@@ -34,8 +34,8 @@ public class CircularBody2D extends AbstractBody2D {
         CircularBody2D circBody = (CircularBody2D) body;
 
         // Distance between centers should be lower than their radius, if colliding
-        Vector2D center1 = getPosition();
-        Vector2D center2 = circBody.getPosition();
+        Vector2D center1 = new Vector2D(getPosition());
+        Vector2D center2 = new Vector2D(getPosition());
         center2.subtract(center1); // Difference vector is store in center2
         return center2.norm() < getRadius() + circBody.getRadius();
 
