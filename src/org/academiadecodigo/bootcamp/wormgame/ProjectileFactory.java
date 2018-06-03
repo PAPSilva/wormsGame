@@ -9,8 +9,6 @@ public class ProjectileFactory {
     private int ammoDamage;
 
     ProjectileFactory(ProjectileType projectileType){
-        this.projectileType = projectileType;
-        this.ammoDamage = projectileType.getAmmoDamage();
     }
 
 }
