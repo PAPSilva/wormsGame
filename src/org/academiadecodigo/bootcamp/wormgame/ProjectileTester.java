@@ -9,8 +9,7 @@ public class ProjectileTester {
 
     public static void main(String[] args) {
 
-        Projectile projectile = new Projectile(ProjectileType.BULLET, new Vector2D(4,4));
-
+        Projectile projectile = new Projectile
 
     }
 }

@@ -10,16 +10,17 @@ public class Projectile extends CircularBody2D{
 
 
     private ProjectileType projectileType;
-    private int ammoDamage;
 
-    public Projectile(ProjectileType projectileType, Vector2D position){
-        super(0,2,position);
-        this.ammoDamage = projectileType.getAmmoDamage();
 
+    public Projectile(ProjectileType projectileType, Vector2D position, Vector2D velocity){
+        super(projectileType.getMass(),projectileType.getRadius(),position);
+        this.projectileType = projectileType;
+        this.setVelocity(velocity);
     }
 
 
     public void hit(Hittable hittable) {
+        hittable.suffer(projectileType.getAmmoDamage());
     }
     
 
