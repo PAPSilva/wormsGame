@@ -9,6 +9,7 @@ public class ProjectileFactory {
     private int ammoDamage;
 
     ProjectileFactory(ProjectileType projectileType){
+        Projectile projectile = new Projectile()
     }
 
 }
