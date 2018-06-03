@@ -1,6 +1,7 @@
 package org.academiadecodigo.bootcamp;
 
 import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
+import org.academiadecodigo.bootcamp.physics2D.Body2D.CircularBody2D;
 import org.academiadecodigo.bootcamp.utils.Vector;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 
@@ -13,6 +14,7 @@ public class Tests {
         assertCondition("Vector test", vectorTest());
         assertCondition("Vector2D test", vector2DTest());
         assertCondition("AbstractBody2D test (via TestBody2D)", absBodyTest());
+        assertCondition("Linear collision test", linearCollisionTest());
         assertCondition("SgfxViewport test", viewportTest());
 
     }
@@ -107,6 +109,43 @@ public class Tests {
         }
 
         return new TestResult(true, null);
+    }
+
+    private static TestResult linearCollisionTest() {
+
+        // Circle collisions
+
+        CircularBody2D body1 = new CircularBody2D(10.0, 20.0, new Vector2D(0.0,0.0));
+        body1.setVelocity(new Vector2D(10.0,0.0));
+
+        CircularBody2D body2 = new CircularBody2D(10.0, 20.0, new Vector2D(20.0, 0.0));
+
+        // Check collision detection
+        if(!body1.checkCollision(body2)) {
+            return new TestResult(false, "Circle-circle collision detection is not working: " + body1 + body2);
+        }
+
+        // Check change in momentum
+        body1.solveCollision(body2);
+        if(Math.abs(body2.getVelocity().x() - 10.0) > TINY || Math.abs(body1.getVelocity().x()) > TINY) {
+            return new TestResult(false, "Change in momentum of body in rest is not working: " + body1 + body2);
+        }
+
+        body1.setVelocity(new Vector2D(10.0,0.0));
+        body1.setVelocity(new Vector2D(-10.0,0.0));
+        if(Math.abs(body1.getVelocity().x() + 10.0) > TINY || Math.abs(body2.getVelocity().x() - 10.0) > TINY) {
+            return new TestResult(false, "Change in momentum of bodies in contrary velocities is not working: " + body1 + body2);
+        }
+
+        body1.setVelocity(new Vector2D(10.0,10.0));
+        body1.setVelocity(new Vector2D(-10.0,10.0));
+        if(Math.abs(body1.getVelocity().x() + 10.0) > TINY || Math.abs(body2.getVelocity().x() - 10.0) > TINY) {
+            return new TestResult(false, "Change in momentum of bodies in 90º velocities is not working: " + body1 + body2);
+        }
+
+
+        return new TestResult(true, null);
+
     }
 
     private static TestResult viewportTest() {

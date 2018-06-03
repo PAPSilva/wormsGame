@@ -109,4 +109,8 @@ public abstract class AbstractBody2D implements Body2D, Collidable {
         return momentum;
     }
 
+    @Override
+    public String toString() {
+        return "[" + " " + position + " " + orientation + " @ " + velocity + "]";
+    }
 }
