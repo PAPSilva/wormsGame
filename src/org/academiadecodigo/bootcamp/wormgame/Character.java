@@ -13,11 +13,12 @@ public class Character extends CircularBody2D implements Hittable {
     //private Player player;
     private int health;
     private double aim;
-    //private Weapon currentWeapon;
+    Weapon currentWeapon;
 
     public Character(Vector2D position) {
 
         super(0,30, position);
+        this.currentWeapon = new Weapon(WeaponType.BAZOOKA);
         this.health = 100;
 
     }
@@ -41,6 +42,8 @@ public class Character extends CircularBody2D implements Hittable {
     // the fire method needs the weapon type
     public void fire() {
 
+        currentWeapon.fire(currentWeapon);
+
     }
 
 
@@ -49,7 +52,6 @@ public class Character extends CircularBody2D implements Hittable {
         health -= sufferDamage;
 
     }
-
 
 
 }
