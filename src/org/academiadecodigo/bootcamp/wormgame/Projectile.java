@@ -12,10 +12,10 @@ public class Projectile extends CircularBody2D{
     private ProjectileType projectileType;
 
 
-    public Projectile(ProjectileType projectileType, Vector2D position, Vector2D velocity){
+    public Projectile(ProjectileType projectileType, Vector2D position){
+
         super(projectileType.getMass(),projectileType.getRadius(),position);
         this.projectileType = projectileType;
-        this.setVelocity(velocity);
     }
 
 

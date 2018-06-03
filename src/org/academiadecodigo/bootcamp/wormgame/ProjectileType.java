@@ -14,7 +14,7 @@ public enum ProjectileType {
     private double radius;
 
 
-    ProjectileType (int ammoDamage, double mass, double radius){
+    ProjectileType (double mass, double radius, int ammoDamage){
         this.ammoDamage = ammoDamage;
         this.mass = mass;
         this.radius = radius;
