@@ -14,14 +14,15 @@ public class Main {
         SgfxCircularBody2D circle = new SgfxCircularBody2D(20.0, 20.0, 100.0, 50, simWindow);
 
         System.out.println(circle);
-        circle.changeMomentum(new Vector2D(2000.0, 2000.0));
+        circle.changeMomentum(new Vector2D(2000.0, 0.0));
         System.out.println(circle);
 
-        SgfxCircularBody2D circle2 = new SgfxCircularBody2D(20.0,20.0, new Vector2D(110.0,50.0), simWindow);
+        SgfxCircularBody2D circle2 = new SgfxCircularBody2D(20.0,20.0, new Vector2D(400.0,50.0), simWindow);
 
 
         if(circle.checkCollision(circle2)) {
             System.out.println("IMPACT1!");
+            return;
         }
 
         double dt = 0.05;
@@ -34,7 +35,7 @@ public class Main {
                 circle.solveCollision(circle2);
             }
 
-            circle.applyForce(force, dt);
+            //circle.applyForce(force, dt);
             circle.updatePosition(dt);
             circle2.updatePosition(dt);
 

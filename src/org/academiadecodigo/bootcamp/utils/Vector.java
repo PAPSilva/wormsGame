@@ -147,7 +147,7 @@ public class Vector {
         for(int i=0; i < vec.length; i++) {
             norm += vec[i] * vec[i];
         }
-        return norm;
+        return Math.sqrt(norm);
     }
 
     @Override
