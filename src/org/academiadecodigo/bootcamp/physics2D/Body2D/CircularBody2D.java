@@ -35,9 +35,9 @@ public class CircularBody2D extends AbstractBody2D {
 
         // Distance between centers should be lower than their radius, if colliding
         Vector2D center1 = new Vector2D(getPosition());
-        Vector2D center2 = new Vector2D(getPosition());
+        Vector2D center2 = new Vector2D(body.getPosition());
         center2.subtract(center1); // Difference vector is store in center2
-        return center2.norm() < getRadius() + circBody.getRadius();
+        return center2.norm() <= getRadius() + circBody.getRadius();
 
     }
 
@@ -68,9 +68,9 @@ public class CircularBody2D extends AbstractBody2D {
 
         // Calculate final velocities
         Vector2D finalVelocity1 = calculateCircularVelocity(mass1, mass2, initialVelocity1, initialVelocity2);
-        changeMomentum(finalVelocity1);
+        setVelocity(finalVelocity1);
         Vector2D finalVelocity2 = calculateCircularVelocity(mass2, mass1, initialVelocity2, initialVelocity1);
-        body.changeMomentum(finalVelocity2);
+        body.setVelocity(finalVelocity2);
 
         return true;
     }
@@ -95,5 +95,10 @@ public class CircularBody2D extends AbstractBody2D {
 
     public double getRadius() {
         return radius;
+    }
+
+    @Override
+    public String toString() {
+        return "[ " + radius + super.toString() + "]";
     }
 }

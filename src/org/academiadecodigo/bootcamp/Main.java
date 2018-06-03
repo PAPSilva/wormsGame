@@ -22,8 +22,6 @@ public class Main {
 
         if(circle.checkCollision(circle2)) {
             System.out.println("IMPACT1!");
-        } else {
-            System.out.println("Did not impact...");
             return;
         }
 
