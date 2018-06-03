@@ -19,7 +19,7 @@ public class SgfxCircularBody2D extends CircularBody2D {
         super(mass, radius, position);
         this.viewport = viewport;
         Vector2D viewCoord = viewport.toViewportCoordinates(position);
-        circle = new Ellipse( viewCoord.x(), viewCoord.y(), radius, radius);
+        circle = new Ellipse( viewCoord.x(), viewCoord.y(), 2.0 * radius, 2.0 *  radius);
         circle.draw();
         System.out.println(viewCoord);
     }
