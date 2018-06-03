@@ -3,8 +3,6 @@ package org.academiadecodigo.bootcamp.wormgame;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.CircularBody2D;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 
-import java.util.LinkedList;
-
 /**
  * Created by codecadet on 03/06/2018.
  */
