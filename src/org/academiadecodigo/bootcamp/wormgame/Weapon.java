@@ -36,7 +36,7 @@ public class Weapon {
 
         }
 
-        if (ammo < 0) {
+        if (ammo <= 0) {
 
             System.out.println("No ammo left...");
 

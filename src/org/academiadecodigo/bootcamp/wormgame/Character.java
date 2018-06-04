@@ -18,6 +18,7 @@ public class Character extends CircularBody2D implements Hittable {
         super(0,30, position);
         this.currentWeapon = new Weapon(WeaponType.BAZOOKA);
         this.health = 100;
+        this.aim = 40;
 
     }
 

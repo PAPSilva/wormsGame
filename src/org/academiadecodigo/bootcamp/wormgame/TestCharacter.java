@@ -21,11 +21,7 @@ public class TestCharacter {
 
         sgfxCharacter.initKeyboard();
 
-        while(true) {
-            Thread.sleep(1000);
-            System.out.println(character.getPosition().x());
 
-        }
 
 
     }

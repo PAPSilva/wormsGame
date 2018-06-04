@@ -19,8 +19,10 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
     private int radius = 20;
 
     public SgfxCharacter(Vector2D position, SgfxViewport viewport) {
+
         super(position);
         circle = new SgfxCircularBody2D(mass, radius, position.x(), position.y(), viewport);
+        
     }
 
 
@@ -48,6 +50,17 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
         rightReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
         keyboard.addEventListener(rightReleased);
 
+        KeyboardEvent aimUp = new KeyboardEvent();
+        aimUp.setKey(KeyboardEvent.KEY_UP);
+        aimUp.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(aimUp);
+
+        KeyboardEvent aimDown = new KeyboardEvent();
+        aimDown.setKey(KeyboardEvent.KEY_DOWN);
+        aimDown.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(aimDown);
+
+
         KeyboardEvent jump = new KeyboardEvent();
         jump.setKey(KeyboardEvent.KEY_M);
         jump.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
@@ -60,7 +73,7 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
 
     }
 
-
+    // Should I add the move method, from the Character?!
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
 
@@ -73,14 +86,24 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
                 circle.setVelocity(new Vector2D(20, 0));
                 circle.updatePosition(1.0);
                 break;
+            case KeyboardEvent.KEY_UP:
+                this.changeAim(5);
+                break;
+            case KeyboardEvent.KEY_DOWN:
+                this.changeAim(-5);
+                break;
             case KeyboardEvent.KEY_M:
                 circle.changeMomentum(new Vector2D(10, 20));
+                break;
+            case KeyboardEvent.KEY_SPACE:
+                this.fire();
                 break;
         }
 
     }
 
 
+    // For now, the keyReleased method is doing nothing
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
 
