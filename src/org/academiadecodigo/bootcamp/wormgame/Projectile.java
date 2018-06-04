@@ -20,7 +20,9 @@ public class Projectile extends CircularBody2D{
 
 
     public void hit(Hittable hittable) {
+
         hittable.suffer(projectileType.getAmmoDamage());
+
     }
     
 

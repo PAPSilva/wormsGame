@@ -14,17 +14,18 @@ public class TestCharacter {
         SgfxViewport simWindow = new SgfxViewport(640,400, 1.0);
         simWindow.show();
 
-        Character character = new Character(new Vector2D(200,30));
-        SgfxCircularBody2D circle = new SgfxCircularBody2D(character.getMass(), character.getRadius(), character.getPosition().x(), character.getPosition().y(), simWindow);
 
-        System.out.println("x: " + character.getPosition().x() + "; y: " + character.getPosition().y());
+        SgfxCharacter sgfxCharacter = new SgfxCharacter(new Vector2D(100,30), simWindow);
 
-        Thread.sleep(500);
+        Character character = (Character) sgfxCharacter;
 
-        character.move(30, 60);
+        sgfxCharacter.initKeyboard();
 
-        System.out.println("x: " + character.getPosition().x() + "; y: " + character.getPosition().y());
+        while(true) {
+            Thread.sleep(1000);
+            System.out.println(character.getPosition().x());
 
+        }
 
 
     }

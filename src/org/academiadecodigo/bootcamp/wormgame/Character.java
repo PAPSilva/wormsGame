@@ -40,11 +40,12 @@ public class Character extends CircularBody2D implements Hittable {
     // the fire method needs the weapon type
     public void fire() {
 
-        currentWeapon.fire(currentWeapon);
+        currentWeapon.fire(currentWeapon); // this doesn't seem ok
 
     }
 
 
+    @Override
     public void suffer(int sufferDamage){
 
         health -= sufferDamage;
