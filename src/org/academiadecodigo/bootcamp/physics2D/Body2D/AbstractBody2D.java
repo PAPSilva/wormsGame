@@ -10,7 +10,7 @@ public abstract class AbstractBody2D implements Body2D {
     private boolean movable;
     private Vector2D velocity;
     private boolean gravitable;
-    private double restitution;
+    private double restitution = 0.8; // Bounciness
     private double staticFrictionCoeff;
     private double kineticFrictionCoeff;
 
@@ -124,6 +124,11 @@ public abstract class AbstractBody2D implements Body2D {
 
     public void toggleGravitable() {
         gravitable = !gravitable;
+    }
+
+    @Override
+    public double getRestitution() {
+        return restitution;
     }
 
     public Vector2D momentum() {

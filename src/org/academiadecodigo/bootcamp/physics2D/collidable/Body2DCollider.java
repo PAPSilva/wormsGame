@@ -31,8 +31,6 @@ public class Body2DCollider implements Collider {
             return false;
         }
 
-
-
         CircularBody2D circBody1 = (CircularBody2D) body1;
         CircularBody2D circBody2 = (CircularBody2D) body2;
 
@@ -100,14 +98,16 @@ public class Body2DCollider implements Collider {
 //            return impulses;
 //        }
 
-        // Calculate final tangent and velocities and apply them
-        // TODO apply restitution coefficient and friction
+        // Calculate final tangent, total velocities with restitution and apply them
+        // TODO deal with sinking objects
         Vector2D newTangentVelocity1 = calculateCircularVelocity(
                 mass1, mass2, tangentVelocity1, tangentVelocity2);
+        newTangentVelocity1.multiply(body1.getRestitution());
         Vector2D finalVelocity1 = new Vector2D(perpVelocity1);
         finalVelocity1.add(newTangentVelocity1);
         Vector2D newTangentVelocity2 = calculateCircularVelocity(
                 mass2, mass1, tangentVelocity2, tangentVelocity1);
+        newTangentVelocity2.multiply(body2.getRestitution());
         Vector2D finalVelocity2 = new Vector2D(perpVelocity2);
         finalVelocity2.add(newTangentVelocity2);
 

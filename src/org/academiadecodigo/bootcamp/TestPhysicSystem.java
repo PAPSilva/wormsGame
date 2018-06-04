@@ -34,7 +34,7 @@ public class TestPhysicSystem {
         system.add(circle2);
 
         double dt = 0.001;
-        for(int i=0; i < 5.0 / dt; i++) {
+        for(int i=0; i < 10.0 / dt; i++) {
 
             system.update(dt, dt);
 

@@ -42,4 +42,6 @@ public interface Body2D {
 
     boolean isGravitable();
 
+    double getRestitution();
+
 }
