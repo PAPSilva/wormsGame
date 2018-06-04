@@ -89,14 +89,16 @@ public class Body2DCollider implements Collider {
         perpVelocity2.subtract(tangentVelocity2);
 
         // Collide only if velocities are converging
-        Vector2D velocity = new Vector2D(body2.getVelocity());
-        velocity.subtract(body1.getVelocity());
-        double convergence = velocity.dot(perpendicular);
-        if(convergence > TINY) {
-            Vector2D impulse = new Vector2D(0.0, 0.0);
-            Vector2D[] impulses = {impulse, impulse};
-            return impulses;
-        }
+        // TODO this code is buggy, but something similar might be needed in the recent future...
+//        Vector2D velocity = new Vector2D(body2.getVelocity());
+//        velocity.subtract(body1.getVelocity());
+//        double convergence = velocity.dot(perpendicular);
+//        System.out.println("Convergence " + convergence);
+//        if(convergence > TINY) {
+//            Vector2D impulse = new Vector2D(0.0, 0.0);
+//            Vector2D[] impulses = {impulse, impulse};
+//            return impulses;
+//        }
 
         // Calculate final tangent and velocities and apply them
         // TODO apply restitution coefficient and friction

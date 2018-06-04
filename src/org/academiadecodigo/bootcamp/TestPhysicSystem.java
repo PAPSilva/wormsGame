@@ -16,19 +16,19 @@ public class TestPhysicSystem {
 
         // Start system
         Body2DCollider collider = new Body2DCollider(1.0E-8);
-        Vector2D gravity = new Vector2D(0.0,0.0);
+        Vector2D gravity = new Vector2D(0.0,-980.0);
         Body2DSystem system = new Body2DSystem(10, gravity, collider);
 
         // Add bodies to system
 
-        SgfxCircularBody2D circle = new SgfxCircularBody2D(20.0, 20.0, 100.0, 50, simWindow);
+        SgfxCircularBody2D circle = new SgfxCircularBody2D(20.0, 20.0, 100.0, 150.0, simWindow);
 
         System.out.println(circle);
-        circle.setVelocity(new Vector2D(100.0, 100.0));
+        //circle.setVelocity(new Vector2D(100.0, 100.0));
         System.out.println(circle);
 
-        SgfxCircularBody2D circle2 = new SgfxCircularBody2D(20.0,20.0, new Vector2D(240.0,150.0), simWindow);
-        //circle2.toggleMovable();
+        SgfxCircularBody2D circle2 = new SgfxCircularBody2D(20.0,20.0, new Vector2D(100.0,50.0), simWindow);
+        circle2.toggleMovable();
 
         system.add(circle);
         system.add(circle2);
