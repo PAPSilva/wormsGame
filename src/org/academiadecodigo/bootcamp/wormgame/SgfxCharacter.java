@@ -22,7 +22,7 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
 
         super(position);
         circle = new SgfxCircularBody2D(mass, radius, position.x(), position.y(), viewport);
-        
+
     }
 
 
@@ -72,6 +72,7 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
         keyboard.addEventListener(fire);
 
     }
+
 
     // Should I add the move method, from the Character?!
     @Override
