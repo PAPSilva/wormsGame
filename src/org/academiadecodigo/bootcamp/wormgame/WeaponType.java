@@ -7,23 +7,37 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
  */
 public enum WeaponType {
 
-    BAZOOKA(3, new Vector2D(10,20)),
-    SNIPER(1, new Vector2D(200,0));
+    BAZOOKA(ProjectileType.ROCKET, new Vector2D(0.0,0.0), 3),
+    SNIPER(ProjectileType.BULLET, new Vector2D(0.0,0.0), 1);
 
 
     private int ammo;
-    private Vector2D iVelocity;
+    private Vector2D shotSpeed;
+    private ProjectileType bullet;
 
-    WeaponType(int ammo, Vector2D iVelocity) {
+    WeaponType(ProjectileType bullet, Vector2D shotSpeed, int ammo) {
 
         this.ammo = ammo;
-        this.iVelocity = iVelocity;
+        this.shotSpeed = shotSpeed;
+        this.bullet = bullet;
 
     }
 
     public int getAmmo() {
 
         return ammo;
+
+    }
+
+    public ProjectileType getBullet() {
+
+        return bullet;
+
+    }
+
+    public Vector2D getShotSpeed() {
+
+        return shotSpeed;
 
     }
 
