@@ -14,7 +14,7 @@ public class CircularBody2D extends AbstractBody2D {
     }
 
     // Behavior
- @Override
+    @Override
     public boolean checkCollision(Body2D body) {
 
         if(checkCircleCircleCollision(body)) {
