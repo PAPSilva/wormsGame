@@ -2,6 +2,7 @@ package org.academiadecodigo.bootcamp;
 
 import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.CircularBody2D;
+import org.academiadecodigo.bootcamp.physics2D.collidable.Body2DCollider;
 import org.academiadecodigo.bootcamp.utils.Vector;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 
@@ -113,6 +114,8 @@ public class Tests {
 
     private static TestResult linearCollisionTest() {
 
+        Body2DCollider collider = new Body2DCollider(1.0e-8);
+
         // Circle collisions
 
         CircularBody2D body1 = new CircularBody2D(10.0, 20.0, new Vector2D(0.0,0.0));
@@ -121,12 +124,12 @@ public class Tests {
         CircularBody2D body2 = new CircularBody2D(10.0, 20.0, new Vector2D(20.0, 0.0));
 
         // Check collision detection
-        if(!body1.checkCollision(body2)) {
+        if(!collider.checkCollision(body1, body2)) {
             return new TestResult(false, "Circle-circle collision detection is not working: " + body1 + body2);
         }
 
         // Check change in momentum
-        body1.solveCollision(body2);
+        collider.solveCollision(body1, body2, 1.0);
         if(Math.abs(body2.getVelocity().x() - 10.0) > TINY || Math.abs(body1.getVelocity().x()) > TINY) {
             return new TestResult(false, "Change in momentum of body in rest is not working: " + body1 + body2);
         }
