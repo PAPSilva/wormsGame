@@ -1,5 +1,7 @@
 package org.academiadecodigo.bootcamp.wormgame;
 
+import org.academiadecodigo.bootcamp.gfx.SgfxProjectileType;
+import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.CircularBody2D;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 
@@ -37,19 +39,24 @@ public class Character extends CircularBody2D implements Hittable {
 
     }
 
-
     // the fire method needs the weapon type
-    public void fire() {
+    public void fire(SgfxViewport viewport) {
 
-        currentWeapon.fire(currentWeapon); // this doesn't seem ok
+
+        currentWeapon.fire(this.getPosition(), this.aim, viewport); // this doesn't seem ok
 
     }
-
 
     @Override
     public void suffer(int sufferDamage){
 
         health -= sufferDamage;
+
+    }
+
+    public Vector2D getPosition() {
+
+        return super.getPosition();
 
     }
 

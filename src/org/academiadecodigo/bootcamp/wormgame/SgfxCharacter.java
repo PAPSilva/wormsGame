@@ -17,11 +17,13 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
 
     private int mass = 20;
     private int radius = 20;
+    private SgfxViewport viewport;
 
     public SgfxCharacter(Vector2D position, SgfxViewport viewport) {
 
         super(position);
         circle = new SgfxCircularBody2D(mass, radius, position.x(), position.y(), viewport);
+        this.viewport = viewport;
 
     }
 
@@ -97,7 +99,7 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
                 circle.changeMomentum(new Vector2D(10, 20));
                 break;
             case KeyboardEvent.KEY_SPACE:
-                this.fire();
+                this.fire(viewport);
                 break;
         }
 

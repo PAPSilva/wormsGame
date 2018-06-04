@@ -1,5 +1,9 @@
 package org.academiadecodigo.bootcamp.wormgame;
 
+import org.academiadecodigo.bootcamp.gfx.SgfxProjectileType;
+import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
+import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
+
 /**
  * Created by codecadet on 03/06/2018.
  */
@@ -7,6 +11,7 @@ public class Weapon {
 
     private int ammo;
     private WeaponType weapon1;
+    private SgfxViewport viewport;
 
     public Weapon(WeaponType weapon) {
 
@@ -27,15 +32,18 @@ public class Weapon {
 
     }
 
-    public void fire(Weapon weapon) {
+    public void fire(Vector2D position, double aim, SgfxViewport viewport) {
 
-        Projectile projectile = new Projectile(weapon1.getBullet(), weapon1.getShotSpeed());
+        SgfxProjectileType tiro = new SgfxProjectileType(weapon1.getBullet(), position, viewport);
+        tiro.setVelocity(new Vector2D(100.0, 0.0));
 
-        projectile.setVelocity(weapon1.getShotSpeed());
+        //Projectile projectile = new Projectile(weapon1.getBullet(), weapon1.getShotSpeed());
+
+        //projectile.setVelocity(weapon1.getShotSpeed());
 
         if (ammo > 0) {
 
-            weapon.ammo--;
+            ammo--;
 
         }
 
