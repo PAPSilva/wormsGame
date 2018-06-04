@@ -1,15 +1,16 @@
 package org.academiadecodigo.bootcamp.physics2D.Body2D;
 
-import org.academiadecodigo.bootcamp.physics2D.collidable.Collidable;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 
-public abstract class AbstractBody2D implements Body2D, Collidable {
+public abstract class AbstractBody2D implements Body2D {
 
     private Vector2D position;
     private double orientation;
     private double mass;
+    private boolean movable;
     private Vector2D velocity;
-    private double restitution;
+    private boolean gravitable;
+    private double restitution = 0.8; // Bounciness
     private double staticFrictionCoeff;
     private double kineticFrictionCoeff;
 
@@ -25,6 +26,8 @@ public abstract class AbstractBody2D implements Body2D, Collidable {
         orientation = 0.0;
         this.mass = mass;
         velocity = new Vector2D(0.0, 0.0);
+        gravitable = true;
+        movable = true;
     }
 
     // Behavior
@@ -40,7 +43,6 @@ public abstract class AbstractBody2D implements Body2D, Collidable {
 
     }
 
-    @Override
     public void applyForces(Vector2D[] forces, double dt) {
 
         // Apply each force
@@ -51,14 +53,21 @@ public abstract class AbstractBody2D implements Body2D, Collidable {
     }
 
     @Override
-    public Vector2D setVelocity(Vector2D velocity) {
+    public Vector2D setVelocity(Vector2D newVelocity) {
 
         // Calculate impulse
+        Vector2D impulse = getImpulse(newVelocity);
+        velocity = newVelocity;
+        return impulse;
+    }
+
+    @Override
+    public Vector2D getImpulse(Vector2D newVelocity) {
+        // Calculate impulse
         Vector2D impulse = new Vector2D(
-                mass * (velocity.x() - this.velocity.x()),
-                mass * (velocity.y() - this.velocity.y())
+                mass * (newVelocity.x() - velocity.x()),
+                mass * (newVelocity.y() - velocity.y())
         );
-        this.velocity = velocity;
         return impulse;
     }
 
@@ -100,7 +109,26 @@ public abstract class AbstractBody2D implements Body2D, Collidable {
 
     @Override
     public boolean isMovable() {
-        return mass > 0.0;
+        return movable;
+    }
+
+    @Override
+    public void toggleMovable() {
+        movable = !movable;
+    }
+
+    @Override
+    public boolean isGravitable() {
+        return movable && gravitable;
+    }
+
+    public void toggleGravitable() {
+        gravitable = !gravitable;
+    }
+
+    @Override
+    public double getRestitution() {
+        return restitution;
     }
 
     public Vector2D momentum() {
