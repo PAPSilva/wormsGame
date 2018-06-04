@@ -3,6 +3,7 @@ package org.academiadecodigo.bootcamp.physics2D.collidable;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.Body2D;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.CircularBody2D;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
+import org.academiadecodigo.bootcamp.utils.Vector;
 
 public class Body2DCollider implements Collider {
 
@@ -25,11 +26,12 @@ public class Body2DCollider implements Collider {
 
     private boolean checkCircleCircleCollision(Body2D body1, Body2D body2) {
 
-
         // Check if both bodies are circles
         if(!(body1 instanceof CircularBody2D) || !(body2 instanceof CircularBody2D)) {
             return false;
         }
+
+
 
         CircularBody2D circBody1 = (CircularBody2D) body1;
         CircularBody2D circBody2 = (CircularBody2D) body2;
@@ -54,35 +56,65 @@ public class Body2DCollider implements Collider {
         }
 
         // No collisions
-        return null;
+        Vector2D impulse = new Vector2D(0.0, 0.0);
+        Vector2D[] impulses = {impulse, impulse};
+        return impulses;
 
     }
 
     private Vector2D[] solveCircleCircleCollision(CircularBody2D body1, CircularBody2D body2, double dt) {
 
-        // Solve estimated contact point and its normal
-        // TODO apply restitution coefficient and friction
+
+        // Get masses
         double mass1 = body1.isMovable() ? body1.getMass() : INFINIY;
         double mass2 = body2.isMovable() ? body2.getMass() : INFINIY;
-        System.out.println(mass1 + " :: " + mass2);
-        Vector2D initialVelocity1 = new Vector2D(body1.getVelocity());
-        Vector2D initialVelocity2 = new Vector2D(body2.getVelocity());
-        System.out.println(initialVelocity1 + " :: " + initialVelocity2);
 
-        // Calculate final velocities and corresponding impulses
-        Vector2D finalVelocity1 = calculateCircularVelocity(
-                mass1, mass2, initialVelocity1, initialVelocity2);
-        Vector2D impulse1 = body1.getImpulse(finalVelocity1);
+        // Get collision tangent (unit vector)
+        Vector2D tangent = new Vector2D(body2.getPosition());
+        tangent.subtract(body1.getPosition());
+        tangent.divide(tangent.norm());
 
-        Vector2D finalVelocity2 = calculateCircularVelocity(
-                mass2, mass1, initialVelocity2, initialVelocity1);
-        Vector2D impulse2 = body2.getImpulse(finalVelocity2);
+        // Get tangent component of velocity of both bodies
+        Vector2D tangentVelocity1 = new Vector2D(tangent);
+        tangentVelocity1.multiply( body1.getVelocity().dot(tangent) );
+        Vector2D tangentVelocity2 = new Vector2D(tangent);
+        tangentVelocity2.multiply( body2.getVelocity().dot(tangent) );
+        Vector2D perpendicular = new Vector2D(tangent);
+        perpendicular.rotate(Math.PI * 0.5);
+
+        // Get perpendicular component of velocity of both bodies
+        Vector2D perpVelocity1 = new Vector2D(body1.getVelocity());
+        perpVelocity1.subtract(tangentVelocity1);
+        Vector2D perpVelocity2 = new Vector2D(body2.getVelocity());
+        perpVelocity2.subtract(tangentVelocity2);
+
+        // Collide only if velocities are converging
+        Vector2D velocity = new Vector2D(body2.getVelocity());
+        velocity.subtract(body1.getVelocity());
+        double convergence = velocity.dot(perpendicular);
+        if(convergence > TINY) {
+            Vector2D impulse = new Vector2D(0.0, 0.0);
+            Vector2D[] impulses = {impulse, impulse};
+            return impulses;
+        }
+
+        // Calculate final tangent and velocities and apply them
+        // TODO apply restitution coefficient and friction
+        Vector2D newTangentVelocity1 = calculateCircularVelocity(
+                mass1, mass2, tangentVelocity1, tangentVelocity2);
+        Vector2D finalVelocity1 = new Vector2D(perpVelocity1);
+        finalVelocity1.add(newTangentVelocity1);
+        Vector2D newTangentVelocity2 = calculateCircularVelocity(
+                mass2, mass1, tangentVelocity2, tangentVelocity1);
+        Vector2D finalVelocity2 = new Vector2D(perpVelocity2);
+        finalVelocity2.add(newTangentVelocity2);
 
         // Return the impulses
+        Vector2D impulse1 = body1.getImpulse(finalVelocity1);
+        Vector2D impulse2 = body2.getImpulse(finalVelocity2);
         impulse1.divide(dt);
         impulse2.divide(dt);
         Vector2D[] impulses = {impulse1, impulse2};
-        System.out.println("solveCollision " + finalVelocity1 + finalVelocity2 + impulses[0]);
 
         return impulses;
 
@@ -102,4 +134,5 @@ public class Body2DCollider implements Collider {
         return finalVelocity;
 
     }
+
 }

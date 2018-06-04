@@ -33,13 +33,13 @@ public class TestPhysicSystem {
         system.add(circle);
         system.add(circle2);
 
-        double dt = 0.05;
+        double dt = 0.001;
         for(int i=0; i < 5.0 / dt; i++) {
 
             system.update(dt, dt);
 
             try {
-                Thread.sleep(50);
+                Thread.sleep( 1 );
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

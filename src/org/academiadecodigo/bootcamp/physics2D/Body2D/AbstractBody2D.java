@@ -119,7 +119,7 @@ public abstract class AbstractBody2D implements Body2D {
 
     @Override
     public boolean isGravitable() {
-        return gravitable;
+        return movable && gravitable;
     }
 
     public void toggleGravitable() {

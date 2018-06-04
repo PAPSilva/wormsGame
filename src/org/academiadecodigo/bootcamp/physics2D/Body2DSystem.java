@@ -8,15 +8,15 @@ public class Body2DSystem implements PhysicSystem {
 
     private Body2D [] bodies;
     private int length = 0;
-    private Vector2D gravityForce;
+    private Vector2D gravityAcceleration;
     private Collider collider;
 
     // Constructor
 
-    public Body2DSystem(int n, Vector2D gravityForce, Collider collider) {
+    public Body2DSystem(int n, Vector2D gravityAcceleration, Collider collider) {
         n = n > 10 ? n : 10;
         bodies = new Body2D[n];
-        this.gravityForce = gravityForce;
+        this.gravityAcceleration = gravityAcceleration;
         this.collider = collider;
     }
 
@@ -68,14 +68,12 @@ public class Body2DSystem implements PhysicSystem {
 
          // Check forces interacting with each body
         Vector2D[] force = new Vector2D[length];
+        for(int i=0; i < length; i++) {
+            force[i] = new Vector2D(0.0, 0.0);
+        }
         // TODO Check for torque here
         for(int i=0; i < length; i++) {
-            force[i] = interactingForces(bodies[i], dt);
-            if(force[i] == null) {
-                System.out.println("Force is null");
-            } else {
-                System.out.println("Force " + force[i]);
-            }
+            force[i].add(interactingForces(bodies[i], dt));
         }
 
         // Apply force to the objects
@@ -83,7 +81,6 @@ public class Body2DSystem implements PhysicSystem {
         for(int i=0; i < length; i++) {
             bodies[i].applyForce(force[i], dt);
             bodies[i].updatePosition(dt);
-            System.out.println("updating position");
         }
 
     }
@@ -96,32 +93,30 @@ public class Body2DSystem implements PhysicSystem {
 
         // Collisions
         // TODO this is calculating some objects two times... improve it
-        for(Body2D otherBody : bodies) {
+        for(int i=0; i < length; i++) {
 
             // Discard self
-            if(body.equals(otherBody)) {
+            if(body.equals(bodies[i])) {
                 continue;
             }
 
             // Check if bodies are colliding
-            if(!collider.checkCollision(body, otherBody)) {
+            if(!collider.checkCollision(body, bodies[i])) {
                 continue;
             }
-            System.out.println("Colliding");
 
             // Get force for object
-            Vector2D[] impulses = collider.solveCollision(body, otherBody, dt);
-            System.out.println("Impulse " + impulses[0]);
+            Vector2D[] impulses = collider.solveCollision(body, bodies[i], dt);
 
             force.add(impulses[0]);
-
-            break;
 
         }
 
         // Apply gravity
         if(body.isGravitable()) {
-            force.add(gravityForce);
+            Vector2D graviticForce = new Vector2D(gravityAcceleration);
+            graviticForce.multiply(body.getMass());
+            force.add(graviticForce);
         }
 
         return force;
