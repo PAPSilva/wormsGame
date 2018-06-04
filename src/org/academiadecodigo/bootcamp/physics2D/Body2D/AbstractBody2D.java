@@ -3,7 +3,7 @@ package org.academiadecodigo.bootcamp.physics2D.Body2D;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Collidable;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 
-public abstract class AbstractBody2D implements Body2D, Collidable {
+public abstract class AbstractBody2D implements Body2D {
 
     private Vector2D position;
     private double orientation;
