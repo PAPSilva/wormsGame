@@ -4,10 +4,9 @@ package org.academiadecodigo.bootcamp.wormgame;
  * Created by codecadet on 03/06/2018.
  */
 public enum ProjectileType {
-    BULLET(40,10,10),
-    ROCKET(80,800,40);
 
-
+    BULLET(2,5,40),
+    ROCKET(20,10,80);
 
     private int ammoDamage;
     private double mass;

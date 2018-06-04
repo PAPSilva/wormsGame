@@ -5,14 +5,13 @@ package org.academiadecodigo.bootcamp.wormgame;
  */
 public class Weapon {
 
-    //Projectile pewpew = new Projectile(ProjectileType);
     private int ammo;
-    private WeaponType pewpew;
+    private WeaponType weapon1;
 
     public Weapon(WeaponType weapon) {
 
         this.ammo = weapon.getAmmo();
-        pewpew = weapon;
+        weapon1 = weapon;
 
     }
 
@@ -30,6 +29,10 @@ public class Weapon {
 
     public void fire(Weapon weapon) {
 
+        Projectile projectile = new Projectile(weapon1.getBullet(), weapon1.getShotSpeed());
+
+        projectile.setVelocity(weapon1.getShotSpeed());
+
         if (ammo > 0) {
 
             weapon.ammo--;
@@ -46,7 +49,7 @@ public class Weapon {
 
     public WeaponType getWeapon(){
 
-        return pewpew;
+        return weapon1;
 
     }
 
