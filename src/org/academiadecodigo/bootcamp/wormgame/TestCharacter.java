@@ -15,13 +15,11 @@ public class TestCharacter {
         simWindow.show();
 
 
-        SgfxCharacter sgfxCharacter = new SgfxCharacter(new Vector2D(100,30), simWindow);
+        SgfxCharacter sgfxCharacter = new SgfxCharacter(30,20, new Vector2D(100,30), simWindow);
 
         Character character = (Character) sgfxCharacter;
 
         sgfxCharacter.initKeyboard();
-
-
 
 
     }

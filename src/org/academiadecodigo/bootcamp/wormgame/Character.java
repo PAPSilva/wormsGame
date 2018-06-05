@@ -8,14 +8,13 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
  */
 public class Character extends CircularBody2D implements Hittable {
 
-    //private Player player;
     private int health;
     private double aim;
     Weapon currentWeapon;
 
-    public Character(Vector2D position) {
+    public Character(double mass, double radius, Vector2D position) {
 
-        super(0,30, position);
+        super(mass,radius, position);
         this.currentWeapon = new Weapon(WeaponType.BAZOOKA);
         this.health = 100;
         this.aim = 40;
@@ -41,7 +40,7 @@ public class Character extends CircularBody2D implements Hittable {
     // the fire method needs the weapon type
     public void fire() {
 
-        currentWeapon.fire(currentWeapon); // this doesn't seem ok
+        currentWeapon.fire();
 
     }
 
@@ -52,6 +51,8 @@ public class Character extends CircularBody2D implements Hittable {
         health -= sufferDamage;
 
     }
+
+
 
 
 }

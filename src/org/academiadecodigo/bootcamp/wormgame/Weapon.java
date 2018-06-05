@@ -27,7 +27,7 @@ public class Weapon {
 
     }
 
-    public void fire(Weapon weapon) {
+    public void fire() {
 
         Projectile projectile = new Projectile(weapon1.getBullet(), weapon1.getShotSpeed());
 
@@ -35,7 +35,7 @@ public class Weapon {
 
         if (ammo > 0) {
 
-            weapon.ammo--;
+            ammo--;
 
         }
 
