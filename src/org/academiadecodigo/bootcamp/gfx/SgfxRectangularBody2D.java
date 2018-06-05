@@ -66,7 +66,10 @@ public class SgfxRectangularBody2D extends RectangularBody2D implements Drawable
     @Override
     public void rotate(double angle) {
         // TODO finish
+        delete();
         super.rotate(angle);
+        updateRectangle();
+        draw();
     }
 
     @Override

@@ -22,21 +22,32 @@ public class TestPhysicSystem {
 
         // Add bodies to system
 
-        SgfxCircularBody2D circle = new SgfxCircularBody2D(20.0, 20.0, 100.0, 150.0, simWindow);
+        // Stacked circles
 
-        System.out.println(circle);
-        //circle.setVelocity(new Vector2D(100.0, 100.0));
-        System.out.println(circle);
+        SgfxCircularBody2D circle1 = new SgfxCircularBody2D(20.0, 20.0, 100.0, 300.0, simWindow);
 
-        SgfxCircularBody2D circle2 = new SgfxCircularBody2D(20.0,20.0, new Vector2D(100.0,50.0), simWindow);
-        circle2.toggleMovable();
+        SgfxCircularBody2D circle2 = new SgfxCircularBody2D(20.0, 20.0, 100.0, 150.0, simWindow);
 
-        SgfxRectangularBody2D rectangle1 = new SgfxRectangularBody2D(20.0, 30.0, 15.0, new Vector2D(400.0, 300.0), simWindow);
-        System.out.println(rectangle1);
+        SgfxCircularBody2D circle3 = new SgfxCircularBody2D(20.0,20.0, new Vector2D(100.0,50.0), simWindow);
+        circle3.toggleMovable();
 
-        system.add(circle);
+        // Box and circles
+
+        SgfxRectangularBody2D rectangle1 = new SgfxRectangularBody2D(20.0, 150.0, 15.0, new Vector2D(200.0, 150.0), simWindow);
+        rectangle1.toggleMovable();
+        rectangle1.rotate(-0.75);
+        System.out.println(rectangle1.getPosition());
+
+        SgfxCircularBody2D circle4 = new SgfxCircularBody2D(20.0,20.0, new Vector2D(200.0,400.0), simWindow);
+
+        // Add bodies to system and start simulation
+
+        system.add(circle1);
         system.add(circle2);
+        system.add(circle3);
         system.add(rectangle1);
+        system.add(circle4);
+
         rectangle1.toggleGravitable();
 
         double dt = 0.001;
@@ -52,7 +63,7 @@ public class TestPhysicSystem {
 
         }
 
-        System.out.println(circle);
+        System.out.println(circle1);
         System.out.println(circle2);
 
         System.out.println("Ended!");
