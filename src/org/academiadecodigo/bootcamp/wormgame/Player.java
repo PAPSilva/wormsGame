@@ -1,7 +1,5 @@
 package org.academiadecodigo.bootcamp.wormgame;
 
-import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
-
 import java.util.ArrayList;
 
 /**
@@ -10,17 +8,38 @@ import java.util.ArrayList;
 public class Player {
 
     private String name;
-    private Weapon weapons;
-    private Character characters;
+    private ArrayList<Fireable> weapons;
+    private Character[] characters;
 
-    public Player(String name, Character characters) {
+    public Player(String name) {
 
-        ArrayList weapons = new ArrayList();
+        weapons = new ArrayList();
 
         this.name = name;
+        addWeapons();
+
+    }
+
+
+    private void addWeapons() {
+
+        for (WeaponType weaponType : WeaponType.values()) {
+            weapons.add(new Weapon(weaponType));
+        }
+
+    }
+
+    public void changeWeapon() {
+
+    }
+
+
+    public void addCharacters(Character[] characters) {
+
         this.characters = characters;
 
     }
+
 
     private String getName() {
 
