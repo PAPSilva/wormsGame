@@ -93,6 +93,11 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
         fire.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(fire);
 
+        KeyboardEvent changeWeapon = new KeyboardEvent();
+        changeWeapon.setKey(KeyboardEvent.KEY_N);
+        changeWeapon.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(changeWeapon);
+
     }
 
 
@@ -120,6 +125,9 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
                 break;
             case KeyboardEvent.KEY_SPACE:
                 this.fire();
+                break;
+            case KeyboardEvent.KEY_N:
+                this.changeWeapon();
                 break;
         }
 

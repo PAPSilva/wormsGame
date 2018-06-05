@@ -37,10 +37,17 @@ public class Character extends CircularBody2D implements Hittable {
     }
 
 
-    // the fire method needs the weapon type
     public void fire() {
 
         currentWeapon.fire();
+
+    }
+
+
+    // needs the method from the Weapon Class
+    public void changeWeapon() {
+
+
 
     }
 
