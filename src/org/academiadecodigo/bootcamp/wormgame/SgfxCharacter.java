@@ -127,7 +127,7 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
                 this.fire();
                 break;
             case KeyboardEvent.KEY_N:
-                this.changeWeapon();
+                //this.changeWeapon();
                 break;
         }
 

@@ -30,9 +30,9 @@ public class Character extends CircularBody2D implements Hittable {
 
 
     // for now, receives a double that can be positive or negative. it can increase or decrease aim.
-    public void changeAim(double a) {
+    public void changeAim(double angle) {
 
-        this.aim += a;
+        this.aim += angle;
 
     }
 
@@ -44,10 +44,9 @@ public class Character extends CircularBody2D implements Hittable {
     }
 
 
-    // needs the method from the Weapon Class
-    public void changeWeapon() {
+    public void changeWeapon(Weapon weapon) {
 
-
+        this.currentWeapon = weapon;
 
     }
 
