@@ -34,15 +34,15 @@ public class WeaponsTest {
         System.out.println("You got a " + weapon.getWeapon());
         System.out.println("You start with " + weapon.getAmmo() + " bullets.");
 
-        weapon.fire(weapon);
+        weapon.fire();
         System.out.println("The weapon is firing! BOOOM!");
         System.out.println("Ammo left: " + weapon.getAmmo());
         weapon.addAmmo(4);
         System.out.println("Ammo updated! Now you have " + weapon.getAmmo() + " bullets.");
-        weapon.fire(weapon);
+        weapon.fire();
         System.out.println("The weapon is firing! BOOOM!");
         System.out.println("Ammo left: " + weapon.getAmmo());
-        weapon.fire(weapon);
+        weapon.fire();
         System.out.println("The weapon is firing! BOOOM!");
         System.out.println("Ammo left: " + weapon.getAmmo());
 

@@ -8,17 +8,16 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
  */
 public class Character extends CircularBody2D implements Hittable {
 
-    //private Player player;
     private int health;
     private double aim;
-    Weapon currentWeapon;
+    Fireable currentWeapon;
 
-    public Character(Vector2D position) {
+    public Character(double mass, double radius, Vector2D position, int health) {
 
-        super(0,30, position);
+        super(mass,radius, position);
         this.currentWeapon = new Weapon(WeaponType.BAZOOKA);
-        this.health = 100;
-        this.aim = 40;
+        this.health = health;
+        this.aim = 0;
 
     }
 
@@ -31,17 +30,23 @@ public class Character extends CircularBody2D implements Hittable {
 
 
     // for now, receives a double that can be positive or negative. it can increase or decrease aim.
-    public void changeAim(double a) {
+    public void changeAim(double angle) {
 
-        this.aim += a;
+        this.aim += angle;
 
     }
 
 
-    // the fire method needs the weapon type
     public void fire() {
 
-        currentWeapon.fire(currentWeapon); // this doesn't seem ok
+        currentWeapon.fire();
+
+    }
+
+
+    public void changeWeapon(Fireable weapon) {
+
+        this.currentWeapon = weapon;
 
     }
 
@@ -52,6 +57,8 @@ public class Character extends CircularBody2D implements Hittable {
         health -= sufferDamage;
 
     }
+
+
 
 
 }
