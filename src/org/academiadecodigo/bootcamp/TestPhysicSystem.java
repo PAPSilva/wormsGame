@@ -1,6 +1,7 @@
 package org.academiadecodigo.bootcamp;
 
 import org.academiadecodigo.bootcamp.gfx.SgfxCircularBody2D;
+import org.academiadecodigo.bootcamp.gfx.SgfxRectangularBody2D;
 import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
 import org.academiadecodigo.bootcamp.physics2D.Body2DSystem;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Body2DCollider;
@@ -30,8 +31,13 @@ public class TestPhysicSystem {
         SgfxCircularBody2D circle2 = new SgfxCircularBody2D(20.0,20.0, new Vector2D(100.0,50.0), simWindow);
         circle2.toggleMovable();
 
+        SgfxRectangularBody2D rectangle1 = new SgfxRectangularBody2D(20.0, 30.0, 15.0, new Vector2D(400.0, 300.0), simWindow);
+        System.out.println(rectangle1);
+
         system.add(circle);
         system.add(circle2);
+        system.add(rectangle1);
+        rectangle1.toggleGravitable();
 
         double dt = 0.001;
         for(int i=0; i < 10.0 / dt; i++) {

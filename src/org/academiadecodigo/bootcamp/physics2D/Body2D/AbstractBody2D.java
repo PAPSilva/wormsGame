@@ -85,11 +85,16 @@ public abstract class AbstractBody2D implements Body2D {
         position.add(velocity.x() * dt, velocity.y() * dt);
     }
 
+    public void rotate(double angle) {
+        orientation += angle;
+        orientation =  orientation % (2.0 * Math.PI);
+    }
+
     // Getters and setters
 
     @Override
     public Vector2D getPosition() {
-        return position;
+        return new Vector2D(position);
     }
 
     @Override
@@ -104,7 +109,7 @@ public abstract class AbstractBody2D implements Body2D {
 
     @Override
     public Vector2D getVelocity() {
-        return velocity;
+        return new Vector2D(velocity);
     }
 
     @Override
