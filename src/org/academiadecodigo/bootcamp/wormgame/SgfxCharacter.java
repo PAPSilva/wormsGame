@@ -1,6 +1,5 @@
 package org.academiadecodigo.bootcamp.wormgame;
 
-import org.academiadecodigo.bootcamp.gfx.SgfxCircularBody2D;
 import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
@@ -19,12 +18,12 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
 
     // Constructor
 
-    public SgfxCharacter(double mass, double radius, double x, double y, SgfxViewport viewport) {
-        this(mass, radius, new Vector2D(x, y), viewport);
+    public SgfxCharacter(double mass, double radius, double x, double y, int health, SgfxViewport viewport) {
+        this(mass, radius, new Vector2D(x, y), health, viewport);
     }
 
-    public SgfxCharacter(double mass, double radius, Vector2D position, SgfxViewport viewport) {
-        super(mass, radius, position);
+    public SgfxCharacter(double mass, double radius, Vector2D position, int health, SgfxViewport viewport) {
+        super(mass, radius, position, health);
         this.viewport = viewport;
         Vector2D topLeftCorner = new Vector2D(position);
         topLeftCorner.add(-radius, radius);

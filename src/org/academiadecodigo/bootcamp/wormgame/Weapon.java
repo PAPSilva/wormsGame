@@ -3,15 +3,15 @@ package org.academiadecodigo.bootcamp.wormgame;
 /**
  * Created by codecadet on 03/06/2018.
  */
-public class Weapon {
+public class Weapon implements Fireable {
 
     private int ammo;
-    private WeaponType weapon1;
+    private WeaponType weapon;
 
     public Weapon(WeaponType weapon) {
 
         this.ammo = weapon.getAmmo();
-        weapon1 = weapon;
+        this.weapon = weapon;
 
     }
 
@@ -29,11 +29,10 @@ public class Weapon {
 
     public void fire() {
 
-        Projectile projectile = new Projectile(weapon1.getBullet(), weapon1.getShotSpeed());
-
-        projectile.setVelocity(weapon1.getShotSpeed());
-
         if (ammo > 0) {
+
+            Projectile projectile = new Projectile(weapon.getBullet(), weapon.getShotSpeed());
+            projectile.setVelocity(weapon.getShotSpeed());
 
             ammo--;
 
@@ -49,7 +48,7 @@ public class Weapon {
 
     public WeaponType getWeapon(){
 
-        return weapon1;
+        return weapon;
 
     }
 
