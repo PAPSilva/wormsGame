@@ -1,6 +1,8 @@
 package org.academiadecodigo.bootcamp.wormgame;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by codecadet on 04/06/2018.
@@ -8,43 +10,54 @@ import java.util.ArrayList;
 public class Player {
 
     private String name;
-    private ArrayList<Fireable> weapons;
-    private Character[] characters;
+    private ArrayList<Fireable> fireables;
+    private List<Character> characters = new LinkedList<>();
+    private Character selectedCharacter;
 
     public Player(String name) {
 
-        weapons = new ArrayList();
+        fireables = new ArrayList();
 
         this.name = name;
-        addWeapons();
+        addFireables();
 
     }
 
-
-    private void addWeapons() {
+    private void addFireables() {
 
         for (WeaponType weaponType : WeaponType.values()) {
-            weapons.add(new Weapon(weaponType));
+            fireables.add(new Weapon(weaponType));
         }
 
     }
 
-    public void changeWeapon() {
-
+    public List<Fireable> getFireables() {
+        return fireables;
     }
 
-
-    public void addCharacters(Character[] characters) {
-
-        this.characters = characters;
-
+    public void addCharacter(Character character) {
+        characters.add(character);
+        // Appoint selected character to first.
+        if(characters.size() == 1) {
+            selectedCharacter = characters.get(0);
+        }
     }
 
+    public Character getSelectedCharacter() {
+        return selectedCharacter;
+    }
+
+    // TODO This, and consider an iterator.
+    public Character nextCharacter() {
+        return selectedCharacter;
+    }
+
+    public boolean hasCharacters() {
+        return characters.size() > 0;
+    }
 
     private String getName() {
-
         return name;
-
     }
 
 }

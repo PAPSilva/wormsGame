@@ -15,6 +15,7 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
 
     private Ellipse circle;
     private SgfxViewport viewport;
+    private boolean active = false;
 
     // Constructor
 
@@ -31,6 +32,7 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
         circle = new Ellipse( viewCoord.x(), viewCoord.y(), 2.0 * radius, 2.0 *  radius);
         circle.draw();
         System.out.println(viewCoord);
+        initKeyboard();
     }
 
     // Behavior
@@ -43,9 +45,6 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
         Vector2D newCoord = viewport.toViewportCoordinates(getPosition());
         circle.translate(newCoord.x() - oldCoord.x(), newCoord.y() - oldCoord.y());
     }
-
-
-
 
     public void initKeyboard() {
 
@@ -104,13 +103,19 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
 
+        // Move only when active
+        if(!active) {
+            return;
+        }
+
+        // Deal with event
         switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_LEFT:
-                this.setVelocity(new Vector2D(-20, 0));
+                this.setVelocity(new Vector2D(-10, 0));
                 this.updatePosition(1.0);
                 break;
             case KeyboardEvent.KEY_RIGHT:
-                this.setVelocity(new Vector2D(20, 0));
+                this.setVelocity(new Vector2D(10, 0));
                 this.updatePosition(1.0);
                 break;
             case KeyboardEvent.KEY_UP:
@@ -146,6 +151,14 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
                 break;
         }
 
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void toogleActive() {
+        active = !active;
     }
 
 }

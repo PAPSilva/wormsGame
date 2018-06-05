@@ -12,6 +12,7 @@ public class TestGame {
         game.init(1);
         game.start();
 
+        System.out.println("GAMEOVER");
     }
 
 }
