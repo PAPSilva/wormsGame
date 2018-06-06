@@ -6,16 +6,21 @@ import org.academiadecodigo.bootcamp.physics2D.Body2DSystem;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Body2DCollider;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.gfx.SgfxCharacter;
+import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
+import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
+import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
+import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 
 /**
  * Created by codecadet on 05/06/2018.
  */
-public class Game {
+public class Game implements KeyboardHandler {
 
     private Player player1;
     private Player player2;
     private SgfxViewport simWindow;
     private Body2DSystem system;
+    private SgfxCharacter selectedCharacter;
 
     private static final double DELTA_TIME = 0.001;
     private static final int FRAMERATE = 30; // TODO implement this
@@ -85,6 +90,8 @@ public class Game {
         simWindow.show();
         boolean gameover = false;
         boolean turnEnded = true;
+        initKeyboard();
+
         while (!gameover) {
 
             system.update(DELTA_TIME, DELTA_TIME);
@@ -112,11 +119,14 @@ public class Game {
 
                 // Select next character
                 SgfxCharacter selectedCharacter = (SgfxCharacter) activePlayer.getSelectedCharacter();
+                this.selectedCharacter = selectedCharacter;
+
                 if(!selectedCharacter.isActive()) {
                     selectedCharacter.toogleActive();
                     turnEnded = false;
                     continue;
                 }
+
                 selectedCharacter.toogleActive();
                 ((SgfxCharacter) activePlayer.nextCharacter()).toogleActive();
                 turnEnded = false;
@@ -147,5 +157,117 @@ public class Game {
         return characters;
 
     }
+
+
+    public void initKeyboard() {
+
+        Keyboard keyboard = new Keyboard(this);
+
+        KeyboardEvent left = new KeyboardEvent();
+        left.setKey(KeyboardEvent.KEY_LEFT);
+        left.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(left);
+
+        KeyboardEvent right = new KeyboardEvent();
+        right.setKey(KeyboardEvent.KEY_RIGHT);
+        right.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(right);
+
+        KeyboardEvent leftReleased = new KeyboardEvent();
+        leftReleased.setKey(KeyboardEvent.KEY_LEFT);
+        leftReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        keyboard.addEventListener(leftReleased);
+
+        KeyboardEvent rightReleased = new KeyboardEvent();
+        rightReleased.setKey(KeyboardEvent.KEY_RIGHT);
+        rightReleased.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        keyboard.addEventListener(rightReleased);
+
+        KeyboardEvent aimUp = new KeyboardEvent();
+        aimUp.setKey(KeyboardEvent.KEY_UP);
+        aimUp.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(aimUp);
+
+        KeyboardEvent aimDown = new KeyboardEvent();
+        aimDown.setKey(KeyboardEvent.KEY_DOWN);
+        aimDown.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(aimDown);
+
+
+        KeyboardEvent jump = new KeyboardEvent();
+        jump.setKey(KeyboardEvent.KEY_M);
+        jump.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(jump);
+
+        KeyboardEvent fire = new KeyboardEvent();
+        fire.setKey(KeyboardEvent.KEY_SPACE);
+        fire.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(fire);
+
+        KeyboardEvent changeWeapon = new KeyboardEvent();
+        changeWeapon.setKey(KeyboardEvent.KEY_N);
+        changeWeapon.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(changeWeapon);
+
+    }
+
+
+    @Override
+    public void keyPressed(KeyboardEvent keyboardEvent) {
+
+        // Move only when active
+        if(!selectedCharacter.isActive()) {
+            return;
+        }
+
+        // Deal with event
+        switch (keyboardEvent.getKey()) {
+            case KeyboardEvent.KEY_LEFT:
+                selectedCharacter.changeMomentum(new Vector2D(-1000.0,0.0));
+                break;
+            case KeyboardEvent.KEY_RIGHT:
+                selectedCharacter.changeMomentum(new Vector2D(1000.0,0.0));
+                break;
+            case KeyboardEvent.KEY_UP:
+                selectedCharacter.changeAim(0.087);
+                break;
+            case KeyboardEvent.KEY_DOWN:
+                selectedCharacter.changeAim(-0.087);
+                break;
+            case KeyboardEvent.KEY_M:
+                selectedCharacter.changeMomentum(new Vector2D(0.0, 10000.0));
+                break;
+            case KeyboardEvent.KEY_SPACE:
+                selectedCharacter.fire();
+                break;
+            case KeyboardEvent.KEY_N:
+                //selectedCharacter.changeWeapon();
+                break;
+        }
+
+    }
+
+
+    // For now, the keyReleased method is doing nothing
+    @Override
+    public void keyReleased(KeyboardEvent keyboardEvent) {
+
+        // Move only when active
+        if(!selectedCharacter.isActive()) {
+            return;
+        }
+
+//        switch (keyboardEvent.getKey()) {
+//            case KeyboardEvent.KEY_LEFT:
+//                this.setVelocity(new Vector2D(0, 0));
+//                break;
+//            case KeyboardEvent.KEY_RIGHT:
+//                this.setVelocity(new Vector2D(0, 0));
+//                break;
+//        }
+
+    }
+
+
 
 }

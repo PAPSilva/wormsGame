@@ -19,7 +19,6 @@ public class TestCharacter {
 
         Character character = (Character) sgfxCharacter;
 
-        sgfxCharacter.initKeyboard();
 
 
     }
