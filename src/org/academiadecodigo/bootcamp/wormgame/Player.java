@@ -1,6 +1,7 @@
 package org.academiadecodigo.bootcamp.wormgame;
 
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -47,9 +48,20 @@ public class Player {
         return selectedCharacter;
     }
 
-    // TODO This, and consider an iterator.
-    public Character nextCharacter() {
+    public Character nextCharacter() throws  EmptyStackException {
+
+        // Check if there is any character
+        if(characters.size() == 0) {
+            throw new EmptyStackException();
+        }
+
+        // Select the next charater and return it. Recycle if necessary.
+        int indexOfNext = characters.indexOf(selectedCharacter) + 1;
+        indexOfNext = (indexOfNext == characters.size()) ? 0 : indexOfNext;
+        selectedCharacter = characters.get(indexOfNext);
+
         return selectedCharacter;
+
     }
 
     public boolean hasCharacters() {
