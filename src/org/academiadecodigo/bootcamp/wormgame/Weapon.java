@@ -32,26 +32,22 @@ public class Weapon {
 
     }
 
-    public void fire(Vector2D position, double aim, SgfxViewport viewport) {
+    public Projectile fire(Vector2D position, double aim, SgfxViewport viewport) {
 
         SgfxProjectileType tiro = new SgfxProjectileType(weapon1.getBullet(), position, viewport);
         tiro.setVelocity(new Vector2D(100.0, 0.0));
 
-        //Projectile projectile = new Projectile(weapon1.getBullet(), weapon1.getShotSpeed());
-
-        //projectile.setVelocity(weapon1.getShotSpeed());
-
         if (ammo > 0) {
 
             ammo--;
-
         }
 
         if (ammo <= 0) {
 
             System.out.println("No ammo left...");
-
         }
+
+        return tiro;
 
     }
 
@@ -60,5 +56,4 @@ public class Weapon {
         return weapon1;
 
     }
-
 }
