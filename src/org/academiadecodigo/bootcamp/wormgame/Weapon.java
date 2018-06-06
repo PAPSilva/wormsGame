@@ -7,16 +7,16 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 /**
  * Created by codecadet on 03/06/2018.
  */
-public class Weapon {
+public class Weapon implements Fireable {
 
     private int ammo;
-    private WeaponType weapon1;
-    private SgfxViewport viewport;
+
+    private WeaponType weapon;
 
     public Weapon(WeaponType weapon) {
 
         this.ammo = weapon.getAmmo();
-        weapon1 = weapon;
+        this.weapon = weapon;
 
     }
 
@@ -28,32 +28,34 @@ public class Weapon {
 
     public void addAmmo(int munitions) {
 
-        ammo = ammo + munitions;
+        ammo += munitions;
 
     }
 
-    public Projectile fire(Vector2D position, double aim, SgfxViewport viewport) {
-
-        SgfxProjectileType tiro = new SgfxProjectileType(weapon1.getBullet(), position, viewport);
-        tiro.setVelocity(new Vector2D(100.0, 0.0));
+    @Override
+    public void fire(Vector2D position, double aim) {
 
         if (ammo > 0) {
+
+            Vector2D muzzle = new Vector2D(1.0, 0.0);
+            muzzle.multiply(weapon.getBarrelLength());
+            muzzle.rotate(aim);
+            muzzle.add(position);
+            Projectile projectile = new Projectile(weapon.getBullet(), muzzle);
+            projectile.setVelocity(weapon.getShotSpeed());
 
             ammo--;
         }
 
         if (ammo <= 0) {
-
             System.out.println("No ammo left...");
         }
-
-        return tiro;
 
     }
 
     public WeaponType getWeapon(){
 
-        return weapon1;
+        return weapon;
 
     }
 }

@@ -4,7 +4,7 @@ import org.academiadecodigo.bootcamp.physics2D.Body2D.CircularBody2D;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 
-public class SgfxCircularBody2D extends CircularBody2D {
+public class SgfxCircularBody2D extends CircularBody2D implements Drawable {
 
     private Ellipse circle;
     private SgfxViewport viewport;
@@ -22,8 +22,7 @@ public class SgfxCircularBody2D extends CircularBody2D {
         topLeftCorner.add(-radius, radius);
         Vector2D viewCoord = viewport.toViewportCoordinates(topLeftCorner);
         circle = new Ellipse( viewCoord.x(), viewCoord.y(), 2.0 * radius, 2.0 *  radius);
-        circle.draw();
-        System.out.println(viewCoord);
+        draw();
     }
 
     // Behavior
@@ -35,6 +34,16 @@ public class SgfxCircularBody2D extends CircularBody2D {
         super.updatePosition(dt);
         Vector2D newCoord = viewport.toViewportCoordinates(getPosition());
         circle.translate(newCoord.x() - oldCoord.x(), newCoord.y() - oldCoord.y());
+    }
+
+    @Override
+    public void draw() {
+        circle.draw();
+    }
+
+    @Override
+    public void delete() {
+        circle.delete();
     }
 
     // Getters and setters

@@ -26,27 +26,28 @@ public class WeaponsTest {
 
 
         //Projectile projectile = new Projectile(ProjectileType.ROCKET, new Vector2D(rectangle.getX(), rectangle.getY()));
-        SgfxCharacter character = new SgfxCharacter(new Vector2D(20,20), testField);
+        //SgfxCharacter character = new SgfxCharacter(new Vector2D(20,20), testField);
 
-        character.initKeyboard();
+        //character.initKeyboard();
 
 
         //Weapon weapon = new Weapon(WeaponType.SNIPER);
         //System.out.println("You got a " + weapon.getWeapon());
         //System.out.println("You start with " + weapon.getAmmo() + " bullets.");
 
-        //character.fire();
-        //System.out.println("The weapon is firing! BOOOM!");
-        //System.out.println("Ammo left: " + weapon.getAmmo());
-        //weapon.addAmmo(4);
-        //System.out.println("Ammo updated! Now you have " + weapon.getAmmo() + " bullets.");
-        //weapon.fire(weapon);
-        //System.out.println("The weapon is firing! BOOOM!");
-        //System.out.println("Ammo left: " + weapon.getAmmo());
-        //weapon.fire(weapon);
-        //System.out.println("The weapon is firing! BOOOM!");
-        //System.out.println("Ammo left: " + weapon.getAmmo());
 
+        /*weapon.fire();
+        System.out.println("The weapon is firing! BOOOM!");
+        System.out.println("Ammo left: " + weapon.getAmmo());
+        weapon.addAmmo(4);
+        System.out.println("Ammo updated! Now you have " + weapon.getAmmo() + " bullets.");
+        weapon.fire();
+        System.out.println("The weapon is firing! BOOOM!");
+        System.out.println("Ammo left: " + weapon.getAmmo());
+        weapon.fire();
+        System.out.println("The weapon is firing! BOOOM!");
+        System.out.println("Ammo left: " + weapon.getAmmo());
+*/
     }
 
 }

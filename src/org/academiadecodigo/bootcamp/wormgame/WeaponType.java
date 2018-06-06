@@ -42,4 +42,10 @@ public enum WeaponType {
 
     }
 
+    public double getBarrelLength() {
+
+        return barrelLength;
+
+    }
+
 }

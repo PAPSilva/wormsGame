@@ -1,6 +1,6 @@
 package org.academiadecodigo.bootcamp.wormgame;
 
-import org.academiadecodigo.bootcamp.gfx.SgfxCircularBody2D;
+import org.academiadecodigo.bootcamp.gfx.SgfxCharacter;
 import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 
@@ -15,13 +15,11 @@ public class TestCharacter {
         simWindow.show();
 
 
-        SgfxCharacter sgfxCharacter = new SgfxCharacter(new Vector2D(100,30), simWindow);
+        SgfxCharacter sgfxCharacter = new SgfxCharacter(30,20, new Vector2D(100,30),100, simWindow);
 
         Character character = (Character) sgfxCharacter;
 
         sgfxCharacter.initKeyboard();
-
-
 
 
     }
