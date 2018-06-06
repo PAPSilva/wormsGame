@@ -113,27 +113,25 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
         // Deal with event
         switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_LEFT:
-                this.setVelocity(new Vector2D(-10, 0));
-                this.updatePosition(1.0);
+                changeMomentum(new Vector2D(-1000.0,0.0));
                 break;
             case KeyboardEvent.KEY_RIGHT:
-                this.setVelocity(new Vector2D(10, 0));
-                this.updatePosition(1.0);
+                changeMomentum(new Vector2D(1000.0,0.0));
                 break;
             case KeyboardEvent.KEY_UP:
-                this.changeAim(5);
+                changeAim(0.087);
                 break;
             case KeyboardEvent.KEY_DOWN:
-                this.changeAim(-5);
+                changeAim(-0.087);
                 break;
             case KeyboardEvent.KEY_M:
-                this.changeMomentum(new Vector2D(10, 20));
+                changeMomentum(new Vector2D(0.0, 10000.0));
                 break;
             case KeyboardEvent.KEY_SPACE:
-                this.fire();
+                fire();
                 break;
             case KeyboardEvent.KEY_N:
-                //this.changeWeapon();
+                //changeWeapon();
                 break;
         }
 
@@ -144,14 +142,19 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
 
-        switch (keyboardEvent.getKey()) {
-            case KeyboardEvent.KEY_LEFT:
-                this.setVelocity(new Vector2D(0, 0));
-                break;
-            case KeyboardEvent.KEY_RIGHT:
-                this.setVelocity(new Vector2D(0, 0));
-                break;
+        // Move only when active
+        if(!active) {
+            return;
         }
+
+//        switch (keyboardEvent.getKey()) {
+//            case KeyboardEvent.KEY_LEFT:
+//                this.setVelocity(new Vector2D(0, 0));
+//                break;
+//            case KeyboardEvent.KEY_RIGHT:
+//                this.setVelocity(new Vector2D(0, 0));
+//                break;
+//        }
 
     }
 

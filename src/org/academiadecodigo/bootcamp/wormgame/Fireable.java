@@ -7,6 +7,6 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
  */
 public interface Fireable {
 
-    void fire(Vector2D position, double aim);
+    Projectile fire(Vector2D position, double aim);
 
 }

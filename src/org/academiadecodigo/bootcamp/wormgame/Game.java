@@ -27,13 +27,21 @@ public class Game {
 
         // Start system
         Body2DCollider collider = new Body2DCollider(1.0E-8);
-        Vector2D gravity = new Vector2D(0.0,-98.0);
+        Vector2D gravity = new Vector2D(0.0,-980.0);
         system = new Body2DSystem(10, gravity, collider);
 
         // Initialize scenario
+        // Floor
         SgfxRectangularBody2D floor = new SgfxRectangularBody2D(20.0, 640.0, 15.0, new Vector2D(320.0, 7.5), simWindow);
         floor.toggleMovable();
         system.add(floor);
+        // Walls
+        SgfxRectangularBody2D wall1 = new SgfxRectangularBody2D(20.0, 1.0, 200.0, new Vector2D(642.5, 100.0), simWindow);
+        wall1.toggleMovable();
+        system.add(wall1);
+        SgfxRectangularBody2D wall2 = new SgfxRectangularBody2D(20.0, 1.0, 105.0, new Vector2D(5.0, 25.0), simWindow);
+        wall2.toggleMovable();
+        system.add(wall2);
 
 
         // Initialize players TODO (and fireables)

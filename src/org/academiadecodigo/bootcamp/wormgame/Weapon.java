@@ -1,7 +1,5 @@
 package org.academiadecodigo.bootcamp.wormgame;
 
-import org.academiadecodigo.bootcamp.gfx.SgfxProjectileType;
-import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 
 /**
@@ -33,7 +31,7 @@ public class Weapon implements Fireable {
     }
 
     @Override
-    public void fire(Vector2D position, double aim) {
+    public Projectile fire(Vector2D position, double aim) {
 
         if (ammo > 0) {
 
@@ -43,14 +41,12 @@ public class Weapon implements Fireable {
             muzzle.add(position);
             Projectile projectile = new Projectile(weapon.getBullet(), muzzle);
             projectile.setVelocity(weapon.getShotSpeed());
-
             ammo--;
-        }
+            return projectile;
 
-        if (ammo <= 0) {
-            System.out.println("No ammo left...");
         }
-
+        //TODO needs to be doublechecked if the null is right
+        return null;
     }
 
     public WeaponType getWeapon(){

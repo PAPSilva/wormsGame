@@ -55,7 +55,7 @@ public class Player {
             throw new EmptyStackException();
         }
 
-        // Select the next charater and return it. Recycle if necessary.
+        // Select the next character and return it. Recycle if necessary.
         int indexOfNext = characters.indexOf(selectedCharacter) + 1;
         indexOfNext = (indexOfNext == characters.size()) ? 0 : indexOfNext;
         selectedCharacter = characters.get(indexOfNext);
