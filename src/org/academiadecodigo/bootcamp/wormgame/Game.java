@@ -1,5 +1,6 @@
 package org.academiadecodigo.bootcamp.wormgame;
 
+import org.academiadecodigo.bootcamp.gfx.SgfxProjectile;
 import org.academiadecodigo.bootcamp.gfx.SgfxRectangularBody2D;
 import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
 import org.academiadecodigo.bootcamp.physics2D.Body2DSystem;
@@ -238,7 +239,13 @@ public class Game implements KeyboardHandler {
                 selectedCharacter.changeMomentum(new Vector2D(0.0, 10000.0));
                 break;
             case KeyboardEvent.KEY_SPACE:
-                selectedCharacter.fire();
+                Projectile projectile = selectedCharacter.fire();
+                if(projectile==null) {
+                    break;
+                }
+                SgfxProjectile sgfxProjectile = new SgfxProjectile(projectile, simWindow);
+                sgfxProjectile.setVelocity(projectile.getVelocity());
+                system.add(sgfxProjectile);
                 break;
             case KeyboardEvent.KEY_N:
                 //selectedCharacter.changeWeapon();

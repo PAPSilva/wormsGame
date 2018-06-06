@@ -36,15 +36,19 @@ public class Weapon implements Fireable {
         if (ammo > 0) {
 
             Vector2D muzzle = new Vector2D(1.0, 0.0);
-            muzzle.multiply(weapon.getBarrelLength());
             muzzle.rotate(aim);
+            Vector2D outVelocity = new Vector2D(muzzle);
+            muzzle.multiply(weapon.getBarrelLength());
             muzzle.add(position);
+            outVelocity.multiply(weapon.getShotSpeed());
+            System.out.println(muzzle + " " + outVelocity);
             Projectile projectile = new Projectile(weapon.getBullet(), muzzle);
-            projectile.setVelocity(weapon.getShotSpeed());
+            projectile.setVelocity(outVelocity);
             ammo--;
             return projectile;
 
         }
+        System.out.println("Ammo out");
         //TODO needs to be doublechecked if the null is right
         return null;
     }

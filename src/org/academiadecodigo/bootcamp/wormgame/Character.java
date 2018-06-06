@@ -16,9 +16,8 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
 
     public Character(double mass, double radius, Vector2D position, int health) {
 
-
         super(mass,radius, position);
-        this.currentWeapon = new Weapon(WeaponType.BAZOOKA);
+        this.currentWeapon = new Weapon(WeaponType.SNIPER);
         this.health = health;
         this.aim = 0;
 
@@ -31,7 +30,6 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
 
     }
 
-
     // for now, receives a double that can be positive or negative. it can increase or decrease aim.
     public void changeAim(double angle) {
 
@@ -39,11 +37,10 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
 
     }
 
+    @Override
+    public Projectile fire() {
 
-
-    public void fire() {
-
-        currentWeapon.fire(getPosition(), aim);
+        return currentWeapon.fire(getPosition(), aim);
 
     }
 
