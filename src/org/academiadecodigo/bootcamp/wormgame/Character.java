@@ -17,7 +17,7 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
     public Character(double mass, double radius, Vector2D position, int health) {
 
         super(mass,radius, position);
-        this.currentWeapon = new Weapon(WeaponType.SNIPER);
+        this.currentWeapon = new Weapon(WeaponType.BAZOOKA);
         this.health = health;
         this.aim = 0;
 
@@ -48,9 +48,6 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
     public void changeWeapon(Fireable weapon) {
 
         this.currentWeapon = weapon;
-
-
-        //currentWeapon.fire(); // this doesn't seem ok
 
     }
 
