@@ -10,7 +10,7 @@ public abstract class AbstractBody2D implements Body2D {
     private boolean movable;
     private Vector2D velocity;
     private boolean gravitable;
-    private double restitution = 1.0; // Bounciness
+    private double restitution = 1.0; // Bounciness [0,1]
     private double staticFrictionCoeff;
     private double kineticFrictionCoeff;
 
@@ -76,7 +76,7 @@ public abstract class AbstractBody2D implements Body2D {
         impulse.multiply( 1.0 / mass);
         velocity.add(impulse);
         // TODO ensure this is here
-        applyForce(new Vector2D(0.0, 0.0), 1.0);
+        //applyForce(impulse, 1.0);
     }
 
     @Override
