@@ -1,8 +1,8 @@
 package org.academiadecodigo.bootcamp.wormgame;
 
-import org.academiadecodigo.bootcamp.gfx.SgfxCircularBody2D;
 import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
+import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -13,18 +13,38 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
  */
 public class SgfxCharacter extends Character implements KeyboardHandler {
 
-    private SgfxCircularBody2D circle;
+    private Ellipse circle;
+    private SgfxViewport viewport;
+    private boolean active = false;
 
-    private int mass = 20;
-    private int radius = 20;
+    // Constructor
 
-    public SgfxCharacter(Vector2D position, SgfxViewport viewport) {
-
-        super(position);
-        circle = new SgfxCircularBody2D(mass, radius, position.x(), position.y(), viewport);
-
+    public SgfxCharacter(double mass, double radius, double x, double y, int health, SgfxViewport viewport) {
+        this(mass, radius, new Vector2D(x, y), health, viewport);
     }
 
+    public SgfxCharacter(double mass, double radius, Vector2D position, int health, SgfxViewport viewport) {
+        super(mass, radius, position, health);
+        this.viewport = viewport;
+        Vector2D topLeftCorner = new Vector2D(position);
+        topLeftCorner.add(-radius, radius);
+        Vector2D viewCoord = viewport.toViewportCoordinates(topLeftCorner);
+        circle = new Ellipse( viewCoord.x(), viewCoord.y(), 2.0 * radius, 2.0 *  radius);
+        circle.draw();
+        System.out.println(viewCoord);
+        initKeyboard();
+    }
+
+    // Behavior
+
+    @Override
+    public void updatePosition(double dt) {
+        // TODO errors might accumulate from double to integer. Check if they do
+        Vector2D oldCoord = viewport.toViewportCoordinates(getPosition());
+        super.updatePosition(dt);
+        Vector2D newCoord = viewport.toViewportCoordinates(getPosition());
+        circle.translate(newCoord.x() - oldCoord.x(), newCoord.y() - oldCoord.y());
+    }
 
     public void initKeyboard() {
 
@@ -71,6 +91,11 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
         fire.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(fire);
 
+        KeyboardEvent changeWeapon = new KeyboardEvent();
+        changeWeapon.setKey(KeyboardEvent.KEY_N);
+        changeWeapon.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(changeWeapon);
+
     }
 
 
@@ -78,14 +103,20 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
 
+        // Move only when active
+        if(!active) {
+            return;
+        }
+
+        // Deal with event
         switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_LEFT:
-                circle.setVelocity(new Vector2D(-20, 0));
-                circle.updatePosition(1.0);
+                this.setVelocity(new Vector2D(-10, 0));
+                this.updatePosition(1.0);
                 break;
             case KeyboardEvent.KEY_RIGHT:
-                circle.setVelocity(new Vector2D(20, 0));
-                circle.updatePosition(1.0);
+                this.setVelocity(new Vector2D(10, 0));
+                this.updatePosition(1.0);
                 break;
             case KeyboardEvent.KEY_UP:
                 this.changeAim(5);
@@ -94,10 +125,13 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
                 this.changeAim(-5);
                 break;
             case KeyboardEvent.KEY_M:
-                circle.changeMomentum(new Vector2D(10, 20));
+                this.changeMomentum(new Vector2D(10, 20));
                 break;
             case KeyboardEvent.KEY_SPACE:
                 this.fire();
+                break;
+            case KeyboardEvent.KEY_N:
+                //this.changeWeapon();
                 break;
         }
 
@@ -110,13 +144,21 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
 
         switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_LEFT:
-                circle.setVelocity(new Vector2D(0, 0));
+                this.setVelocity(new Vector2D(0, 0));
                 break;
             case KeyboardEvent.KEY_RIGHT:
-                circle.setVelocity(new Vector2D(0, 0));
+                this.setVelocity(new Vector2D(0, 0));
                 break;
         }
 
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void toogleActive() {
+        active = !active;
     }
 
 }
