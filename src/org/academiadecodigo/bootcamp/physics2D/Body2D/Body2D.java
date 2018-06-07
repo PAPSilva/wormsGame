@@ -28,6 +28,10 @@ public interface Body2D {
 
     void updatePosition(double dt);
 
+    void translate(Vector2D displacemnt);
+
+    void rotate(double angle);
+
     Vector2D getPosition();
 
     double getOrientation();

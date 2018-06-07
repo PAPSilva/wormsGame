@@ -38,7 +38,7 @@ public class TestPhysicSystem {
         rectangle1.rotate(-0.75);
         System.out.println(rectangle1.getPosition());
 
-        SgfxCircularBody2D circle4 = new SgfxCircularBody2D(20.0,20.0, new Vector2D(200.0,400.0), simWindow);
+        //SgfxCircularBody2D circle4 = new SgfxCircularBody2D(20.0,20.0, new Vector2D(200.0,400.0), simWindow);
 
         // Add bodies to system and start simulation
 
@@ -46,7 +46,7 @@ public class TestPhysicSystem {
         system.add(circle2);
         system.add(circle3);
         system.add(rectangle1);
-        system.add(circle4);
+        //system.add(circle4);
 
         rectangle1.toggleGravitable();
 
@@ -62,9 +62,6 @@ public class TestPhysicSystem {
             }
 
         }
-
-        System.out.println(circle1);
-        System.out.println(circle2);
 
         System.out.println("Ended!");
 

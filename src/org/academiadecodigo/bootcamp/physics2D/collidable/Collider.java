@@ -9,4 +9,6 @@ public interface Collider {
 
     Vector2D[] solveCollision(Body2D body1, Body2D body2, double dt);
 
+    void solveSinking(Body2D body1, Body2D body2);
+
 }

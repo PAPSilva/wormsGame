@@ -18,10 +18,8 @@ public class SgfxCircularBody2D extends CircularBody2D implements Drawable {
     public SgfxCircularBody2D(double mass, double radius, Vector2D position, SgfxViewport viewport) {
         super(mass, radius, position);
         this.viewport = viewport;
-        Vector2D topLeftCorner = new Vector2D(position);
-        topLeftCorner.add(-radius, radius);
-        Vector2D viewCoord = viewport.toViewportCoordinates(topLeftCorner);
-        circle = new Ellipse( viewCoord.x(), viewCoord.y(), 2.0 * radius, 2.0 *  radius);
+        Vector2D topLeftCorner = topLeftCorner();
+        circle = new Ellipse( topLeftCorner.x(), topLeftCorner.y(), 2.0 * radius, 2.0 *  radius);
         draw();
     }
 
@@ -29,11 +27,28 @@ public class SgfxCircularBody2D extends CircularBody2D implements Drawable {
 
     @Override
     public void updatePosition(double dt) {
-        // TODO errors might accumulate from double to integer. Check if they do
-        Vector2D oldCoord = viewport.toViewportCoordinates(getPosition());
         super.updatePosition(dt);
-        Vector2D newCoord = viewport.toViewportCoordinates(getPosition());
+        updateShape();
+    }
+
+    @Override
+    public void translate(Vector2D displacement) {
+        super.translate(displacement);
+        updateShape();
+    }
+
+    private void updateShape() {
+        Vector2D oldCoord = new Vector2D(circle.getX(), circle.getY());
+        Vector2D newCoord = topLeftCorner();
         circle.translate(newCoord.x() - oldCoord.x(), newCoord.y() - oldCoord.y());
+    }
+
+    private Vector2D topLeftCorner() {
+
+        Vector2D topLeftCorner = getPosition();
+        topLeftCorner.add(-getRadius(), getRadius());
+        Vector2D viewCoord = viewport.toViewportCoordinates(topLeftCorner);
+        return viewCoord;
     }
 
     @Override

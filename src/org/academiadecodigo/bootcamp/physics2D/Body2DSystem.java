@@ -1,6 +1,7 @@
 package org.academiadecodigo.bootcamp.physics2D;
 
 import org.academiadecodigo.bootcamp.physics2D.Body2D.Body2D;
+import org.academiadecodigo.bootcamp.physics2D.Body2D.CircularBody2D;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Collider;
 
@@ -66,6 +67,11 @@ public class Body2DSystem implements PhysicSystem {
 
     private void update(double dt) {
 
+        // Deal with sinking effect
+        for(int i=0; i < bodies.length; i++) {
+            avoidSinking(i);
+        }
+
          // Check forces interacting with each body
         Vector2D[] force = new Vector2D[length];
         for(int i=0; i < length; i++) {
@@ -120,6 +126,14 @@ public class Body2DSystem implements PhysicSystem {
         }
 
         return force;
+
+    }
+
+    private void avoidSinking(int index) {
+
+        for(int i=index+1; i < bodies.length; i++) {
+            collider.solveSinking(bodies[index], bodies[i]);
+        }
 
     }
 
