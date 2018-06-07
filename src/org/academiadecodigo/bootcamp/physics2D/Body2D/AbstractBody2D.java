@@ -10,7 +10,7 @@ public abstract class AbstractBody2D implements Body2D {
     private boolean movable;
     private Vector2D velocity;
     private boolean gravitable;
-    private double restitution = 0.3; // Bounciness [0,1]
+    private double restitution = 1.0; // Bounciness [0,1]
     private double staticFrictionCoeff;
     private double kineticFrictionCoeff;
 
@@ -91,10 +91,7 @@ public abstract class AbstractBody2D implements Body2D {
     }
 
     public void translate(Vector2D displacement) {
-        System.out.println("Position before " + position);
-        System.out.println("Displacement    " + displacement);
         position.add(displacement);
-        System.out.println("Position after  " + position);
     }
 
     // Getters and setters
