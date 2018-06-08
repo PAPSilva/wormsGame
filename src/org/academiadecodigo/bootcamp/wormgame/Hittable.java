@@ -5,6 +5,6 @@ package org.academiadecodigo.bootcamp.wormgame;
  */
 public interface Hittable {
 
-    public void suffer(int sufferDamage);
+    void suffer(int sufferDamage);
 
 }

@@ -101,9 +101,6 @@ public class Body2DCollider implements Collider {
 
         }
 
-        if(penetrations==polygonCorners.length) {
-            System.out.println("COLLIDING");
-        }
         // Point is only inside if it is below all sides
         return penetrations == polygonCorners.length;
 
@@ -213,7 +210,6 @@ public class Body2DCollider implements Collider {
 
     private Vector2D[] solveCircleRectangleCollision(CircularBody2D circle, RectangularBody2D rectangle, double dt, boolean returnCircleFirst) {
 
-        System.out.println("COLIDING!");
         // Get masses
         double mass1 = circle.isMovable() ? circle.getMass() : INFINIY;
         double mass2 = rectangle.isMovable() ? rectangle.getMass() : INFINIY;

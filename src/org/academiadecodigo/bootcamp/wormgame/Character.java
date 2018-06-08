@@ -11,15 +11,16 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 public class Character extends CircularBody2D implements Hittable, Shooter {
 
     private int health;
+    private int minDamage;
     private double aim;
     Fireable currentWeapon;
 
-    public Character(double mass, double radius, Vector2D position, int health) {
-
+    public Character(double mass, double radius, Vector2D position, int health, int minDamage) {
 
         super(mass,radius, position);
         this.currentWeapon = new Weapon(WeaponType.BAZOOKA);
         this.health = health;
+        this.minDamage = minDamage;
         this.aim = 0;
 
     }
@@ -31,7 +32,6 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
 
     }
 
-
     // for now, receives a double that can be positive or negative. it can increase or decrease aim.
     public void changeAim(double angle) {
 
@@ -39,11 +39,10 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
 
     }
 
+    @Override
+    public Projectile fire() {
 
-
-    public void fire() {
-
-        currentWeapon.fire(getPosition(), aim);
+        return currentWeapon.fire(getPosition(), aim);
 
     }
 
@@ -52,15 +51,17 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
 
         this.currentWeapon = weapon;
 
-
-        //currentWeapon.fire(); // this doesn't seem ok
-
     }
 
     @Override
     public void suffer(int sufferDamage){
 
-        health -= sufferDamage;
+        int damage = sufferDamage - minDamage;
+        System.out.println("damage: " + damage + "? health: " + health );
+        if(damage > 0 && health > 0) {
+            health -= (damage < health) ? damage : health;
+            System.out.println("Ouch!");
+        }
 
     }
 
