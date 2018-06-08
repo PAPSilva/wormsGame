@@ -17,7 +17,7 @@ public class Game {
     private Player player1;
     private Player player2;
     private SgfxViewport simWindow;
-    private Body2DSystem system;
+    private WormSystem system;
 
     private static final double DELTA_TIME = 0.001;
     private static final int FRAMERATE = 30; // TODO implement this
@@ -30,7 +30,7 @@ public class Game {
         // Start system
         Body2DCollider collider = new Body2DCollider(1.0E-8);
         Vector2D gravity = new Vector2D(0.0,-98.0);
-        system = new Body2DSystem(10, gravity, collider);
+        system = new WormSystem(10, gravity, collider);
 
         // Initialize scenario
         SgfxRectangularBody2D floor = new SgfxRectangularBody2D(20.0, 640.0, 15.0, new Vector2D(320.0, 7.5), simWindow);

@@ -66,8 +66,7 @@ public abstract class AbstractBody2D implements Body2D {
         // Calculate impulse
         Vector2D impulse = new Vector2D(
                 mass * (newVelocity.x() - velocity.x()),
-                mass * (newVelocity.y() - velocity.y())
-        );
+                mass * (newVelocity.y() - velocity.y()));
         return impulse;
     }
 
