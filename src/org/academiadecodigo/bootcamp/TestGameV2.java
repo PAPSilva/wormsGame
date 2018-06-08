@@ -148,7 +148,7 @@ public class TestGameV2 {
         Character[] characters = new Character[numOfChars];
 
         for (Character character : characters) {
-            character = new Character(30, 40, new Vector2D(100, 30), 100);
+            character = new Character(30, 40, new Vector2D(100, 30), 100, 1);
         }
 
         return characters;

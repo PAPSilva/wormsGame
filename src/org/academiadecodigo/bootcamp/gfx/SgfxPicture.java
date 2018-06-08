@@ -22,7 +22,7 @@ public class SgfxPicture extends Character implements Drawable, KeyboardHandler 
     }
 
     public SgfxPicture(double mass, double radius, Vector2D position, int health, SgfxViewport viewport) {
-        super(mass, radius, position, health);
+        super(mass, radius, position, health, 1);
 
         this.viewport = viewport;
         Vector2D topLeftCorner = new Vector2D(position);

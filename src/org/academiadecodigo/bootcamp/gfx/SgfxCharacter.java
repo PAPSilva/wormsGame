@@ -10,7 +10,6 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
  */
 public class SgfxCharacter extends Character {
 
-    private Ellipse circle;
     private Picture picture;
     private SgfxViewport viewport;
     private boolean active = false;
@@ -28,9 +27,7 @@ public class SgfxCharacter extends Character {
         Vector2D topLeftCorner = new Vector2D(position);
         topLeftCorner.add(-radius, radius);
         Vector2D viewCoord = viewport.toViewportCoordinates(topLeftCorner);
-        circle = new Ellipse( viewCoord.x(), viewCoord.y(), 2.0 * radius, 2.0 *  radius);
-        circle.draw();
-        picture = new Picture(viewCoord.x(),viewCoord.y(),"redball.png");
+        picture = new Picture(viewCoord.x(),viewCoord.y(),"cowboys.png");
         double growdx = picture.getWidth()*0.5 - radius;
         double growdy = picture.getHeight()*0.5 - radius;
         System.out.println(picture.getWidth() + " " + growdx);
