@@ -4,7 +4,8 @@ import org.academiadecodigo.bootcamp.gfx.SgfxProjectile;
 import org.academiadecodigo.bootcamp.gfx.SgfxRectangularBody2D;
 import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
 import org.academiadecodigo.bootcamp.physics2D.Body2DSystem;
-import org.academiadecodigo.bootcamp.physics2D.collidable.Body2DCollider;
+import org.academiadecodigo.bootcamp.physics2D.PhysicSystem;
+import org.academiadecodigo.bootcamp.physics2D.collidable.Collider;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.gfx.SgfxCharacter;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
@@ -20,7 +21,7 @@ public class Game implements KeyboardHandler {
     private Player player1;
     private Player player2;
     private SgfxViewport simWindow;
-    private Body2DSystem system;
+    private PhysicSystem system;
     private SgfxCharacter selectedCharacter;
 
     private static final double DELTA_TIME = 0.001;
@@ -32,7 +33,7 @@ public class Game implements KeyboardHandler {
         simWindow = new SgfxViewport(640,400, 1.0);
 
         // Start system
-        Body2DCollider collider = new Body2DCollider(1.0E-8);
+        Collider collider = new WormCollider(1.0E-8);
         Vector2D gravity = new Vector2D(0.0,-980.0);
         system = new Body2DSystem(10, gravity, collider);
 
@@ -71,16 +72,6 @@ public class Game implements KeyboardHandler {
         }
 
     }
-
-
-    /*
-
-    ===>>>> player.addMovable <<<<=====
-    implementar collider
-
-    end of game
-
-     */
 
     public void start() {
 
@@ -141,7 +132,7 @@ public class Game implements KeyboardHandler {
     // To substitute the createCharacters.
     private Character createCharacter(){
 
-        return new SgfxCharacter(30, 20, new Vector2D(Math.random()*400,50), 100, simWindow);
+        return new SgfxCharacter(30, 20, new Vector2D(Math.random()*400,50), 100, 1, simWindow);
 
     }
 
@@ -152,7 +143,7 @@ public class Game implements KeyboardHandler {
         Character[] characters = new Character[numOfChars];
 
         for(Character character : characters) {
-            character = new Character(30, 20, new Vector2D(100,30), 100);
+            character = new Character(30, 20, new Vector2D(100,30), 100, 1);
         }
 
         return characters;

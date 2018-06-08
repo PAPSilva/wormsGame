@@ -17,12 +17,12 @@ public class SgfxCharacter extends Character {
 
     // Constructor
 
-    public SgfxCharacter(double mass, double radius, double x, double y, int health, SgfxViewport viewport) {
-        this(mass, radius, new Vector2D(x, y), health, viewport);
+    public SgfxCharacter(double mass, double radius, double x, double y, int health, int minDamage, SgfxViewport viewport) {
+        this(mass, radius, new Vector2D(x, y), health, minDamage, viewport);
     }
 
-    public SgfxCharacter(double mass, double radius, Vector2D position, int health, SgfxViewport viewport) {
-        super(mass, radius, position, health);
+    public SgfxCharacter(double mass, double radius, Vector2D position, int health, int minDamage, SgfxViewport viewport) {
+        super(mass, radius, position, health, minDamage);
         this.viewport = viewport;
         Vector2D topLeftCorner = new Vector2D(position);
         topLeftCorner.add(-radius, radius);

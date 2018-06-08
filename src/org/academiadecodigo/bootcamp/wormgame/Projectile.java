@@ -6,7 +6,7 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 /**
  * Created by codecadet on 03/06/2018.
  */
-public class Projectile extends CircularBody2D {
+public class Projectile extends CircularBody2D implements PainGiver {
 
 
     private ProjectileType projectileType;
@@ -27,4 +27,9 @@ public class Projectile extends CircularBody2D {
     public ProjectileType getProjectileType() {
         return projectileType;
     }
+
+    public int getDamage() {
+        return projectileType.getAmmoDamage();
+    }
+
 }

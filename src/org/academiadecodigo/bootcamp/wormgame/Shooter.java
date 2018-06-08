@@ -5,6 +5,6 @@ package org.academiadecodigo.bootcamp.wormgame;
  */
 public interface Shooter {
 
-    Projectile fire();
+    PainGiver fire();
 
 }
