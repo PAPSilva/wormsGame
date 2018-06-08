@@ -2,19 +2,18 @@ package org.academiadecodigo.bootcamp.gfx;
 
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.wormgame.Character;
-import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 /**
  * Created by codecadet on 04/06/2018.
  */
-public class SgfxCharacter extends Character {
+public class SgfxCharacter extends Character implements Drawable{
 
     private Picture picture;
     private SgfxViewport viewport;
     private boolean active = false;
     private Picture aim = new Picture(0.0,0.0,"crosshair.png");
-    private final double MUZZLE = 30.0;
+    private final double MUZZLE = 40.0;
 
     // Constructor
 
@@ -25,10 +24,11 @@ public class SgfxCharacter extends Character {
     public SgfxCharacter(double mass, double radius, Vector2D position, int health, int minDamage, SgfxViewport viewport) {
         super(mass, radius, position, health, minDamage);
         this.viewport = viewport;
+
         Vector2D topLeftCorner = new Vector2D(position);
         topLeftCorner.add(-radius, radius);
         Vector2D viewCoord = viewport.toViewportCoordinates(topLeftCorner);
-        picture = new Picture(viewCoord.x(),viewCoord.y(),"redball.png");
+        picture = new Picture(viewCoord.x(),viewCoord.y(),"soldado.png");
         double growdx = picture.getWidth()*0.5 - radius;
         double growdy = picture.getHeight()*0.5 - radius;
         System.out.println(picture.getWidth() + " " + growdx);
@@ -43,11 +43,8 @@ public class SgfxCharacter extends Character {
     @Override
     public void updatePosition(double dt) {
         // TODO errors might accumulate from double to integer. Check if they do
-        Vector2D oldCoord = viewport.toViewportCoordinates(getPosition());
         super.updatePosition(dt);
-        Vector2D newCoord = viewport.toViewportCoordinates(getPosition());
-        //circle.translate(newCoord.x() - oldCoord.x(), newCoord.y() - oldCoord.y());
-        picture.translate(newCoord.x() - oldCoord.x(), newCoord.y() - oldCoord.y());
+        updateShape();
         updateAim();
     }
 
@@ -68,6 +65,17 @@ public class SgfxCharacter extends Character {
 
     }
 
+    private void updateShape() {
+
+        Vector2D topLeftCorner = new Vector2D(getPosition());
+        topLeftCorner.add(-getRadius(), getRadius());
+        Vector2D viewCoord = viewport.toViewportCoordinates(topLeftCorner);
+        viewCoord.subtract(new Vector2D(picture.getX(), picture.getY()));
+        picture.translate(viewCoord.x(), viewCoord.y());
+
+    }
+
+
     public boolean isActive() {
         return active;
     }
@@ -84,4 +92,13 @@ public class SgfxCharacter extends Character {
 
     }
 
+    @Override
+    public void draw() {
+
+    }
+
+    @Override
+    public void delete() {
+
+    }
 }
