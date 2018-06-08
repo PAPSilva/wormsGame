@@ -1,5 +1,6 @@
 package org.academiadecodigo.bootcamp.wormgame;
 
+
 /**
  * Created by codecadet on 05/06/2018.
  */
@@ -11,6 +12,8 @@ public class TestGame {
 
         game.init(1);
         game.start();
+
+
 
         System.out.println("GAMEOVER");
     }

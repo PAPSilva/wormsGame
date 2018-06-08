@@ -14,26 +14,22 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
     private int minDamage;
     private double aim;
     Fireable currentWeapon;
-    private boolean active;
+    private boolean active = false;
 
     public Character(double mass, double radius, Vector2D position, int health, int minDamage) {
 
         super(mass,radius, position);
-        this.currentWeapon = new Weapon(WeaponType.BAZOOKA);
+        this.currentWeapon = new Weapon(WeaponType.SNIPER);
         this.health = health;
         this.minDamage = minDamage;
         this.aim = 0;
 
     }
 
-
     public void move(double x, double y) {
-
         this.getPosition().add(x, y);
-
     }
 
-    // for now, receives a double that can be positive or negative. it can increase or decrease aim.
     public void changeAim(double angle) {
         this.aim += angle;
     }
@@ -66,9 +62,7 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
     }
 
     public Vector2D getPosition() {
-
         return super.getPosition();
-
     }
 
     @Override
@@ -79,4 +73,10 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
     public void toggleActive() {
         active = !active;
     }
+
+    @Override
+    public double getAim() {
+        return aim;
+    }
+
 }

@@ -70,7 +70,7 @@ public class Game implements KeyboardHandler {
             player1.addCharacter(randomCharacter);
             system.add(randomCharacter);
 
-            // PLayer 2
+            // Player 2
             randomCharacter = createCharacter();
             player2.addCharacter(randomCharacter);
             system.add(randomCharacter);
@@ -89,22 +89,26 @@ public class Game implements KeyboardHandler {
         boolean allMoved = true;
         initKeyboard();
 
+        if(selectedCharacter.isActive()) System.out.println("I was active!");
+
         if(!selectedCharacter.isActive()) {
             selectedCharacter.toggleActive();
         }
+
+        if(selectedCharacter.isActive()) System.out.println("I'm active!");
 
         while (!gameover) {
 
             allMoved = update();
 
             try {
-                Thread.sleep( 2 );
+                Thread.sleep( 1 );
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
 
             // Change player if turn ended
-            checkTurnEnd(allMoved);
+            //checkTurnEnd(allMoved);
 
             // TODO check other conditions for end of game
             if(!activePlayer.hasCharacters() || !activePlayer.hasCharacters()) {

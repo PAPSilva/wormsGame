@@ -12,9 +12,4 @@ public interface Drawable {
      */
     void delete();
 
-    /**
-     * Removes
-     */
-    void remove();
-
 }

@@ -6,12 +6,11 @@ package org.academiadecodigo.bootcamp.wormgame;
 public enum ProjectileType {
 
     BULLET(2, 2, 5),
-    ROCKET(20, 4, 5);
+    ROCKET(20, 10, 5);
 
-    private int ammoDamage;
     private double mass;
     private double radius;
-
+    private int ammoDamage;
 
     ProjectileType (double mass, double radius, int ammoDamage){
         this.ammoDamage = ammoDamage;
