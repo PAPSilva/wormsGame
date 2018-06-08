@@ -11,4 +11,10 @@ public interface Drawable {
      * Hides shape.
      */
     void delete();
+
+    /**
+     * Removes
+     */
+    void remove();
+
 }

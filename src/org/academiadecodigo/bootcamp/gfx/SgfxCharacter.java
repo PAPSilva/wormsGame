@@ -12,8 +12,6 @@ public class SgfxCharacter extends Character {
 
     private Ellipse circle;
     private SgfxViewport viewport;
-    private boolean active = false;
-
 
     // Constructor
 
@@ -41,15 +39,6 @@ public class SgfxCharacter extends Character {
         super.updatePosition(dt);
         Vector2D newCoord = viewport.toViewportCoordinates(getPosition());
         circle.translate(newCoord.x() - oldCoord.x(), newCoord.y() - oldCoord.y());
-    }
-
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void toogleActive() {
-        active = !active;
     }
 
 }

@@ -43,7 +43,7 @@ public class TestPainGivers {
             // Start system
             Collider collider = new WormCollider(1.0E-8);
             Vector2D gravity = new Vector2D(0.0, -980.0);
-            system = new Body2DSystem(10, gravity, collider);
+            system = new Body2DSystem(gravity, collider);
 
             // Initialize scenario
             // Floor
@@ -75,7 +75,7 @@ public class TestPainGivers {
             }
 
             selectedCharacter = (SgfxCharacter) player1.getSelectedCharacter();
-            selectedCharacter.toogleActive();
+            selectedCharacter.toggleActive();
 
         }
 

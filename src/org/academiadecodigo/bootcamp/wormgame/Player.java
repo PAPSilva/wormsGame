@@ -14,6 +14,7 @@ public class Player {
     private ArrayList<Fireable> fireables;
     private List<Character> characters = new LinkedList<>();
     private Character selectedCharacter;
+    private boolean fired = false;
 
     public Player(String name) {
 
@@ -66,6 +67,14 @@ public class Player {
 
     public boolean hasCharacters() {
         return characters.size() > 0;
+    }
+
+    public void toggleFired() {
+        fired = !fired;
+    }
+
+    public boolean fired() {
+        return fired;
     }
 
     private String getName() {

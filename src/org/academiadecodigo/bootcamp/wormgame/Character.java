@@ -8,12 +8,13 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 /**
  * Created by codecadet on 03/06/2018.
  */
-public class Character extends CircularBody2D implements Hittable, Shooter {
+public class Character extends CircularBody2D implements Hittable, Shooter, Controllable {
 
     private int health;
     private int minDamage;
     private double aim;
     Fireable currentWeapon;
+    private boolean active;
 
     public Character(double mass, double radius, Vector2D position, int health, int minDamage) {
 
@@ -34,23 +35,17 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
 
     // for now, receives a double that can be positive or negative. it can increase or decrease aim.
     public void changeAim(double angle) {
-
         this.aim += angle;
-
     }
 
     @Override
     public Projectile fire() {
-
         return currentWeapon.fire(getPosition(), aim);
-
     }
 
 
     public void changeWeapon(Fireable weapon) {
-
         this.currentWeapon = weapon;
-
     }
 
     @Override
@@ -65,13 +60,23 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
 
     }
 
+    @Override
+    public boolean isDead() {
+        return health <= 0;
+    }
+
     public Vector2D getPosition() {
 
         return super.getPosition();
 
     }
 
+    @Override
+    public boolean isActive() {
+        return active;
+    }
 
-
-
+    public void toggleActive() {
+        active = !active;
+    }
 }
