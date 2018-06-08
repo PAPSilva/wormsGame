@@ -71,7 +71,8 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
 
     }
 
-
-
-
+    @Override
+    public double getAim() {
+        return aim;
+    }
 }

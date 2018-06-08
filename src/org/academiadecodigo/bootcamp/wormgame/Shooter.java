@@ -7,4 +7,5 @@ public interface Shooter {
 
     PainGiver fire();
 
+    double getAim();
 }

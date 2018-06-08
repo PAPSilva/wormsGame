@@ -13,7 +13,8 @@ public class SgfxCharacter extends Character {
     private Picture picture;
     private SgfxViewport viewport;
     private boolean active = false;
-
+    private Picture aim = new Picture(0.0,0.0,"crosshair.png");
+    private final double MUZZLE = 30.0;
 
     // Constructor
 
@@ -27,13 +28,14 @@ public class SgfxCharacter extends Character {
         Vector2D topLeftCorner = new Vector2D(position);
         topLeftCorner.add(-radius, radius);
         Vector2D viewCoord = viewport.toViewportCoordinates(topLeftCorner);
-        picture = new Picture(viewCoord.x(),viewCoord.y(),"cowboys.png");
+        picture = new Picture(viewCoord.x(),viewCoord.y(),"redball.png");
         double growdx = picture.getWidth()*0.5 - radius;
         double growdy = picture.getHeight()*0.5 - radius;
         System.out.println(picture.getWidth() + " " + growdx);
         picture.grow(-growdx, -growdy);
         picture.translate(-growdx, -growdy);
         picture.draw();
+        updateAim();
     }
 
     // Behavior
@@ -46,15 +48,40 @@ public class SgfxCharacter extends Character {
         Vector2D newCoord = viewport.toViewportCoordinates(getPosition());
         //circle.translate(newCoord.x() - oldCoord.x(), newCoord.y() - oldCoord.y());
         picture.translate(newCoord.x() - oldCoord.x(), newCoord.y() - oldCoord.y());
+        updateAim();
     }
 
+    private void updateAim() {
+
+        if(!active) {
+            return;
+        }
+
+        Vector2D muzzle = new Vector2D(1.0, 0.0);
+        muzzle.rotate(getAim());
+        muzzle.multiply(MUZZLE);
+        muzzle.add(getPosition());
+
+        Vector2D viewCoord = viewport.toViewportCoordinates(muzzle);
+        viewCoord.subtract(new Vector2D(aim.getX(), aim.getY()));
+        aim.translate(viewCoord.x(), viewCoord.y());
+
+    }
 
     public boolean isActive() {
         return active;
     }
 
     public void toogleActive() {
+
         active = !active;
+
+        if(active) {
+            aim.draw();
+        } else {
+            aim.delete();
+        }
+
     }
 
 }
