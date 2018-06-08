@@ -23,12 +23,13 @@ public class SgfxPicture extends Character implements Drawable, KeyboardHandler 
 
     public SgfxPicture(double mass, double radius, Vector2D position, int health, SgfxViewport viewport) {
         super(mass, radius, position, health);
+
         this.viewport = viewport;
         Vector2D topLeftCorner = new Vector2D(position);
         topLeftCorner.add(-radius, radius);
         Vector2D viewCoord = viewport.toViewportCoordinates(topLeftCorner);
-        picture = new Picture(viewCoord.x(), viewCoord.y(), "lbreakout3.png");
-
+        picture = new Picture(viewCoord.x(), viewCoord.y(), "soldier.png");
+        //picture.grow(-90,-90);
         picture.draw();
         initKeyboard();
     }
@@ -42,6 +43,7 @@ public class SgfxPicture extends Character implements Drawable, KeyboardHandler 
         super.updatePosition(dt);
         Vector2D newCoord = viewport.toViewportCoordinates(getPosition());
         picture.translate(newCoord.x() - oldCoord.x(), newCoord.y() - oldCoord.y());
+
     }
 
     @Override

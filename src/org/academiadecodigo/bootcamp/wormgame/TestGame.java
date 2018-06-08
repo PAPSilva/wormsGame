@@ -9,7 +9,7 @@ public class TestGame {
 
     public static void main(String[] args) {
 
-        TestGameV2 game = new TestGameV2();
+        Game game = new Game();
 
         game.init(1);
         game.start();

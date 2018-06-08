@@ -25,7 +25,7 @@ public class TestGameV2 {
     public void init(int numOfChars) {
 
         // Start viewport
-        simWindow = new SgfxViewport(640, 400, 1.0);
+        simWindow = new SgfxViewport(800, 600, 1.0);
 
         // Start system
         Body2DCollider collider = new Body2DCollider(1.0E-8);
@@ -148,7 +148,7 @@ public class TestGameV2 {
         Character[] characters = new Character[numOfChars];
 
         for (Character character : characters) {
-            character = new Character(30, 20, new Vector2D(100, 30), 100);
+            character = new Character(30, 40, new Vector2D(100, 30), 100);
         }
 
         return characters;

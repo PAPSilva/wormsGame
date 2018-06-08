@@ -8,6 +8,7 @@ import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 /**
  * Created by codecadet on 04/06/2018.
@@ -15,6 +16,7 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 public class SgfxCharacter extends Character implements KeyboardHandler {
 
     private Ellipse circle;
+    private Picture picture;
     private SgfxViewport viewport;
     private boolean active = false;
 
@@ -33,7 +35,17 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
         Vector2D viewCoord = viewport.toViewportCoordinates(topLeftCorner);
         circle = new Ellipse( viewCoord.x(), viewCoord.y(), 2.0 * radius, 2.0 *  radius);
         circle.draw();
-        System.out.println(viewCoord);
+        picture = new Picture(viewCoord.x(),viewCoord.y(),"redball.png");
+        double growdx = picture.getWidth()*0.5 - radius;
+        double growdy = picture.getHeight()*0.5 - radius;
+        System.out.println(picture.getWidth() + " " + growdx);
+        picture.grow(-growdx, -growdy);
+        picture.translate(-growdx, -growdy);
+        picture.draw();
+        //System.out.println(picture.pixels());
+        //System.out.println(picture.getX());
+        //System.out.println(picture.getY());
+        //System.out.println(viewCoord);
         initKeyboard();
     }
 
@@ -45,7 +57,8 @@ public class SgfxCharacter extends Character implements KeyboardHandler {
         Vector2D oldCoord = viewport.toViewportCoordinates(getPosition());
         super.updatePosition(dt);
         Vector2D newCoord = viewport.toViewportCoordinates(getPosition());
-        circle.translate(newCoord.x() - oldCoord.x(), newCoord.y() - oldCoord.y());
+        //circle.translate(newCoord.x() - oldCoord.x(), newCoord.y() - oldCoord.y());
+        picture.translate(newCoord.x() - oldCoord.x(), newCoord.y() - oldCoord.y());
     }
 
     public void initKeyboard() {
