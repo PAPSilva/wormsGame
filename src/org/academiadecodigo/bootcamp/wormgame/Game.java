@@ -41,8 +41,23 @@ public class Game implements KeyboardHandler {
 
     public void openMenu() {
 
-        menu = new Menu();
-        menu.initMenu();
+        simWindow = new SgfxViewport(1000, 700, 1.0);
+        initKeyboard();
+
+        menuPic = new Picture();
+        menuPic.load("resources/menupic.png");
+        menuPic.draw();
+
+        while(!gameStarted) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+
+            }
+
+        }
+
+        init(1);
 
     }
 
@@ -57,7 +72,7 @@ public class Game implements KeyboardHandler {
         Picture background = level.getPicture();
         List<RectangularBody2D> obstacles = level.getObstacles();
         List<Vector2D> spawnSites = level.getSpawns();
-        simWindow = new SgfxViewport(background.getWidth(),background.getHeight(), 1.0);
+        //simWindow = new SgfxViewport(background.getWidth(),background.getHeight(), 1.0);
 
         // Start system
         Collider collider = new WormCollider(1.0E-8);
@@ -121,20 +136,6 @@ public class Game implements KeyboardHandler {
         simWindow.show();
         boolean gameover = false;
         boolean turnEnded = true;
-        initKeyboard();
-
-        menuPic = new Picture();
-        menuPic.load("resources/menupic.png");
-        menuPic.draw();
-
-        while(!gameStarted) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-
-            }
-
-        }
 
 
         while (!gameover) {

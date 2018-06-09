@@ -11,9 +11,9 @@ public class TestGame {
 
 
         Game game = new Game();
-        //game.openMenu();
+        game.openMenu();
 
-        game.init(1);
+        //game.init(1);
         game.start();
         //game.openMenu();
 
