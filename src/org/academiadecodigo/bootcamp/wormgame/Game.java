@@ -213,7 +213,6 @@ public class Game implements KeyboardHandler {
         if(!selectedCharacter.isActive()) {
             return;
         }
-        System.out.println(selectedCharacter.getAim());
 
         // Deal with event
         switch (keyboardEvent.getKey()) {
