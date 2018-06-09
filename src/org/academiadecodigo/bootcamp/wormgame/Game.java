@@ -259,7 +259,6 @@ public class Game implements KeyboardHandler {
         aimDown.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(aimDown);
 
-
         KeyboardEvent jump = new KeyboardEvent();
         jump.setKey(KeyboardEvent.KEY_M);
         jump.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
@@ -309,7 +308,7 @@ public class Game implements KeyboardHandler {
                 selectedCharacter.changeAim(-0.087);
                 break;
             case KeyboardEvent.KEY_M:
-                selectedCharacter.changeMomentum(new Vector2D(0.0, 10000.0));
+                selectedCharacter.changeMomentum(new Vector2D(0.0, -10000.0));
                 break;
             case KeyboardEvent.KEY_SPACE:
                 if(activePlayer.fired()) {
