@@ -47,6 +47,7 @@ public class Weapon implements Fireable {
             projectile.setVelocity(outVelocity);
             ammo--;
 
+            System.out.println("ammo" + ammo);
             return projectile;
 
         }

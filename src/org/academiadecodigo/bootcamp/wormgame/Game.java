@@ -340,6 +340,8 @@ public class Game implements KeyboardHandler {
                 Fireable fireable = activePlayer.nextWeapon(selectedCharacter.getWeapon());
                 System.out.println(fireable.getWeaponType());
                 selectedCharacter.changeWeapon(fireable);
+                weaponUI.removeWeapon();
+                weaponUI = new SgfxWeapon(selectedCharacter.getWeapon().getWeaponType(), simWindow);
                 break;
         }
 

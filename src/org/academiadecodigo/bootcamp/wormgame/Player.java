@@ -50,6 +50,7 @@ public class Player {
 
         System.out.println(index + " ; " + fireables.size());
         index = ++index % fireables.size();
+        System.out.println("Ammo " + fireables.get(index).getAmmo());
         return fireables.get(index);
 
     }

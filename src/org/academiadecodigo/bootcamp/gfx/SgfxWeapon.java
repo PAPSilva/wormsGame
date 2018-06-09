@@ -1,6 +1,7 @@
 package org.academiadecodigo.bootcamp.gfx;
 
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
+import org.academiadecodigo.bootcamp.wormgame.Fireable;
 import org.academiadecodigo.bootcamp.wormgame.Projectile;
 import org.academiadecodigo.bootcamp.wormgame.Weapon;
 import org.academiadecodigo.bootcamp.wormgame.WeaponType;
@@ -24,17 +25,23 @@ public class SgfxWeapon extends Weapon {
         super(weapon);
         this.viewport = viewport;
 
+
         picture = new Picture(10,6, weapon.getPictureSkin());
         picture.draw();
-
-
+        //ammoCounter = new Text(60,10,"Ammo left: " + weapon.getAmmo());
+        //ammoCounter.draw();
 
     }
 
-    /*public Text updateAmmo(Weapon weapon) {
+    public SgfxWeapon (WeaponType weapon, int ammo, SgfxViewport viewport) {
+        this(weapon, viewport);
+        int deltaAmmo = ammo - weapon.getAmmo();
+        addAmmo(deltaAmmo);
+    }
 
-        ammoCounter.setText("Ammo left: " + weapon.getAmmo());
-        return ammoCounter;
+    /*public void removeAmmo() {
+
+        ammoCounter.delete();
 
     }
 
@@ -54,6 +61,12 @@ public class SgfxWeapon extends Weapon {
 
     public void setPicture(Picture picture) {
         this.picture = picture;
+    }
+
+    public void removeWeapon(){
+
+        picture.delete();
+
     }
 
 

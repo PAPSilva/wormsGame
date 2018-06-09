@@ -13,5 +13,7 @@ public interface Fireable {
 
     boolean equals(Object o);
 
+    int getAmmo();
+
 
 }
