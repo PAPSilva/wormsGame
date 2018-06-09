@@ -16,7 +16,8 @@ import java.util.ArrayList;
  * Container of shapes
  */
 public class Canvas {
-    private static final int MIN_SIZE = 100;
+    private static final int MIN_WIDTH = 680;
+    private static final int MIN_HEIGHT = 480;
     private static final int MARGIN = 10;
     private static final int LOCATION_OFFSET = 120;
     private static Canvas canvas = new Canvas();
@@ -195,8 +196,8 @@ public class Canvas {
         }
 
         public Dimension getPreferredSize() {
-            int maxx = MIN_SIZE;
-            int maxy = MIN_SIZE;
+            int maxx = MIN_WIDTH;
+            int maxy = MIN_HEIGHT;
             if (background != null) {
                 maxx = Math.max(maxx, background.getWidth());
                 maxy = Math.max(maxx, background.getHeight());

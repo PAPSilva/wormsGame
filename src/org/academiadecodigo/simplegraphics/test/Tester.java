@@ -16,6 +16,7 @@ public class Tester implements KeyboardHandler, MouseHandler {
     public static void main(String[] args) throws InterruptedException {
 
         Tester t = new Tester();
+
         t.test();
 
     }

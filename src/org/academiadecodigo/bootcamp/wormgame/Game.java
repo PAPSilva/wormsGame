@@ -8,6 +8,7 @@ import org.academiadecodigo.bootcamp.physics2D.PhysicSystem;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Collider;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.gfx.SgfxCharacter;
+import org.academiadecodigo.simplegraphics.graphics.Canvas;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -30,7 +31,7 @@ public class Game implements KeyboardHandler {
     public void init(int numOfChars) {
 
         // Start viewport
-        simWindow = new SgfxViewport(640,400, 1.0);
+        simWindow = new SgfxViewport(640,480, 1.0);
 
         // Start system
         Collider collider = new WormCollider(1.0E-8);
