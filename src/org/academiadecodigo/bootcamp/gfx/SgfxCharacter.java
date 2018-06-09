@@ -92,6 +92,13 @@ public class SgfxCharacter extends Character implements Drawable {
     }
 
     @Override
+    public void turnAim() {
+        super.turnAim();
+        picture.flipHorizontal();
+        picture.draw();
+    }
+
+    @Override
     public void draw() {
         picture.draw();
     }

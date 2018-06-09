@@ -47,7 +47,7 @@ public class WormCollider implements Collider {
                 damage /= 10;
             }
 
-            System.out.println("Damage = " + damage + " = " + impulse[0].norm() + " / " + IMPULSE_MODIFIER + " * " + damageMultiplier);
+            //System.out.println("Damage = " + damage + " = " + impulse[0].norm() + " / " + IMPULSE_MODIFIER + " * " + damageMultiplier);
 
             ((Hittable) body1).suffer(damage);
 

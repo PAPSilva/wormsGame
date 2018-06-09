@@ -8,6 +8,7 @@ import org.academiadecodigo.simplegraphics.graphics.Shape;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
@@ -304,4 +305,17 @@ public class Picture implements Shape, Movable {
             }
         }
     }
+
+    public void flipHorizontal() {
+
+        for (int i = 0; i < image.getWidth() / 2; i++) {
+            for (int j = 0; j < image.getHeight(); j++) {
+                int tmp = image.getRGB(i, j);
+                image.setRGB(i, j, image.getRGB(image.getWidth() - i - 1, j));
+                image.setRGB(image.getWidth() - i - 1, j, tmp);
+            }
+        }
+
+    }
+
 }

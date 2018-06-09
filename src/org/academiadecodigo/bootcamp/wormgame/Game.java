@@ -127,7 +127,7 @@ public class Game implements KeyboardHandler {
             }
 
             // Change player if turn ended
-            //checkTurnEnd(allMoved);
+            checkTurnEnd(allMoved);
 
             // TODO check other conditions for end of game
             if(!activePlayer.hasCharacters() || !activePlayer.hasCharacters()) {
