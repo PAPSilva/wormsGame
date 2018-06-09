@@ -7,7 +7,7 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 
 public class WormCollider implements Collider {
 
-    private final int IMPULSE_MODIFIER = 10000000;
+    private final int IMPULSE_MODIFIER = 1000000;
     private Body2DCollider bodyCollider;
 
     public WormCollider(double tiny) {
@@ -46,6 +46,8 @@ public class WormCollider implements Collider {
             if(!body2.isMovable()) {
                 damage /= 10;
             }
+
+            System.out.println("Damage = " + damage + " = " + impulse[0].norm() + " / " + IMPULSE_MODIFIER + " * " + damageMultiplier);
 
             ((Hittable) body1).suffer(damage);
 
