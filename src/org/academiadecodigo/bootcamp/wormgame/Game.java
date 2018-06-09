@@ -1,13 +1,10 @@
 package org.academiadecodigo.bootcamp.wormgame;
 
-import org.academiadecodigo.bootcamp.gfx.SgfxProjectile;
-import org.academiadecodigo.bootcamp.gfx.SgfxRectangularBody2D;
-import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
+import org.academiadecodigo.bootcamp.gfx.*;
 import org.academiadecodigo.bootcamp.physics2D.Body2DSystem;
 import org.academiadecodigo.bootcamp.physics2D.PhysicSystem;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Collider;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
-import org.academiadecodigo.bootcamp.gfx.SgfxCharacter;
 import org.academiadecodigo.simplegraphics.graphics.Canvas;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
@@ -133,6 +130,7 @@ public class Game implements KeyboardHandler {
 
     // To substitute the createCharacters.
     private Character createCharacter(){
+
 
         return new SgfxCharacter(30, 20, new Vector2D(Math.random()*400,50), 100, 1, simWindow);
 

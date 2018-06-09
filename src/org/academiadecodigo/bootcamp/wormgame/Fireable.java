@@ -9,4 +9,7 @@ public interface Fireable {
 
     Projectile fire(Vector2D position, double aim);
 
+    WeaponType getWeaponType();
+
+
 }

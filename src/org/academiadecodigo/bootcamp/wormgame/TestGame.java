@@ -10,8 +10,8 @@ public class TestGame {
 
         Game game = new Game();
 
-        game.init(1);
-        game.start();
+            game.init(1);
+            game.start();
 
 
 

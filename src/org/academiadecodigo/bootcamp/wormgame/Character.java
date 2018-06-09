@@ -1,5 +1,6 @@
 package org.academiadecodigo.bootcamp.wormgame;
 
+import org.academiadecodigo.bootcamp.gfx.SgfxWeapon;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.CircularBody2D;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 
@@ -11,12 +12,11 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
     private int health;
     private int minDamage;
     private double aim;
-    Fireable currentWeapon;
+    Fireable currentWeapon = new Weapon(WeaponType.SNIPER);
 
     public Character(double mass, double radius, Vector2D position, int health, int minDamage) {
 
         super(mass,radius, position);
-        this.currentWeapon = new Weapon(WeaponType.BAZOOKA);
         this.health = health;
         this.minDamage = minDamage;
         this.aim = 0;
@@ -97,5 +97,12 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
         aim = (Math.PI - aim);
 
     }
+
+    public Fireable getWeapon() {
+
+        return currentWeapon;
+
+    }
+
 
 }

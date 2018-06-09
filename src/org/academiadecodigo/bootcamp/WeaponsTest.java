@@ -32,7 +32,7 @@ public class WeaponsTest {
 
 
         //Weapon weapon = new Weapon(WeaponType.SNIPER);
-        //System.out.println("You got a " + weapon.getWeapon());
+        //System.out.println("You got a " + weapon.getWeaponType());
         //System.out.println("You start with " + weapon.getAmmo() + " bullets.");
 
 

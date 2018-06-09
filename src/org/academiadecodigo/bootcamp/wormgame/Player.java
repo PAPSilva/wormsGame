@@ -32,6 +32,10 @@ public class Player {
 
     }
 
+    public void addFireable(Fireable fireable) {
+        fireables.add(fireable);
+    }
+
     public List<Fireable> getFireables() {
         return fireables;
     }
