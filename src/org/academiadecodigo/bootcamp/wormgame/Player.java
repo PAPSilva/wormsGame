@@ -11,7 +11,7 @@ import java.util.List;
 public class Player {
 
     private String name;
-    private ArrayList<Fireable> fireables;
+    private List<Fireable> fireables = new LinkedList<>();
     private List<Character> characters = new LinkedList<>();
     private Character selectedCharacter = null;
     private boolean fired = false;
@@ -21,20 +21,38 @@ public class Player {
         fireables = new ArrayList();
 
         this.name = name;
-        addFireables();
 
     }
 
-    private void addFireables() {
+//    private void addFireables() {
+//
+//        for (WeaponType weaponType : WeaponType.values()) {
+//            fireables.add(new Weapon(weaponType));
+//        }
+//
+//    }
 
-        for (WeaponType weaponType : WeaponType.values()) {
-            fireables.add(new Weapon(weaponType));
-        }
-
+    public void addFireable(Fireable fireable) {
+        fireables.add(fireable);
     }
 
     public List<Fireable> getFireables() {
         return fireables;
+    }
+
+    public Fireable nextWeapon(Fireable fireable) {
+
+        System.out.println("Weaponory = " + fireables.size());
+        int index;
+        if( (index = fireables.indexOf(fireable)) < 0 ) {
+             return null;
+        }
+
+        System.out.println(index + " ; " + fireables.size());
+        index = ++index % fireables.size();
+        System.out.println("Ammo " + fireables.get(index).getAmmo());
+        return fireables.get(index);
+
     }
 
     public void addCharacter(Character character) {

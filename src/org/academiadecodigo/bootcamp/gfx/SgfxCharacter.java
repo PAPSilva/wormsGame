@@ -2,6 +2,7 @@ package org.academiadecodigo.bootcamp.gfx;
 
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.wormgame.Character;
+import org.academiadecodigo.bootcamp.wormgame.sound.SoundFX;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 /**
@@ -106,6 +107,15 @@ public class SgfxCharacter extends Character implements Drawable {
     @Override
     public void delete() {
         picture.delete();
+    }
+
+    @Override
+    public boolean suffer(int sufferDamage){
+        if(super.suffer(sufferDamage)){
+            SoundFX.play("sounds/cry.wav");
+            return true;
+        }
+       return false;
     }
 
 }

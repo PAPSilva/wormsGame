@@ -3,6 +3,7 @@ package org.academiadecodigo.bootcamp.gfx;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.wormgame.Projectile;
 import org.academiadecodigo.bootcamp.wormgame.ProjectileType;
+import org.academiadecodigo.bootcamp.wormgame.sound.SoundFX;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class SgfxProjectile extends Projectile implements Drawable {
@@ -10,6 +11,7 @@ public class SgfxProjectile extends Projectile implements Drawable {
     private SgfxViewport viewport;
     private ProjectileType projectileType;
     private Picture picture;
+
 
 
     public SgfxProjectile(Projectile projectile, SgfxViewport viewport) {
@@ -74,5 +76,14 @@ public class SgfxProjectile extends Projectile implements Drawable {
     @Override
     public String toString() {
         return "Projectile (" + getPosition() + ") " + "[" + picture.getX() + "," + picture.getY()+"]";
+    }
+
+    @Override
+    public boolean isDead() {
+        if (super.isDead()) {
+            SoundFX.play("sounds/bazooka.wav");
+            return true;
+        }
+        return false;
     }
 }
