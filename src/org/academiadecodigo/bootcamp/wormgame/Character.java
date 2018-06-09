@@ -21,6 +21,7 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
         this.minDamage = minDamage;
         this.aim = 0;
 
+
     }
 
 
@@ -60,7 +61,6 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
 
     @Override
     public Projectile fire() {
-
         return currentWeapon.fire(getPosition(), aim);
 
     }
