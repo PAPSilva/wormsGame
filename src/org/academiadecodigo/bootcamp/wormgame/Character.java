@@ -18,7 +18,7 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
     public Character(double mass, double radius, Vector2D position, int health, int minDamage) {
 
         super(mass,radius, position);
-        this.currentWeapon = new Weapon(WeaponType.SNIPER);
+        this.currentWeapon = new Weapon(WeaponType.BAZOOKA);
         this.health = health;
         this.minDamage = minDamage;
         this.aim = 0;
