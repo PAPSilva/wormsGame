@@ -1,7 +1,6 @@
 package org.academiadecodigo.bootcamp.wormgame;
 
 
-
 import org.academiadecodigo.bootcamp.gfx.*;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.Body2D;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.RectangularBody2D;
@@ -107,13 +106,13 @@ public class Game implements KeyboardHandler {
 
         // Initialize players
         player1 = new Player("Player 1");
-        for(WeaponType weaponType : WeaponType.values() ) {
+        for (WeaponType weaponType : WeaponType.values()) {
 
             player1.addFireable(new Weapon(weaponType));
         }
 
         player2 = new Player("Player 2");
-        for(WeaponType weaponType : WeaponType.values() ) {
+        for (WeaponType weaponType : WeaponType.values()) {
 
             player2.addFireable(new Weapon(weaponType));
 
@@ -154,7 +153,7 @@ public class Game implements KeyboardHandler {
 
         gameover = false;
         boolean allMoved = true;
-        initKeyboard();
+        
 
         if (!selectedCharacter.isActive()) {
             selectedCharacter.toggleActive();
@@ -431,6 +430,7 @@ public class Game implements KeyboardHandler {
                 weaponUI.removeWeapon();
                 weaponUI = new SgfxWeapon(selectedCharacter.getWeapon().getWeaponType(), simWindow);
                 break;
+
             case KeyboardEvent.KEY_Q:
                 gameover = true;
                 openMenu();

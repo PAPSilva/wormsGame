@@ -33,7 +33,7 @@ public class SgfxWeapon extends Weapon {
 
     }
 
-    public SgfxWeapon (WeaponType weapon, int ammo, SgfxViewport viewport) {
+    /*public SgfxWeapon (WeaponType weapon, int ammo, SgfxViewport viewport) {
         this(weapon, viewport);
         int deltaAmmo = ammo - weapon.getAmmo();
         addAmmo(deltaAmmo);
