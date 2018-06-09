@@ -2,7 +2,6 @@
 package org.academiadecodigo.bootcamp.gfx;
 
 import org.academiadecodigo.bootcamp.wormgame.Character;
-import org.academiadecodigo.bootcamp.physics2D.Body2D.CircularBody2D;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
@@ -63,14 +62,6 @@ public class SgfxPicture extends Character implements Drawable {
     }
 
 
-
-        public boolean isActive() {
-        return active;
-    }
-
-    public void toogleActive() {
-        active = !active;
-    }
 
 }
 

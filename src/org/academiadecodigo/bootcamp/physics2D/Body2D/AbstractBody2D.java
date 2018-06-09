@@ -32,6 +32,10 @@ public abstract class AbstractBody2D implements Body2D {
 
     // Behavior
 
+    public void remove() {
+
+    }
+
     public void applyForce(Vector2D force, double dt) {
 
         // Force effect
