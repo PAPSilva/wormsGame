@@ -1,15 +1,10 @@
 package org.academiadecodigo.bootcamp.gfx;
 
-import org.academiadecodigo.bootcamp.physics2D.Body2D.CircularBody2D;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.wormgame.Projectile;
 import org.academiadecodigo.bootcamp.wormgame.ProjectileType;
-import org.academiadecodigo.simplegraphics.graphics.Ellipse;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
-/**
- * Created by codecadet on 04/06/2018.
- */
 public class SgfxProjectile extends Projectile implements Drawable {
 
     private SgfxViewport viewport;
@@ -31,7 +26,6 @@ public class SgfxProjectile extends Projectile implements Drawable {
         picture = new Picture(viewCoord.x(),viewCoord.y(),"bullet.png");
         double growdx = picture.getWidth()*0.5 - radius;
         double growdy = picture.getHeight()*0.5 - radius;
-        System.out.println(picture.getWidth() + " " + growdx);
         picture.grow(-growdx, -growdy);
         picture.translate(-growdx, -growdy);
         picture.draw();
@@ -56,6 +50,11 @@ public class SgfxProjectile extends Projectile implements Drawable {
     @Override
     public void delete() {
         picture.delete();
+    }
+
+    @Override
+    public void remove() {
+        delete();
     }
 
     // Getters and setters

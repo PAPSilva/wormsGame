@@ -13,7 +13,8 @@ public class Player {
     private String name;
     private ArrayList<Fireable> fireables;
     private List<Character> characters = new LinkedList<>();
-    private Character selectedCharacter;
+    private Character selectedCharacter = null;
+    private boolean fired = false;
 
     public Player(String name) {
 
@@ -49,10 +50,11 @@ public class Player {
     }
 
     public Character getSelectedCharacter() {
+
         return selectedCharacter;
     }
 
-    public Character nextCharacter() throws  EmptyStackException {
+    public Character nextCharacter() throws EmptyStackException {
 
         // Check if there is any character
         if(characters.size() == 0) {
@@ -70,6 +72,14 @@ public class Player {
 
     public boolean hasCharacters() {
         return characters.size() > 0;
+    }
+
+    public void toggleFired() {
+        fired = !fired;
+    }
+
+    public boolean fired() {
+        return fired;
     }
 
     private String getName() {

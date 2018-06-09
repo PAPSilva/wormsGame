@@ -18,7 +18,7 @@ public class TestPhysicSystem {
         // Start system
         Body2DCollider collider = new Body2DCollider(1.0E-8);
         Vector2D gravity = new Vector2D(0.0,-980.0);
-        Body2DSystem system = new Body2DSystem(10, gravity, collider);
+        Body2DSystem system = new Body2DSystem(gravity, collider);
 
         // Add bodies to system
 

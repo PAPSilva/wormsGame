@@ -93,6 +93,6 @@ public class RectangularBody2D extends AbstractBody2D {
 
     @Override
     public String toString() {
-        return "[ " + getWidth() + "," + getHeight() + " : " + getOrientation() + super.toString() + "]";
+        return "[ " + getPosition() + " : " + getWidth() + "x" + getHeight() + " : " + getOrientation() + super.toString() + "]";
     }
 }
