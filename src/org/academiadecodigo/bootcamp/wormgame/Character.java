@@ -13,7 +13,7 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
     private int minDamage;
     private double aim;
 
-    Fireable currentWeapon;
+    private Fireable currentWeapon = new Weapon(WeaponType.BAZOOKA); // TODO change this to get from player
     private boolean active = false;
 
     public Character(double mass, double radius, Vector2D position, int health, int minDamage) {
@@ -53,11 +53,12 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
     @Override
     public Projectile fire() {
         return currentWeapon.fire(getPosition(), aim);
-
     }
 
     public void changeWeapon(Fireable weapon) {
+        System.out.print("Changed from " + currentWeapon.getWeaponType());
         this.currentWeapon = weapon;
+        System.out.println(" to " + getWeapon().getWeaponType());
     }
 
     @Override

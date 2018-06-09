@@ -2,9 +2,7 @@ package org.academiadecodigo.bootcamp.wormgame;
 
 
 
-import org.academiadecodigo.bootcamp.gfx.SgfxProjectile;
-import org.academiadecodigo.bootcamp.gfx.SgfxRectangularBody2D;
-import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
+import org.academiadecodigo.bootcamp.gfx.*;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.Body2D;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.RectangularBody2D;
 import org.academiadecodigo.bootcamp.physics2D.Body2DSystem;
@@ -12,7 +10,6 @@ import org.academiadecodigo.bootcamp.physics2D.PhysicSystem;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Collider;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 
-import org.academiadecodigo.bootcamp.gfx.SgfxCharacter;
 import org.academiadecodigo.bootcamp.wormgame.level.Level;
 import org.academiadecodigo.bootcamp.wormgame.level.LevelType;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
@@ -35,6 +32,7 @@ public class Game implements KeyboardHandler {
     private SgfxViewport simWindow;
     private PhysicSystem system;
     private Character selectedCharacter;
+    private SgfxWeapon weaponUI;
     private int aimSide = KeyboardEvent.KEY_RIGHT;
 
     private static final double DELTA_TIME = 0.001;
@@ -77,7 +75,17 @@ public class Game implements KeyboardHandler {
 
         // Initialize players
         player1 = new Player("Player 1");
+        for(WeaponType weaponType : WeaponType.values() ) {
+
+            player1.addFireable(new Weapon(weaponType));
+        }
+
         player2 = new Player("Player 2");
+        for(WeaponType weaponType : WeaponType.values() ) {
+
+            player2.addFireable(new Weapon(weaponType));
+
+        }
 
         // Select initial player at random
         activePlayer = Math.random() > 0.5 ? player1 : player2;
@@ -104,7 +112,7 @@ public class Game implements KeyboardHandler {
         }
 
         selectedCharacter = activePlayer.nextCharacter();
-
+        weaponUI = new SgfxWeapon(selectedCharacter.getWeapon().getWeaponType(), simWindow);
     }
 
     public void start() {
@@ -329,7 +337,9 @@ public class Game implements KeyboardHandler {
                 //activePlayer.toggleFired(); // TODO Uncomment for production
                 break;
             case KeyboardEvent.KEY_N:
-                //selectedCharacter.changeWeapon();
+                Fireable fireable = activePlayer.nextWeapon(selectedCharacter.getWeapon());
+                System.out.println(fireable.getWeaponType());
+                selectedCharacter.changeWeapon(fireable);
                 break;
         }
 

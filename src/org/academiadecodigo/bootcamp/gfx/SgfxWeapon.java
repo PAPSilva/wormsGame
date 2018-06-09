@@ -24,7 +24,7 @@ public class SgfxWeapon extends Weapon {
         super(weapon);
         this.viewport = viewport;
 
-        picture = new Picture(10,10, weapon.getPictureSkin());
+        picture = new Picture(10,6, weapon.getPictureSkin());
         picture.draw();
 
 
@@ -52,6 +52,9 @@ public class SgfxWeapon extends Weapon {
 
     }*/
 
+    public void setPicture(Picture picture) {
+        this.picture = picture;
+    }
 
 
 }

@@ -61,5 +61,15 @@ public class Weapon implements Fireable {
 
     }
 
+    @Override
+    public boolean equals(Object o) {
 
+        if(!(o instanceof Fireable)) {
+            return false;
+        }
+
+        Fireable fireable = (Fireable) o;
+        System.out.println("equals!");
+        return weapon == fireable.getWeaponType();
+    }
 }

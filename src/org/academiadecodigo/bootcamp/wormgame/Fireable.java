@@ -11,5 +11,7 @@ public interface Fireable {
 
     WeaponType getWeaponType();
 
+    boolean equals(Object o);
+
 
 }
