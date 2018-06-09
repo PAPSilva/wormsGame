@@ -13,7 +13,11 @@ public enum LevelType {
     LEVEL_ONE("resources/levels/levelSample.png",
               "resources/levels/levelSample.obs",
               "resources/levels/levelSample.spw",
-              700);
+              700),
+    LEVEL_MOUNTAIN("resources/levels/mountainsField.png",
+                   "resources/levels/mountainsField.obs",
+                   "resources/levels/mountainsField.spw",
+                   700);
 
     private String imagePath;
     private String obstaclesPath;
@@ -50,18 +54,17 @@ public enum LevelType {
             }
 
             Vector2D current = it2.next();
-            System.out.println("  --  "  + current);
-
-            current.multiply(yInverter);
-            System.out.println("  --  "  + current);
-            current.add(0.0, imageHeight);
+            //System.out.println("  --  "  + current);
+            //current.multiply(yInverter);
+            //System.out.println("  --  "  + current);
+            //current.add(0.0, imageHeight);
             Vector2D next;
             System.out.println("  --  "  + current);
             while( it2.hasNext() ) {
                 next = it2.next();
                 System.out.println("  --  "  + current);
-                next.multiply(yInverter);
-                next.add(0.0, imageHeight);
+                //next.multiply(yInverter);
+                //next.add(0.0, imageHeight);
                 obstacles.add( constructRectangle(current, next) );
                 current = next;
             }
@@ -86,7 +89,7 @@ public enum LevelType {
 
         RectangularBody2D rectangle = new RectangularBody2D(
                 -1.0, width, 0.5, center);
-        rectangle.rotate(angle);
+        rectangle.rotate(-angle);
         rectangle.toggleMovable();
 
         System.out.println( " * Rect " + rectangle);
@@ -97,17 +100,22 @@ public enum LevelType {
 
     public List<Vector2D> spawnSites () {
 
-        List<List<Vector2D>> vectors = DoubleReader.load(obstaclesPath);
+        List<List<Vector2D>> vectors = DoubleReader.load(spawnSitesPath);
 
         List<Vector2D> sites = new ArrayList<>();
 
         Iterator<List<Vector2D>> it = vectors.iterator();
         Iterator<Vector2D> it2;
+        Vector2D yInverter = new Vector2D(1.0, -1.0);
+        Vector2D current;
         while( it.hasNext() ) {
 
             it2 = it.next().iterator();
-            while( it.hasNext() ) {
-                sites.add(it2.next());
+            while( it2.hasNext() ) {
+                current = it2.next();
+                current.multiply(yInverter);
+                current.add(0, imageHeight);
+                sites.add(current);
             }
 
         }

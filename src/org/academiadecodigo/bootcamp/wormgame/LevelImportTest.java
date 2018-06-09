@@ -1,5 +1,6 @@
 package org.academiadecodigo.bootcamp.wormgame;
 
+import org.academiadecodigo.bootcamp.gfx.SgfxCharacter;
 import org.academiadecodigo.bootcamp.gfx.SgfxRectangularBody2D;
 import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.RectangularBody2D;
@@ -10,6 +11,7 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.wormgame.level.LevelType;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
+import java.lang.Character;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,11 +25,11 @@ public class LevelImportTest {
 
     private LevelImportTest() {
 
-        SgfxViewport viewport = new SgfxViewport(640, 480, 1);
+        SgfxViewport viewport = new SgfxViewport(1000, 700, 1);
         Collider collider = new Body2DCollider(1.0E-8);
-        Body2DSystem system = new Body2DSystem(20, new Vector2D(0.0,0.0), collider);
+        Body2DSystem system = new Body2DSystem(100, new Vector2D(0.0,0.0), collider);
 
-        LevelType level = LevelType.LEVEL_ONE;
+        LevelType level = LevelType.LEVEL_MOUNTAIN;
 
         // Add image
         Picture picture = level.image();
@@ -48,6 +50,20 @@ public class LevelImportTest {
 
             system.add(sgfxBody); // TODO this is to see. Add it.next() directly.
         }
+
+        // Add characters
+        List<Vector2D> spawnSites = level.spawnSites();
+
+        Iterator<Vector2D> spawnIt = spawnSites.iterator();
+        while (spawnIt.hasNext()) {
+
+            Vector2D position = spawnIt.next();
+            System.out.println(position);
+            SgfxCharacter character = new SgfxCharacter(20, 20, position,100, 1, viewport);
+            system.add(character);
+
+        }
+
 
     }
 
