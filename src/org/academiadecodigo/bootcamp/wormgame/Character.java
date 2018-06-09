@@ -6,12 +6,13 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 /**
  * Created by codecadet on 03/06/2018.
  */
-public class Character extends CircularBody2D implements Hittable, Shooter {
+public class Character extends CircularBody2D implements Hittable, Shooter, Controllable {
 
     private int health;
     private int minDamage;
     private double aim;
     Fireable currentWeapon;
+    private boolean active = false;
 
     public Character(double mass, double radius, Vector2D position, int health, int minDamage) {
 
@@ -20,14 +21,12 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
         this.health = health;
         this.minDamage = minDamage;
         this.aim = 0;
+        this.active = false;
 
     }
 
-
     public void move(double x, double y) {
-
         this.getPosition().add(x, y);
-
     }
 
     public void changeAim(double angle) {
@@ -50,21 +49,15 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
 
     }
 
-
-    public void changeWeapon(Fireable weapon) {
-
-        this.currentWeapon = weapon;
-
-    }
-
-
     @Override
     public Projectile fire() {
-
         return currentWeapon.fire(getPosition(), aim);
 
     }
 
+    public void changeWeapon(Fireable weapon) {
+        this.currentWeapon = weapon;
+    }
 
     @Override
     public void suffer(int sufferDamage){
@@ -72,30 +65,38 @@ public class Character extends CircularBody2D implements Hittable, Shooter {
         int damage = sufferDamage - minDamage;
         if(damage > 0 && health > 0) {
             health -= (damage < health) ? damage : health;
+            System.out.println("Ouch");
         }
 
     }
 
-
     @Override
-    public Vector2D getPosition() {
-
-        return super.getPosition();
-
+    public boolean isDead() {
+        return health <= 0;
     }
 
+    public Vector2D getPosition() {
+        return super.getPosition();
+    }
+
+    @Override
+    public boolean isActive() {
+        return active;
+    }
+
+    @Override
+    public void toggleActive() {
+        active = !active;
+    }
 
     @Override
     public double getAim() {
         return aim;
     }
 
-
     @Override
     public void turnAim() {
-
         aim = (Math.PI - aim);
-
     }
 
 }

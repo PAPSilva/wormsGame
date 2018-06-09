@@ -7,4 +7,6 @@ public interface Hittable {
 
     void suffer(int sufferDamage);
 
+    boolean isDead();
+
 }
