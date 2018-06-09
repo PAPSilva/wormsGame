@@ -1,4 +1,4 @@
-package org.academiadecodigo.bootcamp.wormgame;
+package org.academiadecodigo.bootcamp.wormgame.level;
 
 import org.academiadecodigo.bootcamp.gfx.SgfxCharacter;
 import org.academiadecodigo.bootcamp.gfx.SgfxRectangularBody2D;
@@ -8,10 +8,8 @@ import org.academiadecodigo.bootcamp.physics2D.Body2DSystem;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Body2DCollider;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Collider;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
-import org.academiadecodigo.bootcamp.wormgame.level.LevelType;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
-import java.lang.Character;
 import java.util.Iterator;
 import java.util.List;
 
@@ -40,7 +38,7 @@ public class LevelImportTest {
 
         Iterator<RectangularBody2D> it = obstacles.iterator();
         while (it.hasNext()) {
-            System.out.println("Adding rectangels");
+
             RectangularBody2D body = it.next();
             Vector2D position = viewport.fromViewportCoordinates(body.getPosition());
 

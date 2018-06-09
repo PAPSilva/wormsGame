@@ -10,10 +10,10 @@ import java.util.Iterator;
 import java.util.List;
 
 public enum LevelType {
-    LEVEL_ONE("resources/levels/levelSample.png",
-              "resources/levels/levelSample.obs",
-              "resources/levels/levelSample.spw",
-              700),
+    LEVEL_RUIN("resources/levels/ruinsField.png",
+               "resources/levels/ruinsField.obs",
+               "resources/levels/ruinsField.spw",
+               700),
     LEVEL_MOUNTAIN("resources/levels/mountainsField.png",
                    "resources/levels/mountainsField.obs",
                    "resources/levels/mountainsField.spw",
@@ -37,6 +37,10 @@ public enum LevelType {
 
     }
 
+    public static LevelType random() {
+        return values()[ (int) (Math.random() * values().length) ];
+    }
+
     public List<RectangularBody2D> obstacles() {
 
         List<List<Vector2D>> vectors = DoubleReader.load(obstaclesPath);
@@ -45,7 +49,6 @@ public enum LevelType {
 
         Iterator<List<Vector2D>> it = vectors.iterator();
         Iterator<Vector2D> it2;
-        Vector2D yInverter = new Vector2D(1.0, -1.0);
         while( it.hasNext() ) {
 
             it2 = it.next().iterator();
@@ -54,17 +57,9 @@ public enum LevelType {
             }
 
             Vector2D current = it2.next();
-            //System.out.println("  --  "  + current);
-            //current.multiply(yInverter);
-            //System.out.println("  --  "  + current);
-            //current.add(0.0, imageHeight);
             Vector2D next;
-            System.out.println("  --  "  + current);
             while( it2.hasNext() ) {
                 next = it2.next();
-                System.out.println("  --  "  + current);
-                //next.multiply(yInverter);
-                //next.add(0.0, imageHeight);
                 obstacles.add( constructRectangle(current, next) );
                 current = next;
             }
@@ -77,9 +72,6 @@ public enum LevelType {
 
     private RectangularBody2D constructRectangle(Vector2D point1, Vector2D point2) {
 
-        System.out.println(point1 + " -- " + point2);
-
-
         Vector2D center = new Vector2D(point2);
         center.subtract(point1);
         double width = center.norm();
@@ -91,8 +83,6 @@ public enum LevelType {
                 -1.0, width, 0.5, center);
         rectangle.rotate(-angle);
         rectangle.toggleMovable();
-
-        System.out.println( " * Rect " + rectangle);
 
         return rectangle;
 

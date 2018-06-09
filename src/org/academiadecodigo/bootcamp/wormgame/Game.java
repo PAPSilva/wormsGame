@@ -3,16 +3,24 @@ package org.academiadecodigo.bootcamp.wormgame;
 import org.academiadecodigo.bootcamp.gfx.SgfxProjectile;
 import org.academiadecodigo.bootcamp.gfx.SgfxRectangularBody2D;
 import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
+import org.academiadecodigo.bootcamp.physics2D.Body2D.Body2D;
+import org.academiadecodigo.bootcamp.physics2D.Body2D.RectangularBody2D;
 import org.academiadecodigo.bootcamp.physics2D.Body2DSystem;
 import org.academiadecodigo.bootcamp.physics2D.PhysicSystem;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Collider;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.gfx.SgfxCharacter;
+import org.academiadecodigo.bootcamp.wormgame.level.Level;
+import org.academiadecodigo.bootcamp.wormgame.level.LevelType;
 import org.academiadecodigo.simplegraphics.graphics.Canvas;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by codecadet on 05/06/2018.
@@ -31,45 +39,60 @@ public class Game implements KeyboardHandler {
 
     public void init(int numOfChars) {
 
-        // Start viewport
-        simWindow = new SgfxViewport(640,480, 1.0);
+        // Load random level
+        LevelType levelType = LevelType.random();
+        Level level = new Level(levelType.image(), levelType.obstacles(), levelType.spawnSites());
+        Picture background = level.getPicture();
+        List<RectangularBody2D> obstacles = level.getObstacles();
+        List<Vector2D> spawnSites = level.getSpawns();
+        simWindow = new SgfxViewport(background.getWidth(),background.getHeight(), 1.0);
 
         // Start system
         Collider collider = new WormCollider(1.0E-8);
         Vector2D gravity = new Vector2D(0.0,-980.0);
-        system = new Body2DSystem(10, gravity, collider);
+        system = new Body2DSystem(1000, gravity, collider);
 
         // Initialize scenario
-        // Floor
-        SgfxRectangularBody2D floor = new SgfxRectangularBody2D(20.0, 640.0, 15.0, new Vector2D(320.0, 7.5), simWindow);
-        floor.toggleMovable();
-        system.add(floor);
-        // Walls
-        SgfxRectangularBody2D wall1 = new SgfxRectangularBody2D(20.0, 1.0, 200.0, new Vector2D(642.5, 100.0), simWindow);
-        wall1.toggleMovable();
-        system.add(wall1);
-        SgfxRectangularBody2D wall2 = new SgfxRectangularBody2D(20.0, 1.0, 105.0, new Vector2D(5.0, 25.0), simWindow);
-        wall2.toggleMovable();
-        system.add(wall2);
+        background.draw();
+        Iterator<RectangularBody2D> obstacleIterator = obstacles.iterator();
+        while (obstacleIterator.hasNext()) {
 
+            RectangularBody2D body = obstacleIterator.next();
+            Vector2D position = simWindow.fromViewportCoordinates(body.getPosition());
 
-        // Initialize players TODO (and fireables)
+            SgfxRectangularBody2D sgfxBody = new SgfxRectangularBody2D(body.getMass(), body.getWidth(), body.getHeight(), position, simWindow);
+            sgfxBody.rotate(body.getOrientation());
+            sgfxBody.toggleMovable();
+
+            system.add(sgfxBody); // TODO this is to see. Add it.next() directly.
+
+            //RectangularBody2D rectBody = obstacleIterator.next();
+            //body.toggleMovable();
+            //system.add(body);
+        }
+
+        // Initialize players
         player1 = new Player("Player 1");
         player2 = new Player("Player 2");
 
         // Initialize characters
         Character randomCharacter;
+        Vector2D position;
         for (int i = 0; i < numOfChars; i++) {
 
             //Player 1
-            randomCharacter = createCharacter();
+            position = spawnSites.get( (int) (Math.random() * spawnSites.size()) );
+            randomCharacter = createCharacter(position);
             player1.addCharacter(randomCharacter);
             system.add(randomCharacter);
+            spawnSites.remove(position);
 
-            // PLayer 2
-            randomCharacter = createCharacter();
+            // Player 2
+            position = spawnSites.get( (int) (Math.random() * spawnSites.size()) );
+            randomCharacter = createCharacter(position);
             player2.addCharacter(randomCharacter);
             system.add(randomCharacter);
+            spawnSites.remove(position);
 
         }
 
@@ -132,9 +155,9 @@ public class Game implements KeyboardHandler {
     }
 
     // To substitute the createCharacters.
-    private Character createCharacter(){
+    private Character createCharacter(Vector2D position){
 
-        return new SgfxCharacter(30, 20, new Vector2D(Math.random()*400,50), 100, 1, simWindow);
+        return new SgfxCharacter(30, 20, position, 100, 1, simWindow);
 
     }
 
