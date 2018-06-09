@@ -3,7 +3,6 @@ package org.academiadecodigo.bootcamp.wormgame;
 import org.academiadecodigo.bootcamp.gfx.SgfxProjectile;
 import org.academiadecodigo.bootcamp.gfx.SgfxRectangularBody2D;
 import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
-import org.academiadecodigo.bootcamp.physics2D.Body2D.Body2D;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.RectangularBody2D;
 import org.academiadecodigo.bootcamp.physics2D.Body2DSystem;
 import org.academiadecodigo.bootcamp.physics2D.PhysicSystem;
@@ -12,7 +11,6 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.gfx.SgfxCharacter;
 import org.academiadecodigo.bootcamp.wormgame.level.Level;
 import org.academiadecodigo.bootcamp.wormgame.level.LevelType;
-import org.academiadecodigo.simplegraphics.graphics.Canvas;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -33,9 +31,23 @@ public class Game implements KeyboardHandler {
     private PhysicSystem system;
     private SgfxCharacter selectedCharacter;
     private int aimSide = KeyboardEvent.KEY_RIGHT;
+    private boolean gameStarted = false;
+    private Menu menu;
+    private Picture menuPic;
 
     private static final double DELTA_TIME = 0.001;
     private static final int FRAMERATE = 30; // TODO implement this
+
+
+    public void openMenu() {
+
+        menu = new Menu();
+        menu.initMenu();
+
+    }
+
+
+
 
     public void init(int numOfChars) {
 
@@ -96,6 +108,8 @@ public class Game implements KeyboardHandler {
 
         }
 
+
+
     }
 
     public void start() {
@@ -108,6 +122,20 @@ public class Game implements KeyboardHandler {
         boolean gameover = false;
         boolean turnEnded = true;
         initKeyboard();
+
+        menuPic = new Picture();
+        menuPic.load("resources/menupic.png");
+        menuPic.draw();
+
+        while(!gameStarted) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+
+            }
+
+        }
+
 
         while (!gameover) {
 
@@ -233,8 +261,10 @@ public class Game implements KeyboardHandler {
     public void keyPressed(KeyboardEvent keyboardEvent) {
 
         // Move only when active
-        if(!selectedCharacter.isActive()) {
-            return;
+        if(gameStarted) {
+            if (!selectedCharacter.isActive()) {
+                return;
+            }
         }
 
         // Deal with event
@@ -263,6 +293,11 @@ public class Game implements KeyboardHandler {
                 selectedCharacter.changeMomentum(new Vector2D(0.0, 10000.0));
                 break;
             case KeyboardEvent.KEY_SPACE:
+                if(!gameStarted) {
+                    gameStarted = true;
+                    menuPic.delete();
+                    break;
+                }
                 Projectile projectile = selectedCharacter.fire();
                 if(projectile==null) {
                     break;
@@ -279,7 +314,6 @@ public class Game implements KeyboardHandler {
     }
 
 
-    // For now, the keyReleased method is doing nothing
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
 
@@ -288,16 +322,47 @@ public class Game implements KeyboardHandler {
             return;
         }
 
-//        switch (keyboardEvent.getKey()) {
-//            case KeyboardEvent.KEY_LEFT:
-//                this.setVelocity(new Vector2D(0, 0));
-//                break;
-//            case KeyboardEvent.KEY_RIGHT:
-//                this.setVelocity(new Vector2D(0, 0));
-//                break;
-//        }
+    }
+
+/*
+    public class Menu {
+
+        private String backgroundPath = "resources/menupic.png";
+
+        private Picture background;
+
+        private boolean gameStart = false;
+
+        public Menu() {
+
+            background = new Picture();
+
+        }
+
+
+        public void initMenu() {
+
+            background.load(backgroundPath);
+            background.draw();
+
+            while (!gameStart) {}
+
+        }
+
+
+        public void startGame() {
+
+            gameStart = true;
+            background.delete();
+            //init(1);
+            //start();
+
+
+        }
+
 
     }
+    */
 
 
 

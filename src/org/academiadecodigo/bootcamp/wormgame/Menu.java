@@ -7,25 +7,41 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
  */
 public class Menu {
 
-    private Picture picture;
-    private Picture title;
-    private String picturePath = "";
-    private String titlePath = "";
+    private String backgroundPath = "resources/menupic.png";
 
+    private Picture background;
+
+    private MenuKeyboard menuKeyboard;
+    private boolean gameStart = false;
 
     public Menu() {
 
-        picture = new Picture();
-        title = new Picture();
+        background = new Picture();
+        menuKeyboard = new MenuKeyboard(this);
 
     }
 
 
-    public void init() {
+    public void initMenu() {
 
-        picture.load(picturePath);
-        title.load(titlePath);
+        background.load(backgroundPath);
+        background.draw();
+        menuKeyboard.initKeyboard();
+
+        while (!gameStart) {}
 
     }
+
+
+    public void startGame() {
+
+        gameStart = true;
+        background.delete();
+        //init(1);
+        //start();
+
+
+    }
+
 
 }
