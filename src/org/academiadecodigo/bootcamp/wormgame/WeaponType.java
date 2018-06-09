@@ -7,8 +7,8 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
  */
 public enum WeaponType {
 
-    BAZOOKA(ProjectileType.ROCKET, 1000.0, 40.0, 3),
-    SNIPER(ProjectileType.BULLET, 2000.0, 40.0, 1);
+    BAZOOKA(ProjectileType.ROCKET, 1000.0, 40.0, 30000),
+    SNIPER(ProjectileType.BULLET, 2000.0, 40.0, 10000);
 
     private int ammo;
     private double shotSpeed;
