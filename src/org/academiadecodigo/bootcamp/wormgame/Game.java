@@ -12,6 +12,7 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.gfx.SgfxCharacter;
 import org.academiadecodigo.bootcamp.wormgame.level.Level;
 import org.academiadecodigo.bootcamp.wormgame.level.LevelType;
+import org.academiadecodigo.simplegraphics.graphics.Canvas;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -42,30 +43,31 @@ public class Game implements KeyboardHandler {
     private static final int FRAMERATE = 30; // TODO implement this
     private static final double MOVE_THRESHOLD = 10.0;
 
+    public Game() {
+
+        simWindow = new SgfxViewport(1000, 700, 1.0);
+
+    }
+
 
     public void openMenu() {
-
         gameStarted = false;
-        simWindow = new SgfxViewport(1000, 700, 1.0);
+
         initKeyboard();
 
         menuPic = new Picture();
         menuPic.load("resources/menupic.png");
         menuPic.draw();
 
-        while(!gameStarted) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
+        while (!gameStarted) {
 
-            }
+            waitAsecond();
 
         }
 
         init(1);
 
     }
-
 
 
     public void init(int numOfChars) {
@@ -80,7 +82,7 @@ public class Game implements KeyboardHandler {
 
         // Start system
         Collider collider = new WormCollider(1.0E-8);
-        Vector2D gravity = new Vector2D(0.0,-980.0);
+        Vector2D gravity = new Vector2D(0.0, -980.0);
         system = new Body2DSystem(gravity, collider);
 
         // Initialize scenario
@@ -115,14 +117,14 @@ public class Game implements KeyboardHandler {
         for (int i = 0; i < numOfChars; i++) {
 
             //Player 1
-            position = spawnSites.get( (int) (Math.random() * spawnSites.size()) );
+            position = spawnSites.get((int) (Math.random() * spawnSites.size()));
             randomCharacter = createCharacter(position);
             player1.addCharacter(randomCharacter);
             system.add(randomCharacter);
             spawnSites.remove(position);
 
             // Player 2
-            position = spawnSites.get( (int) (Math.random() * spawnSites.size()) );
+            position = spawnSites.get((int) (Math.random() * spawnSites.size()));
             randomCharacter = createCharacter(position);
             player2.addCharacter(randomCharacter);
             system.add(randomCharacter);
@@ -143,7 +145,7 @@ public class Game implements KeyboardHandler {
         boolean allMoved = true;
         initKeyboard();
 
-        if(!selectedCharacter.isActive()) {
+        if (!selectedCharacter.isActive()) {
             selectedCharacter.toggleActive();
         }
 
@@ -152,7 +154,7 @@ public class Game implements KeyboardHandler {
             allMoved = update();
 
             try {
-                Thread.sleep( 1 );
+                Thread.sleep(1);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -161,13 +163,15 @@ public class Game implements KeyboardHandler {
             //checkTurnEnd(allMoved);
 
             // TODO check other conditions for end of game
-            if(!activePlayer.hasCharacters() || !activePlayer.hasCharacters()) {
+            if (!activePlayer.hasCharacters() || !activePlayer.hasCharacters()) {
                 gameover = true;
                 continue;
             }
 
         }
 
+        end();
+        waitAsecond();
         gameOverScreen();
 
     }
@@ -178,14 +182,14 @@ public class Game implements KeyboardHandler {
         system.update(DELTA_TIME, DELTA_TIME);
 
         // Check if Hittables are dead, remove them if so.
-        for(Body2D body : system) {
+        for (Body2D body : system) {
 
-            if(!(body instanceof Hittable)) {
+            if (!(body instanceof Hittable)) {
                 continue;
             }
 
             Hittable hittable = (Hittable) body;
-            if(hittable.isDead()) {
+            if (hittable.isDead()) {
                 system.remove(body);
             }
 
@@ -193,14 +197,14 @@ public class Game implements KeyboardHandler {
 
         // Check if all projectiles moved
         boolean allMoved = true;
-        for(Body2D body : system) {
+        for (Body2D body : system) {
 
-            if(!(body instanceof PainGiver)) {
+            if (!(body instanceof PainGiver)) {
                 continue;
             }
 
             PainGiver painGiver = (PainGiver) body;
-            if(painGiver.getPosition().norm() > MOVE_THRESHOLD) {
+            if (painGiver.getPosition().norm() > MOVE_THRESHOLD) {
                 allMoved = false;
                 break;
             }
@@ -216,13 +220,13 @@ public class Game implements KeyboardHandler {
     private void checkTurnEnd(boolean allMoved) {
 
         // End turn conditions
-        if(!activePlayer.fired()) {
+        if (!activePlayer.fired()) {
             return;
         }
 
         // Deactivate current character
         // TODO deactivate instead of this?
-        if(selectedCharacter.isActive()) {
+        if (selectedCharacter.isActive()) {
             selectedCharacter.toggleActive();
         }
 
@@ -232,7 +236,7 @@ public class Game implements KeyboardHandler {
 
         // Ensure this character is inactivated and select the next one
         // TODO repeated code
-        if(selectedCharacter.isActive()) {
+        if (selectedCharacter.isActive()) {
             selectedCharacter.toggleActive();
         }
         activePlayer.nextCharacter().toggleActive();
@@ -240,6 +244,14 @@ public class Game implements KeyboardHandler {
 
     }
 
+    private void end() {
+
+        //for(Body2D body : system) {
+        //    system.remove(body);
+        //}
+        // TODO Canvas.getInstance().DELETE!
+
+    }
 
     public void gameOverScreen() { // missing a picture
 
@@ -249,7 +261,7 @@ public class Game implements KeyboardHandler {
         gameOverPic.load("resources/menupic.png");
         gameOverPic.draw();
 
-        while(gameover) {
+        while (gameover) {
 
             try {
                 Thread.sleep(1000);
@@ -262,9 +274,8 @@ public class Game implements KeyboardHandler {
     }
 
 
-
     // To substitute the createCharacters.
-    private Character createCharacter(Vector2D position){
+    private Character createCharacter(Vector2D position) {
 
         return new SgfxCharacter(30, 20, position, 100, 1, simWindow);
 
@@ -276,8 +287,8 @@ public class Game implements KeyboardHandler {
 
         Character[] characters = new Character[numOfChars];
 
-        for(Character character : characters) {
-            character = new Character(30, 20, new Vector2D(100,30), 100, 1);
+        for (Character character : characters) {
+            character = new Character(30, 20, new Vector2D(100, 30), 100, 1);
         }
 
         return characters;
@@ -335,6 +346,11 @@ public class Game implements KeyboardHandler {
         changeWeapon.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(changeWeapon);
 
+        KeyboardEvent toMenu = new KeyboardEvent();
+        toMenu.setKey(KeyboardEvent.KEY_Q);
+        toMenu.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(toMenu);
+
     }
 
 
@@ -343,7 +359,7 @@ public class Game implements KeyboardHandler {
 
 
         // Move only when active
-        if(gameStarted && !gameover) {
+        if (gameStarted && !gameover) {
             if (!selectedCharacter.isActive()) {
                 return;
             }
@@ -352,18 +368,18 @@ public class Game implements KeyboardHandler {
         // Deal with event
         switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_LEFT:
-                if(aimSide == KeyboardEvent.KEY_RIGHT) {
+                if (aimSide == KeyboardEvent.KEY_RIGHT) {
                     selectedCharacter.turnAim();
                     aimSide = KeyboardEvent.KEY_LEFT;
                 }
-                selectedCharacter.changeMomentum(new Vector2D(-1000.0,0.0));
+                selectedCharacter.changeMomentum(new Vector2D(-1000.0, 0.0));
                 break;
             case KeyboardEvent.KEY_RIGHT:
-                if(aimSide == KeyboardEvent.KEY_LEFT) {
+                if (aimSide == KeyboardEvent.KEY_LEFT) {
                     selectedCharacter.turnAim();
                     aimSide = KeyboardEvent.KEY_RIGHT;
                 }
-                selectedCharacter.changeMomentum(new Vector2D(1000.0,0.0));
+                selectedCharacter.changeMomentum(new Vector2D(1000.0, 0.0));
                 break;
             case KeyboardEvent.KEY_UP:
                 selectedCharacter.changeAim(0.087);
@@ -375,20 +391,20 @@ public class Game implements KeyboardHandler {
                 selectedCharacter.changeMomentum(new Vector2D(0.0, 10000.0));
                 break;
             case KeyboardEvent.KEY_SPACE:
-                if(!gameStarted) {
+                if (!gameStarted) {
                     gameStarted = true;
                     menuPic.delete();
                     break;
                 }
-                if(gameover) {
+                if (gameover) {
                     gameOverPic.delete();
                     openMenu();
                 }
-                if(activePlayer.fired()) {
+                if (activePlayer.fired()) {
                     break;
                 }
                 Projectile projectile = selectedCharacter.fire();
-                if(projectile==null) {
+                if (projectile == null) {
                     break;
                 }
                 SgfxProjectile sgfxProjectile = new SgfxProjectile(projectile, simWindow);
@@ -399,6 +415,10 @@ public class Game implements KeyboardHandler {
             case KeyboardEvent.KEY_N:
                 //selectedCharacter.changeWeapon();
                 break;
+            case KeyboardEvent.KEY_Q:
+                gameover = true;
+                openMenu();
+                break;
         }
 
     }
@@ -408,8 +428,18 @@ public class Game implements KeyboardHandler {
     public void keyReleased(KeyboardEvent keyboardEvent) {
 
         // Move only when active
-        if(!selectedCharacter.isActive()) {
+        if (!selectedCharacter.isActive()) {
             return;
+        }
+
+    }
+
+    public void waitAsecond() {
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            System.err.println(e.getMessage());
         }
 
     }
