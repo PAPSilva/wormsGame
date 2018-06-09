@@ -23,6 +23,7 @@ public class Game implements KeyboardHandler {
     private SgfxViewport simWindow;
     private PhysicSystem system;
     private SgfxCharacter selectedCharacter;
+    private int aimSide = KeyboardEvent.KEY_RIGHT;
 
     private static final double DELTA_TIME = 0.001;
     private static final int FRAMERATE = 30; // TODO implement this
@@ -211,13 +212,22 @@ public class Game implements KeyboardHandler {
         if(!selectedCharacter.isActive()) {
             return;
         }
+        System.out.println(selectedCharacter.getAim());
 
         // Deal with event
         switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_LEFT:
+                if(aimSide == KeyboardEvent.KEY_RIGHT) {
+                    selectedCharacter.turnAim();
+                    aimSide = KeyboardEvent.KEY_LEFT;
+                }
                 selectedCharacter.changeMomentum(new Vector2D(-1000.0,0.0));
                 break;
             case KeyboardEvent.KEY_RIGHT:
+                if(aimSide == KeyboardEvent.KEY_LEFT) {
+                    selectedCharacter.turnAim();
+                    aimSide = KeyboardEvent.KEY_RIGHT;
+                }
                 selectedCharacter.changeMomentum(new Vector2D(1000.0,0.0));
                 break;
             case KeyboardEvent.KEY_UP:
