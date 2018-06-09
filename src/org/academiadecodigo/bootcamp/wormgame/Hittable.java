@@ -5,7 +5,7 @@ package org.academiadecodigo.bootcamp.wormgame;
  */
 public interface Hittable {
 
-    void suffer(int sufferDamage);
+    boolean suffer(int sufferDamage);
 
     boolean isDead();
 

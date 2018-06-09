@@ -7,7 +7,7 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 
 public class WormCollider implements Collider {
 
-    private final int IMPULSE_MODIFIER = 10000000;
+    private final int IMPULSE_MODIFIER = 1000000;
     private Body2DCollider bodyCollider;
 
     public WormCollider(double tiny) {

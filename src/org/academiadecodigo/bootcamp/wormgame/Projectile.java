@@ -18,13 +18,14 @@ public class Projectile extends CircularBody2D implements PainGiver, Hittable {
     }
 
     @Override
-    public void suffer(int damage) {
+    public boolean suffer(int damage) {
 
         if (damage > 0 && health > 0) {
             health -= (damage < health) ? damage : health;
             System.out.println("Boom!");
+            return true;
         }
-
+        return false;
     }
 
     @Override

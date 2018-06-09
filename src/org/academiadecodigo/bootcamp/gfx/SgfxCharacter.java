@@ -103,9 +103,12 @@ public class SgfxCharacter extends Character implements Drawable {
     }
 
     @Override
-    public void suffer(int sufferDamage){
-        super.suffer(sufferDamage);
-        SoundFX.play("BAZOOKA");
+    public boolean suffer(int sufferDamage){
+        if(super.suffer(sufferDamage)){
+            SoundFX.play("sounds/bazooka.wav");
+            return true;
+        }
+       return false;
     }
 
 }
