@@ -32,6 +32,12 @@ public class Character extends CircularBody2D implements Hittable {
     // for now, receives a double that can be positive or negative. it can increase or decrease aim.
     public void changeAim(double angle) {
 
+
+        if(getVelocity().x() > 0){
+
+        }
+
+
         this.aim += angle;
 
     }
