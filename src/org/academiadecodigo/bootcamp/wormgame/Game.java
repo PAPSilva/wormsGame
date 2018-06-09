@@ -321,6 +321,7 @@ public class Game implements KeyboardHandler {
                 }
                 SgfxProjectile sgfxProjectile = new SgfxProjectile(projectile, simWindow);
                 sgfxProjectile.setVelocity(projectile.getVelocity());
+                sgfxProjectile.flip();
                 system.add(sgfxProjectile);
                 //activePlayer.toggleFired(); // TODO Uncomment for production
                 break;

@@ -28,6 +28,11 @@ public class SgfxProjectile extends Projectile implements Drawable {
         double growdy = picture.getHeight()*0.5 - radius;
         picture.grow(-growdx, -growdy);
         picture.translate(-growdx, -growdy);
+
+        // Flip according to direction
+
+
+
         picture.draw();
     }
 
@@ -40,6 +45,7 @@ public class SgfxProjectile extends Projectile implements Drawable {
         super.updatePosition(dt);
         Vector2D newCoord = viewport.toViewportCoordinates(getPosition());
         picture.translate(newCoord.x() - oldCoord.x(), newCoord.y() - oldCoord.y());
+
     }
 
     @Override
@@ -55,6 +61,12 @@ public class SgfxProjectile extends Projectile implements Drawable {
     @Override
     public void remove() {
         delete();
+    }
+
+    public void flip() {
+        if(Math.cos(getVelocity().angle()) < 0) {
+            picture.flipHorizontal();
+        }
     }
 
     // Getters and setters
