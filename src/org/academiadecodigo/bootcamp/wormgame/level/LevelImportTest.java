@@ -25,9 +25,9 @@ public class LevelImportTest {
 
         SgfxViewport viewport = new SgfxViewport(1000, 700, 1);
         Collider collider = new Body2DCollider(1.0E-8);
-        Body2DSystem system = new Body2DSystem(100, new Vector2D(0.0,0.0), collider);
+        Body2DSystem system = new Body2DSystem(new Vector2D(0.0,0.0), collider);
 
-        LevelType level = LevelType.LEVEL_MOUNTAIN;
+        LevelType level = LevelType.LEVEL_RUIN;
 
         // Add image
         Picture picture = level.image();

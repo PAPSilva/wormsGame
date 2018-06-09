@@ -4,6 +4,8 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 
 public interface Body2D {
 
+    default void remove() {};
+
     void applyForce(Vector2D forces, double dt);
 
     /**

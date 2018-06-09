@@ -8,7 +8,7 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 /**
  * Created by codecadet on 04/06/2018.
  */
-public class SgfxCharacter extends Character implements Drawable{
+public class SgfxCharacter extends Character implements Drawable {
 
     private Picture picture;
     private SgfxViewport viewport;
@@ -76,12 +76,11 @@ public class SgfxCharacter extends Character implements Drawable{
 
     }
 
-
     public boolean isActive() {
         return active;
     }
 
-    public void toogleActive() {
+    public void toggleActive() {
 
         active = !active;
 
@@ -95,12 +94,12 @@ public class SgfxCharacter extends Character implements Drawable{
 
     @Override
     public void draw() {
-
+        picture.draw();
     }
 
     @Override
     public void delete() {
-
+        picture.delete();
     }
 
     @Override

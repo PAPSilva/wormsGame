@@ -9,24 +9,27 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 public class Projectile extends CircularBody2D implements PainGiver, Hittable {
 
     private ProjectileType projectileType;
-    private int active;
-
+    private int health = 1;
 
     public Projectile(ProjectileType projectileType, Vector2D position){
 
         super(projectileType.getMass(), projectileType.getRadius(), position);
         this.projectileType = projectileType;
-        this.active = 1;
     }
 
-    public void hit(Hittable hittable) {
-
-        hittable.suffer(projectileType.getAmmoDamage());
-
-    }
-
+    @Override
     public void suffer(int damage) {
-        this.active -= damage;
+
+        if (damage > 0 && health > 0) {
+            health -= (damage < health) ? damage : health;
+            System.out.println("Boom!");
+        }
+
+    }
+
+    @Override
+    public boolean isDead() {
+        return health <= 0;
     }
 
     public ProjectileType getProjectileType() {
