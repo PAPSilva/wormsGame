@@ -32,8 +32,9 @@ public class Game implements KeyboardHandler {
     private SgfxCharacter selectedCharacter;
     private int aimSide = KeyboardEvent.KEY_RIGHT;
     private boolean gameStarted = false;
-    private Menu menu;
     private Picture menuPic;
+    private Picture gameOverPic;
+    boolean gameover;
 
     private static final double DELTA_TIME = 0.001;
     private static final int FRAMERATE = 30; // TODO implement this
@@ -41,6 +42,8 @@ public class Game implements KeyboardHandler {
 
     public void openMenu() {
 
+        gameStarted = false;
+        gameover = true;
         simWindow = new SgfxViewport(1000, 700, 1.0);
         initKeyboard();
 
@@ -60,7 +63,6 @@ public class Game implements KeyboardHandler {
         init(1);
 
     }
-
 
 
 
@@ -134,7 +136,7 @@ public class Game implements KeyboardHandler {
 
         // Run game
         simWindow.show();
-        boolean gameover = false;
+        gameover = false;
         boolean turnEnded = true;
 
 
@@ -179,9 +181,35 @@ public class Game implements KeyboardHandler {
             }
 
             // TODO check end of game
+
+        }
+
+        //gameOverScreen();
+
+    }
+
+
+    public void gameOverScreen() { // missing a picture
+
+        gameover = true;
+
+        gameOverPic = new Picture();
+        gameOverPic.load("");
+        gameOverPic.draw();
+
+        while(gameover) {
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+
+            }
+
         }
 
     }
+
+
 
     // To substitute the createCharacters.
     private Character createCharacter(Vector2D position){
@@ -262,7 +290,7 @@ public class Game implements KeyboardHandler {
     public void keyPressed(KeyboardEvent keyboardEvent) {
 
         // Move only when active
-        if(gameStarted) {
+        if(gameStarted || !gameover) {
             if (!selectedCharacter.isActive()) {
                 return;
             }
@@ -299,6 +327,10 @@ public class Game implements KeyboardHandler {
                     menuPic.delete();
                     break;
                 }
+                if(gameover) {
+                    //gameOverPic.delete();
+                    //openMenu();
+                }
                 Projectile projectile = selectedCharacter.fire();
                 if(projectile==null) {
                     break;
@@ -324,47 +356,6 @@ public class Game implements KeyboardHandler {
         }
 
     }
-
-/*
-    public class Menu {
-
-        private String backgroundPath = "resources/menupic.png";
-
-        private Picture background;
-
-        private boolean gameStart = false;
-
-        public Menu() {
-
-            background = new Picture();
-
-        }
-
-
-        public void initMenu() {
-
-            background.load(backgroundPath);
-            background.draw();
-
-            while (!gameStart) {}
-
-        }
-
-
-        public void startGame() {
-
-            gameStart = true;
-            background.delete();
-            //init(1);
-            //start();
-
-
-        }
-
-
-    }
-    */
-
 
 
 }
