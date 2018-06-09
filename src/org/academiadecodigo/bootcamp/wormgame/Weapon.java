@@ -1,5 +1,6 @@
 package org.academiadecodigo.bootcamp.wormgame;
 
+import org.academiadecodigo.bootcamp.gfx.SgfxWeapon;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 
 /**
@@ -45,6 +46,8 @@ public class Weapon implements Fireable {
             Projectile projectile = new Projectile(weapon.getBullet(), muzzle);
             projectile.setVelocity(outVelocity);
             ammo--;
+
+            System.out.println("ammo" + ammo);
             return projectile;
 
         }
@@ -53,9 +56,21 @@ public class Weapon implements Fireable {
         return null;
     }
 
-    public WeaponType getWeapon(){
+    public WeaponType getWeaponType(){
 
         return weapon;
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if(!(o instanceof Fireable)) {
+            return false;
+        }
+
+        Fireable fireable = (Fireable) o;
+        System.out.println("equals!");
+        return weapon == fireable.getWeaponType();
     }
 }

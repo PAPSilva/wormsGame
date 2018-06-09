@@ -1,15 +1,14 @@
 package org.academiadecodigo.bootcamp.wormgame;
 
-import org.academiadecodigo.bootcamp.gfx.SgfxProjectile;
-import org.academiadecodigo.bootcamp.gfx.SgfxRectangularBody2D;
-import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
+
+import org.academiadecodigo.bootcamp.gfx.*;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.Body2D;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.RectangularBody2D;
 import org.academiadecodigo.bootcamp.physics2D.Body2DSystem;
 import org.academiadecodigo.bootcamp.physics2D.PhysicSystem;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Collider;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
-import org.academiadecodigo.bootcamp.gfx.SgfxCharacter;
+
 import org.academiadecodigo.bootcamp.wormgame.level.Level;
 import org.academiadecodigo.bootcamp.wormgame.level.LevelType;
 import org.academiadecodigo.bootcamp.wormgame.sound.SoundFX;
@@ -33,11 +32,43 @@ public class Game implements KeyboardHandler {
     private SgfxViewport simWindow;
     private PhysicSystem system;
     private Character selectedCharacter;
+    private SgfxWeapon weaponUI;
     private int aimSide = KeyboardEvent.KEY_RIGHT;
+    private boolean gameStarted = false;
+    private Picture menuPic;
+    private Picture gameOverPic;
+    boolean gameover = false;
 
     private static final double DELTA_TIME = 0.001;
     private static final int FRAMERATE = 30; // TODO implement this
     private static final double MOVE_THRESHOLD = 10.0;
+
+    public Game() {
+
+        simWindow = new SgfxViewport(1000, 700, 1.0);
+
+    }
+
+
+    public void openMenu() {
+        gameStarted = false;
+
+        initKeyboard();
+
+        menuPic = new Picture();
+        menuPic.load("resources/menupic.png");
+        menuPic.draw();
+
+        while (!gameStarted) {
+
+            waitAsecond();
+
+        }
+
+        init(1);
+
+    }
+
 
     public void init(int numOfChars) {
 
@@ -49,11 +80,11 @@ public class Game implements KeyboardHandler {
         Picture background = level.getPicture();
         List<RectangularBody2D> obstacles = level.getObstacles();
         List<Vector2D> spawnSites = level.getSpawns();
-        simWindow = new SgfxViewport(background.getWidth(),background.getHeight(), 1.0);
+        //simWindow = new SgfxViewport(background.getWidth(),background.getHeight(), 1.0);
 
         // Start system
         Collider collider = new WormCollider(1.0E-8);
-        Vector2D gravity = new Vector2D(0.0,-980.0);
+        Vector2D gravity = new Vector2D(0.0, -980.0);
         system = new Body2DSystem(gravity, collider);
 
         // Initialize scenario
@@ -77,7 +108,17 @@ public class Game implements KeyboardHandler {
 
         // Initialize players
         player1 = new Player("Player 1");
+        for (WeaponType weaponType : WeaponType.values()) {
+
+            player1.addFireable(new Weapon(weaponType));
+        }
+
         player2 = new Player("Player 2");
+        for (WeaponType weaponType : WeaponType.values()) {
+
+            player2.addFireable(new Weapon(weaponType));
+
+        }
 
         // Select initial player at random
         activePlayer = Math.random() > 0.5 ? player1 : player2;
@@ -88,14 +129,14 @@ public class Game implements KeyboardHandler {
         for (int i = 0; i < numOfChars; i++) {
 
             //Player 1
-            position = spawnSites.get( (int) (Math.random() * spawnSites.size()) );
+            position = spawnSites.get((int) (Math.random() * spawnSites.size()));
             randomCharacter = createCharacter(position);
             player1.addCharacter(randomCharacter);
             system.add(randomCharacter);
             spawnSites.remove(position);
 
             // Player 2
-            position = spawnSites.get( (int) (Math.random() * spawnSites.size()) );
+            position = spawnSites.get((int) (Math.random() * spawnSites.size()));
             randomCharacter = createCharacter(position);
             player2.addCharacter(randomCharacter);
             system.add(randomCharacter);
@@ -104,18 +145,19 @@ public class Game implements KeyboardHandler {
         }
 
         selectedCharacter = activePlayer.nextCharacter();
-
+        weaponUI = new SgfxWeapon(selectedCharacter.getWeapon().getWeaponType(), simWindow);
     }
 
     public void start() {
 
         // Run game
         simWindow.show();
-        boolean gameover = false;
-        boolean allMoved = true;
-        initKeyboard();
 
-        if(!selectedCharacter.isActive()) {
+        gameover = false;
+        boolean allMoved = true;
+        
+
+        if (!selectedCharacter.isActive()) {
             selectedCharacter.toggleActive();
         }
 
@@ -124,7 +166,7 @@ public class Game implements KeyboardHandler {
             allMoved = update();
 
             try {
-                Thread.sleep( 1 );
+                Thread.sleep(1);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -133,12 +175,16 @@ public class Game implements KeyboardHandler {
             //checkTurnEnd(allMoved);
 
             // TODO check other conditions for end of game
-            if(!activePlayer.hasCharacters() || !activePlayer.hasCharacters()) {
+            if (!activePlayer.hasCharacters() || !activePlayer.hasCharacters()) {
                 gameover = true;
                 continue;
             }
 
         }
+
+        end();
+        waitAsecond();
+        gameOverScreen();
 
     }
 
@@ -148,14 +194,14 @@ public class Game implements KeyboardHandler {
         system.update(DELTA_TIME, DELTA_TIME);
 
         // Check if Hittables are dead, remove them if so.
-        for(Body2D body : system) {
+        for (Body2D body : system) {
 
-            if(!(body instanceof Hittable)) {
+            if (!(body instanceof Hittable)) {
                 continue;
             }
 
             Hittable hittable = (Hittable) body;
-            if(hittable.isDead()) {
+            if (hittable.isDead()) {
                 system.remove(body);
             }
 
@@ -163,17 +209,20 @@ public class Game implements KeyboardHandler {
 
         // Check if all projectiles moved
         boolean allMoved = true;
-        for(Body2D body : system) {
+        for (Body2D body : system) {
 
-            if(!(body instanceof PainGiver)) {
+            if (!(body instanceof PainGiver)) {
                 continue;
             }
 
             PainGiver painGiver = (PainGiver) body;
-            if(painGiver.getPosition().norm() > MOVE_THRESHOLD) {
+            if (painGiver.getPosition().norm() > MOVE_THRESHOLD) {
                 allMoved = false;
                 break;
             }
+
+            // TODO check end of game
+
 
         }
         return allMoved;
@@ -183,13 +232,13 @@ public class Game implements KeyboardHandler {
     private void checkTurnEnd(boolean allMoved) {
 
         // End turn conditions
-        if(!activePlayer.fired()) {
+        if (!activePlayer.fired()) {
             return;
         }
 
         // Deactivate current character
         // TODO deactivate instead of this?
-        if(selectedCharacter.isActive()) {
+        if (selectedCharacter.isActive()) {
             selectedCharacter.toggleActive();
         }
 
@@ -199,15 +248,47 @@ public class Game implements KeyboardHandler {
 
         // Ensure this character is inactivated and select the next one
         // TODO repeated code
-        if(selectedCharacter.isActive()) {
+        if (selectedCharacter.isActive()) {
             selectedCharacter.toggleActive();
         }
         activePlayer.nextCharacter().toggleActive();
 
+
     }
 
+    private void end() {
+
+        //for(Body2D body : system) {
+        //    system.remove(body);
+        //}
+        // TODO Canvas.getInstance().DELETE!
+
+    }
+
+    public void gameOverScreen() { // missing a picture
+
+        gameover = true;
+
+        gameOverPic = new Picture();
+        gameOverPic.load("resources/menupic.png");
+        gameOverPic.draw();
+
+        while (gameover) {
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+
+            }
+
+        }
+
+    }
+
+
     // To substitute the createCharacters.
-    private Character createCharacter(Vector2D position){
+    private Character createCharacter(Vector2D position) {
+
 
         return new SgfxCharacter(30, 20, position, 100, 1, simWindow);
 
@@ -219,8 +300,8 @@ public class Game implements KeyboardHandler {
 
         Character[] characters = new Character[numOfChars];
 
-        for(Character character : characters) {
-            character = new Character(30, 20, new Vector2D(100,30), 100, 1);
+        for (Character character : characters) {
+            character = new Character(30, 20, new Vector2D(100, 30), 100, 1);
         }
 
         return characters;
@@ -278,32 +359,40 @@ public class Game implements KeyboardHandler {
         changeWeapon.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(changeWeapon);
 
+        KeyboardEvent toMenu = new KeyboardEvent();
+        toMenu.setKey(KeyboardEvent.KEY_Q);
+        toMenu.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(toMenu);
+
     }
 
 
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
 
+
         // Move only when active
-        if(!selectedCharacter.isActive()) {
-            return;
+        if (gameStarted && !gameover) {
+            if (!selectedCharacter.isActive()) {
+                return;
+            }
         }
 
         // Deal with event
         switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_LEFT:
-                if(aimSide == KeyboardEvent.KEY_RIGHT) {
+                if (aimSide == KeyboardEvent.KEY_RIGHT) {
                     selectedCharacter.turnAim();
                     aimSide = KeyboardEvent.KEY_LEFT;
                 }
-                selectedCharacter.changeMomentum(new Vector2D(-1000.0,0.0));
+                selectedCharacter.changeMomentum(new Vector2D(-1000.0, 0.0));
                 break;
             case KeyboardEvent.KEY_RIGHT:
-                if(aimSide == KeyboardEvent.KEY_LEFT) {
+                if (aimSide == KeyboardEvent.KEY_LEFT) {
                     selectedCharacter.turnAim();
                     aimSide = KeyboardEvent.KEY_RIGHT;
                 }
-                selectedCharacter.changeMomentum(new Vector2D(1000.0,0.0));
+                selectedCharacter.changeMomentum(new Vector2D(1000.0, 0.0));
                 break;
             case KeyboardEvent.KEY_UP:
                 selectedCharacter.changeAim(0.087);
@@ -315,11 +404,20 @@ public class Game implements KeyboardHandler {
                 selectedCharacter.changeMomentum(new Vector2D(0.0, 10000.0));
                 break;
             case KeyboardEvent.KEY_SPACE:
-                if(activePlayer.fired()) {
+                if (!gameStarted) {
+                    gameStarted = true;
+                    menuPic.delete();
+                    break;
+                }
+                if (gameover) {
+                    gameOverPic.delete();
+                    openMenu();
+                }
+                if (activePlayer.fired()) {
                     break;
                 }
                 Projectile projectile = selectedCharacter.fire();
-                if(projectile==null) {
+                if (projectile == null) {
                     break;
                 }
                 SgfxProjectile sgfxProjectile = new SgfxProjectile(projectile, simWindow);
@@ -328,33 +426,41 @@ public class Game implements KeyboardHandler {
                 //activePlayer.toggleFired(); // TODO Uncomment for production
                 break;
             case KeyboardEvent.KEY_N:
-                //selectedCharacter.changeWeapon();
+                Fireable fireable = activePlayer.nextWeapon(selectedCharacter.getWeapon());
+                System.out.println(fireable.getWeaponType());
+                selectedCharacter.changeWeapon(fireable);
+                weaponUI.removeWeapon();
+                weaponUI = new SgfxWeapon(selectedCharacter.getWeapon().getWeaponType(), simWindow);
+                break;
+
+            case KeyboardEvent.KEY_Q:
+                gameover = true;
+                openMenu();
                 break;
         }
 
     }
 
 
-    // For now, the keyReleased method is doing nothing
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
 
         // Move only when active
-        if(!selectedCharacter.isActive()) {
+        if (!selectedCharacter.isActive()) {
             return;
         }
 
-//        switch (keyboardEvent.getKey()) {
-//            case KeyboardEvent.KEY_LEFT:
-//                this.setVelocity(new Vector2D(0, 0));
-//                break;
-//            case KeyboardEvent.KEY_RIGHT:
-//                this.setVelocity(new Vector2D(0, 0));
-//                break;
-//        }
-
     }
 
+    public void waitAsecond() {
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            System.err.println(e.getMessage());
+        }
+
+    }
 
 
 }
