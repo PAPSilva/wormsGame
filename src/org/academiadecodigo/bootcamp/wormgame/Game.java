@@ -12,6 +12,7 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.gfx.SgfxCharacter;
 import org.academiadecodigo.bootcamp.wormgame.level.Level;
 import org.academiadecodigo.bootcamp.wormgame.level.LevelType;
+import org.academiadecodigo.bootcamp.wormgame.sound.SoundFX;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -39,6 +40,8 @@ public class Game implements KeyboardHandler {
     private static final double MOVE_THRESHOLD = 10.0;
 
     public void init(int numOfChars) {
+
+        SoundFX.play("sounds/game.wav");
 
         // Load random level
         LevelType levelType = LevelType.random();

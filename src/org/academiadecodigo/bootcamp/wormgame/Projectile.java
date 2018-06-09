@@ -40,5 +40,4 @@ public class Projectile extends CircularBody2D implements PainGiver, Hittable {
     public int getDamage() {
         return projectileType.getAmmoDamage();
     }
-
 }
