@@ -100,7 +100,7 @@ public class Game implements KeyboardHandler {
 
         }
 
-        selectedCharacter = activePlayer.getSelectedCharacter();
+        selectedCharacter = activePlayer.nextCharacter();
 
     }
 
@@ -112,13 +112,9 @@ public class Game implements KeyboardHandler {
         boolean allMoved = true;
         initKeyboard();
 
-        if(selectedCharacter.isActive()) System.out.println("I was active!");
-
         if(!selectedCharacter.isActive()) {
             selectedCharacter.toggleActive();
         }
-
-        if(selectedCharacter.isActive()) System.out.println("I'm active!");
 
         while (!gameover) {
 
@@ -326,7 +322,7 @@ public class Game implements KeyboardHandler {
                 SgfxProjectile sgfxProjectile = new SgfxProjectile(projectile, simWindow);
                 sgfxProjectile.setVelocity(projectile.getVelocity());
                 system.add(sgfxProjectile);
-                activePlayer.toggleFired();
+                //activePlayer.toggleFired(); // TODO Uncomment for production
                 break;
             case KeyboardEvent.KEY_N:
                 //selectedCharacter.changeWeapon();

@@ -4,13 +4,13 @@ import org.academiadecodigo.bootcamp.physics2D.Body2D.Body2D;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Collider;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Body2DSystem implements PhysicSystem {
 
-    private List<Body2D> bodies = new ArrayList<>();
+    private List<Body2D> bodies = new LinkedList<>();
     private Vector2D gravityAcceleration;
     private Collider collider;
 
@@ -30,6 +30,7 @@ public class Body2DSystem implements PhysicSystem {
     }
 
     public void remove(Body2D body) {
+        body.remove();
         bodies.remove(body);
     }
 

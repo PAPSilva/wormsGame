@@ -21,6 +21,7 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
         this.health = health;
         this.minDamage = minDamage;
         this.aim = 0;
+        this.active = false;
 
     }
 
@@ -82,6 +83,7 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
         return active;
     }
 
+    @Override
     public void toggleActive() {
         active = !active;
     }

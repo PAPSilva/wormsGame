@@ -4,4 +4,6 @@ public interface Controllable {
 
     boolean isActive();
 
+    void toggleActive();
+
 }

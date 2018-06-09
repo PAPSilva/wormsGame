@@ -13,11 +13,11 @@ public enum LevelType {
     LEVEL_RUIN("resources/levels/ruinsField.png",
                "resources/levels/ruinsField.obs",
                "resources/levels/ruinsField.spw",
-               700),
-    LEVEL_MOUNTAIN("resources/levels/mountainsField.png",
-                   "resources/levels/mountainsField.obs",
-                   "resources/levels/mountainsField.spw",
-                   700);
+               700);
+    //LEVEL_MOUNTAIN("resources/levels/mountainsField.png",
+    //               "resources/levels/mountainsField.obs",
+    //               "resources/levels/mountainsField.spw",
+    //               700);
 
     private String imagePath;
     private String obstaclesPath;

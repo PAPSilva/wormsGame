@@ -79,7 +79,7 @@ public class SgfxCharacter extends Character implements Drawable {
         return active;
     }
 
-    public void toogleActive() {
+    public void toggleActive() {
 
         active = !active;
 
