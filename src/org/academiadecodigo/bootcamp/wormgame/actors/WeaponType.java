@@ -7,8 +7,8 @@ import org.academiadecodigo.bootcamp.wormgame.actors.ProjectileType;
  */
 public enum WeaponType {
 
-    BAZOOKA(ProjectileType.ROCKET, 1000.0, 40.0, 30000, "resources/bazooka.png"),
-    SNIPER(ProjectileType.BULLET, 2000.0, 40.0, 10000, "resources/sniper.png");
+    BAZOOKA(ProjectileType.ROCKET, 100.0, 40.0, 30000, "resources/bazooka.png"),
+    SNIPER(ProjectileType.BULLET, 200.0, 40.0, 10000, "resources/sniper.png");
 
     private int ammo;
     private double shotSpeed;

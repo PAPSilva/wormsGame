@@ -41,16 +41,13 @@ public class Weapon implements Fireable {
             muzzle.multiply(weapon.getBarrelLength());
             muzzle.add(position);
             outVelocity.multiply(weapon.getShotSpeed());
-            System.out.println(muzzle + " " + outVelocity);
             Projectile projectile = new Projectile(weapon.getBullet(), muzzle);
             projectile.setVelocity(outVelocity);
             ammo--;
 
-            System.out.println("ammo" + ammo);
             return projectile;
 
         }
-        System.out.println("Ammo out");
         //TODO needs to be doublechecked if the null is right
         return null;
     }
@@ -69,7 +66,6 @@ public class Weapon implements Fireable {
         }
 
         Fireable fireable = (Fireable) o;
-        System.out.println("equals!");
         return weapon == fireable.getWeaponType();
     }
 }
