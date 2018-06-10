@@ -44,6 +44,8 @@ public class Game implements KeyboardHandler {
     private boolean inInstructions = false;
     private SoundFX gamesound;
     private Collider collider;
+    private boolean player1Wins;
+    private Picture winnerPic;
 
     private static final double DELTA_TIME = 0.001;
     private static final int FRAMERATE = 30; // TODO implement this
@@ -164,7 +166,7 @@ public class Game implements KeyboardHandler {
         }
 
         // Select initial player at random
-        activePlayer = Math.random() > 0.5 ? player1 : player2;
+        activePlayer = player1;
 
         // Initialize characters, with random skin for each player.
         Character randomCharacter;
@@ -230,6 +232,7 @@ public class Game implements KeyboardHandler {
 
         }
 
+        checkWinner();
         end();
         waitAsecond();
         gameOverScreen();
@@ -310,6 +313,16 @@ public class Game implements KeyboardHandler {
 
     }
 
+    private void checkWinner() {
+        
+        if(player2.hasCharactersAvailable()) {
+            player1Wins = false;
+        } else {
+            player1Wins = true;
+        }
+
+    }
+
     private void end() {
 
         //for(Body2D body : system) {
@@ -324,16 +337,22 @@ public class Game implements KeyboardHandler {
         gameover = true;
 
         gameOverPic = new Picture();
-        gameOverPic.load("resources/startmenu.png");
+        gameOverPic.load("resources/credits.png");
         gameOverPic.draw();
+
+        winnerPic = new Picture();
+
+        if(player1Wins) {
+            winnerPic.load("resources/player1wins.png");
+        } else {
+            winnerPic.load("resources/player2wins.png");
+        }
+
+        winnerPic.draw();
 
         while (gameover) {
 
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-
-            }
+           waitAsecond();
 
         }
 
@@ -342,7 +361,6 @@ public class Game implements KeyboardHandler {
 
     // To substitute the createCharacters.
     private Character createCharacter(Vector2D position, String imagePath) {
-
 
         return new SgfxCharacter(30, 20, position, 100, 1, imagePath, simWindow);
 
@@ -493,7 +511,9 @@ public class Game implements KeyboardHandler {
                     break;
                 }
                 if (gameover) {
+                    gameover = false;
                     gameOverPic.delete();
+                    winnerPic.delete();
                     openMenu();
                 }
                 //if (activePlayer.fired()) {
