@@ -21,7 +21,7 @@ public class SoundFX {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File("resources/" + pathname)));
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 

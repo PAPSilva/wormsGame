@@ -45,15 +45,12 @@ public class Player {
 
     public Fireable nextWeapon(Fireable fireable) {
 
-        System.out.println("Weaponory = " + fireables.size());
         int index;
         if( (index = fireables.indexOf(fireable)) < 0 ) {
              return null;
         }
 
-        System.out.println(index + " ; " + fireables.size());
         index = ++index % fireables.size();
-        System.out.println("Ammo " + fireables.get(index).getAmmo());
         return fireables.get(index);
 
     }

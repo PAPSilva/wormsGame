@@ -33,7 +33,6 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
 
         if(sufferDamage > minDamage && health > 0) {
             health -= (sufferDamage < health) ? sufferDamage : health;
-            System.out.println("Ouch");
             return true;
         }
 
@@ -43,7 +42,6 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
 
     @Override
     public boolean isDead() {
-        if(health<=0) System.out.println("I'm dead!");
         return health <= 0;
     }
 

@@ -1,14 +1,11 @@
 package org.academiadecodigo.bootcamp.wormgame.logic;
 
-import org.academiadecodigo.bootcamp.gfx.DeathGiver;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.Body2D;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Body2DCollider;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Collider;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.wormgame.actors.Hittable;
 import org.academiadecodigo.bootcamp.wormgame.actors.PainGiver;
-
-import java.util.Iterator;
 
 public class WormCollider implements Collider {
 

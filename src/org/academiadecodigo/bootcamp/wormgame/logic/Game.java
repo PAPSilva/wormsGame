@@ -161,9 +161,7 @@ public class Game implements KeyboardHandler {
         Character randomCharacter;
         String soldierSkin1 = CharacterType.random().getImagePath();
         String soldierSkin2;
-        while ((soldierSkin2 = CharacterType.random().getImagePath()).equals(soldierSkin1)) {
-            System.out.println(soldierSkin1 + " and " + soldierSkin2 );
-        }
+        while ((soldierSkin2 = CharacterType.random().getImagePath()).equals(soldierSkin1)) {}
         Vector2D position;
         for (int i = 0; i < numOfChars; i++) {
 
@@ -231,7 +229,6 @@ public class Game implements KeyboardHandler {
         while (!gameover) {
 
             allMoved = update();
-            System.out.println(allMoved);
 
             try {
                 Thread.sleep(((long) DELTA_TIME) * 1000);
@@ -267,7 +264,6 @@ public class Game implements KeyboardHandler {
 
             Hittable hittable = (Hittable) body;
             if (hittable.isDead()) {
-                System.out.println(body);
                 system.remove(body);
             }
 
@@ -285,11 +281,7 @@ public class Game implements KeyboardHandler {
 
                 if(body2 instanceof Hittable && collider.checkCollision(body2, body1)) {
                     Hittable hittable = (Hittable) body2;
-                    System.out.println("Suffering " + hittable.health() + " points of damage");
                     hittable.suffer(hittable.health());
-                    if(hittable.isDead()) {
-                        System.out.println("I'm dead, dead, dead!");
-                    }
                     system.remove(body2);
                 }
 
@@ -301,7 +293,6 @@ public class Game implements KeyboardHandler {
         for (Body2D body : system) {
 
             if (body instanceof PainGiver) {
-                System.out.println("Projectiles in the air!");
                 return false;
             }
 
@@ -317,23 +308,15 @@ public class Game implements KeyboardHandler {
             selectedCharacter.toggleActive();
         }
 
-        System.out.println("not dead");
-
         // Player still in his turn
         if ( selectedCharacter.isActive() ) {
-            System.out.println("Active");
             return;
         }
-
-        System.out.println("inactive");
 
         // Player fired but there still is movement in the area
         if(!allMoved) {
-            System.out.println("Projectiles are still moving");
             return;
         }
-
-        System.out.println("No projectiles");
 
         // Deactivate current character
         if (selectedCharacter.isActive()) {
@@ -552,7 +535,6 @@ public class Game implements KeyboardHandler {
                 break;
             case KeyboardEvent.KEY_N:
                 Fireable fireable = activePlayer.nextWeapon(selectedCharacter.getWeapon());
-                System.out.println(fireable.getWeaponType());
                 selectedCharacter.changeWeapon(fireable);
                 weaponUI.removeWeapon();
                 weaponUI = new SgfxWeapon(selectedCharacter.getWeapon().getWeaponType(), simWindow);

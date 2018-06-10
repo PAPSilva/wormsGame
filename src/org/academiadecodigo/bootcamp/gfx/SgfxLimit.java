@@ -3,9 +3,6 @@ package org.academiadecodigo.bootcamp.gfx;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.wormgame.level.Level;
 
-/**
- * Created by codecadet on 10/06/2018.
- */
 public class SgfxLimit extends SgfxRectangularBody2D implements DeathGiver {
 
     public SgfxLimit(double width, double height, Vector2D position, SgfxViewport viewport) {

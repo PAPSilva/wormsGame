@@ -75,10 +75,4 @@ public class SgfxViewport {
         return coord;
     }
 
-    public double getScale() {
-        return scale;
-    }
-
-
-
 }

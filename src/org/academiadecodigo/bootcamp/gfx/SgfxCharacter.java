@@ -5,9 +5,6 @@ import org.academiadecodigo.bootcamp.wormgame.actors.Character;
 import org.academiadecodigo.bootcamp.wormgame.sound.SoundFX;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
-/**
- * Created by codecadet on 04/06/2018.
- */
 public class SgfxCharacter extends Character implements Drawable {
 
     private Picture picture;
@@ -17,10 +14,6 @@ public class SgfxCharacter extends Character implements Drawable {
     private final double MUZZLE = 40.0;
 
     // Constructor
-
-    public SgfxCharacter(double mass, double radius, double x, double y, int health, int minDamage, String imagePath, SgfxViewport viewport) {
-        this(mass, radius, new Vector2D(x, y), health, minDamage, imagePath, viewport);
-    }
 
     public SgfxCharacter(double mass, double radius, Vector2D position, int health, int minDamage, String imagePath, SgfxViewport viewport) {
         super(mass, radius, position, health, minDamage);
@@ -32,7 +25,6 @@ public class SgfxCharacter extends Character implements Drawable {
         picture = new Picture(viewCoord.x(),viewCoord.y(), imagePath);
         double growdx = picture.getWidth()*0.5 - radius;
         double growdy = picture.getHeight()*0.5 - radius;
-        System.out.println(picture.getWidth() + " " + growdx);
         picture.grow(-growdx, -growdy);
         picture.translate(-growdx, -growdy);
 

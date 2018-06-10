@@ -9,7 +9,6 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 public class SgfxProjectile extends Projectile implements Drawable {
 
     private SgfxViewport viewport;
-    private ProjectileType projectileType;
     private Picture picture;
 
     public SgfxProjectile(Projectile projectile, SgfxViewport viewport) {
