@@ -91,7 +91,9 @@ public class Game implements KeyboardHandler {
         Picture background = level.getPicture();
         List<RectangularBody2D> obstacles = level.getObstacles();
         List<Vector2D> spawnSites = level.getSpawns();
+
         //simWindow = new SgfxViewport(background.getWidth(),background.getHeight(), 1.0);
+
 
         // Start system
         Collider collider = new WormCollider(1.0E-8);
@@ -115,7 +117,29 @@ public class Game implements KeyboardHandler {
             //RectangularBody2D rectBody = obstacleIterator.next();
             //body.toggleMovable();
             //system.add(body);
+
         }
+
+
+        // Load Outbounds
+        int margin = 40;
+        int limitWidth = background.getWidth() + margin * 2;
+        int limitHeigth = background.getHeight() + margin * 2;
+        SgfxLimit upLimit = new SgfxLimit(limitWidth, 0.5, new Vector2D(background.getWidth()/2,-margin), simWindow);
+        SgfxLimit leftLimit = new SgfxLimit(0.5, limitHeigth, new Vector2D(-margin, background.getHeight() / 2), simWindow);
+        SgfxLimit downLimit = new SgfxLimit(limitWidth, 0.5, new Vector2D(background.getWidth()/2, background.getHeight() + margin), simWindow);
+        SgfxLimit rightLimit = new SgfxLimit(0.5, limitHeigth, new Vector2D(background.getWidth() + margin, background.getHeight()/2), simWindow);
+
+        upLimit.toggleMovable();
+        leftLimit.toggleMovable();
+        downLimit.toggleMovable();
+        rightLimit.toggleMovable();
+
+        system.add(upLimit);
+        system.add(leftLimit);
+        system.add(downLimit);
+        system.add(rightLimit);
+
 
         // Initialize players
         player1 = new Player("Player 1");
