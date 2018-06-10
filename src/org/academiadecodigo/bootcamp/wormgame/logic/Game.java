@@ -43,6 +43,7 @@ public class Game implements KeyboardHandler {
     private boolean gameover = false;
     private boolean inInstructions = false;
     private SoundFX gamesound;
+    private Collider collider;
 
     private static final double DELTA_TIME = 0.001;
     private static final int FRAMERATE = 30; // TODO implement this
@@ -103,7 +104,7 @@ public class Game implements KeyboardHandler {
 
 
         // Start system
-        Collider collider = new WormCollider(1.0E-8);
+        collider = new WormCollider(1.0E-8);
         Vector2D gravity = new Vector2D(0.0, -980.0);
         system = new Body2DSystem(gravity, collider);
 
@@ -255,6 +256,17 @@ public class Game implements KeyboardHandler {
             }
 
         }
+
+
+        // Check Collision with Boundaries
+        for(Body2D body : system) {
+
+            //if(((WormCollider) collider).collisionWithBoundaries()) {
+
+            //}
+
+        }
+
 
         // Check if all projectiles moved
         boolean allMoved = true;

@@ -1,5 +1,6 @@
 package org.academiadecodigo.bootcamp.wormgame.logic;
 
+import org.academiadecodigo.bootcamp.gfx.DeathGiver;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.Body2D;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Body2DCollider;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Collider;
@@ -33,10 +34,10 @@ public class WormCollider implements Collider {
         // Resolve each kind of interactions specific to the game.
 
         // Hittable suffer damage on impact, proportional to the damage of a PainGiver.
-        if(body1 instanceof Hittable) {
+        if (body1 instanceof Hittable) {
 
             int damageMultiplier = 1;
-            if(body2 instanceof PainGiver) {
+            if (body2 instanceof PainGiver) {
                 damageMultiplier = ((PainGiver) body2).getDamage();
             }
 
@@ -45,7 +46,7 @@ public class WormCollider implements Collider {
             int damage = ((int) (impulse[0].norm() / IMPULSE_MODIFIER)) * damageMultiplier;
 
             // Modify impulse damage if body2 is unmovable.
-            if(!body2.isMovable()) {
+            if (!body2.isMovable()) {
                 damage /= 10;
             }
 
@@ -56,6 +57,21 @@ public class WormCollider implements Collider {
         }
 
         return impulse;
+
+    }
+
+    public boolean collisionWithBoundaries(Body2D body1, Body2D body2) {
+
+        boolean result = false;
+
+        if(body1 instanceof Hittable && body2 instanceof DeathGiver) {
+
+            ((Hittable) body1).suffer(9999);
+            result = true;
+
+        }
+
+        return result;
 
     }
 
