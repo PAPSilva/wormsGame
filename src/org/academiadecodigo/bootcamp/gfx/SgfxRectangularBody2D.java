@@ -89,4 +89,9 @@ public class SgfxRectangularBody2D extends RectangularBody2D implements Drawable
             }
         }
     }
+
+    @Override
+    public void remove() {
+        delete();
+    }
 }

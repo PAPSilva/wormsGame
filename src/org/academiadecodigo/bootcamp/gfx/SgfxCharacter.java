@@ -35,8 +35,10 @@ public class SgfxCharacter extends Character implements Drawable {
         System.out.println(picture.getWidth() + " " + growdx);
         picture.grow(-growdx, -growdy);
         picture.translate(-growdx, -growdy);
+
         picture.draw();
         updateAim();
+
     }
 
     // Behavior
@@ -117,5 +119,8 @@ public class SgfxCharacter extends Character implements Drawable {
         }
        return false;
     }
+
+    @Override
+    public void remove() {}
 
 }

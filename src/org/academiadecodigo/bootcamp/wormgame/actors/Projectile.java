@@ -3,9 +3,6 @@ package org.academiadecodigo.bootcamp.wormgame.actors;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.CircularBody2D;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 
-/**
- * Created by codecadet on 03/06/2018.
- */
 public class Projectile extends CircularBody2D implements PainGiver, Hittable {
 
     private ProjectileType projectileType;
@@ -26,6 +23,7 @@ public class Projectile extends CircularBody2D implements PainGiver, Hittable {
             return true;
         }
         return false;
+
     }
 
     @Override
@@ -37,7 +35,13 @@ public class Projectile extends CircularBody2D implements PainGiver, Hittable {
         return projectileType;
     }
 
+    @Override
     public int getDamage() {
         return projectileType.getAmmoDamage();
+    }
+
+    @Override
+    public String toString() {
+        return  "[" + getProjectileType() + " " + getPosition() + "]";
     }
 }

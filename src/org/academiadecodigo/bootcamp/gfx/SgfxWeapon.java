@@ -8,7 +8,7 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 /**
  * Created by codecadet on 09/06/2018.
  */
-public class SgfxWeapon extends Weapon {
+public class SgfxWeapon extends Weapon implements Drawable {
 
     private Picture picture;
     private SgfxViewport viewport;
@@ -65,5 +65,19 @@ public class SgfxWeapon extends Weapon {
 
     }
 
+    @Override
+    public void draw() {
+        picture.draw();
+    }
 
+    @Override
+    public void delete() {
+        picture.delete();
+    }
+
+    @Override
+    public void remove() {
+        delete();
+    }
+    
 }

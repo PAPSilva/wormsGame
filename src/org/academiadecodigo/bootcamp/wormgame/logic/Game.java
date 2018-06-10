@@ -200,15 +200,16 @@ public class Game implements KeyboardHandler {
         // Run physic system
         system.update(DELTA_TIME, DELTA_TIME);
 
-        // Check if Hittables are dead, remove them if so.
+        // Check if Hittable PainGivers are dead, remove them if so.
         for (Body2D body : system) {
 
-            if (!(body instanceof Hittable)) {
+            if (!(body instanceof Hittable && body instanceof PainGiver)) {
                 continue;
             }
 
             Hittable hittable = (Hittable) body;
             if (hittable.isDead()) {
+                System.out.println(body);
                 system.remove(body);
             }
 

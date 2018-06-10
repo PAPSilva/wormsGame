@@ -12,8 +12,6 @@ public class SgfxProjectile extends Projectile implements Drawable {
     private ProjectileType projectileType;
     private Picture picture;
 
-
-
     public SgfxProjectile(Projectile projectile, SgfxViewport viewport) {
         this(projectile.getProjectileType(), projectile.getPosition(), viewport);
     }
@@ -31,11 +29,8 @@ public class SgfxProjectile extends Projectile implements Drawable {
         picture.grow(-growdx, -growdy);
         picture.translate(-growdx, -growdy);
 
-        // Flip according to direction
-
-
-
         picture.draw();
+
     }
 
     // Behavior
@@ -86,4 +81,5 @@ public class SgfxProjectile extends Projectile implements Drawable {
         }
         return false;
     }
+
 }
