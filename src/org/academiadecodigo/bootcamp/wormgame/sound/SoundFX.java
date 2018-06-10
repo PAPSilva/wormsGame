@@ -4,7 +4,9 @@ import java.io.*;
 import javax.sound.sampled.*;
 
 public class SoundFX {
-    public static void play(String pathname) {
+    private Clip clip;
+
+    public static void playOnce(String pathname) {
         try {
             Clip clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File("resources/" + pathname)));
@@ -12,5 +14,27 @@ public class SoundFX {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public SoundFX(String pathname) {
+        try {
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(new File("resources/" + pathname)));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+
+    public void play(){
+        clip.start();
+    }
+
+    public void stop(){
+        clip.stop();
+    }
+
+    public boolean isPlaying(){
+        return clip.isRunning();
     }
 }

@@ -76,7 +76,7 @@ public class SgfxProjectile extends Projectile implements Drawable {
     @Override
     public boolean isDead() {
         if (super.isDead()) {
-            SoundFX.play("sounds/bazooka.wav");
+            SoundFX.playOnce("sounds/bazooka.wav");
             return true;
         }
         return false;
