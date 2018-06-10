@@ -14,6 +14,7 @@ import org.academiadecodigo.bootcamp.wormgame.actors.Character;
 import org.academiadecodigo.bootcamp.wormgame.level.Level;
 import org.academiadecodigo.bootcamp.wormgame.level.LevelType;
 import org.academiadecodigo.bootcamp.wormgame.sound.SoundFX;
+import org.academiadecodigo.simplegraphics.graphics.Canvas;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -47,6 +48,7 @@ public class Game implements KeyboardHandler {
     private boolean player1Wins;
     private Picture winnerPic;
     private Picture creditsbg;
+    private boolean inGame;
 
     private static final double DELTA_TIME = 0.020; // milliseconds
     private static final int FRAMERATE = 30; // TODO implement this
@@ -62,22 +64,30 @@ public class Game implements KeyboardHandler {
 
     public void openMenu() {
 
+        inGame = true;
+
         gameStarted = false;
         inInstructions = false;
-
         initKeyboard();
-
         menuPic = new Picture();
-        menuPic.load("resources/startmenu.png");
-        menuPic.draw();
 
-        while (!gameStarted) {
-            waitAsecond();
+        while(inGame) {
+            gameStarted = false;
+            inInstructions = false;
+
+            menuPic.load("resources/startmenu.png");
+            menuPic.draw();
+
+            while (!gameStarted) {
+                waitAsecond();
+            }
+
+            init(2);
+
+            start();
+
+
         }
-
-        init(2);
-
-        start();
 
     }
 
@@ -524,12 +534,10 @@ public class Game implements KeyboardHandler {
                     break;
                 }
                 if (gameover) {
-                    System.out.println("I'm ending it");
                     gameover = false;
                     gameOverPic.delete();
                     winnerPic.delete();
                     creditsbg.delete();
-                    //openMenu();
                     break;
                 }
                 Projectile projectile = selectedCharacter.fire();
@@ -549,9 +557,8 @@ public class Game implements KeyboardHandler {
                 weaponUI.removeWeapon();
                 weaponUI = new SgfxWeapon(selectedCharacter.getWeapon().getWeaponType(), simWindow);
                 break;
-            case KeyboardEvent.KEY_Q: //TODO Q not working yet
-                //gameover = true;
-                //openMenu();
+            case KeyboardEvent.KEY_Q: //TODO Add Q to instructions
+                Canvas.getInstance().closeWindow();
                 break;
             case KeyboardEvent.KEY_I:
                 if(!inInstructions) {
