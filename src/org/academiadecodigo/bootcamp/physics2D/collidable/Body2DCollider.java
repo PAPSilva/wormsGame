@@ -170,12 +170,14 @@ public class Body2DCollider implements Collider {
         // Get tangent component of velocity of both bodies
         Vector2D tangentVelocity1 = new Vector2D(tangent);
         tangentVelocity1.multiply( body1.getVelocity().dot(tangent) );
+
         Vector2D tangentVelocity2 = new Vector2D(tangent);
         tangentVelocity2.multiply( body2.getVelocity().dot(tangent) );
 
         // Get perpendicular component of velocity of both bodies
         Vector2D perpVelocity1 = new Vector2D(body1.getVelocity());
         perpVelocity1.subtract(tangentVelocity1);
+
         Vector2D perpVelocity2 = new Vector2D(body2.getVelocity());
         perpVelocity2.subtract(tangentVelocity2);
 
@@ -185,6 +187,7 @@ public class Body2DCollider implements Collider {
         newTangentVelocity1.multiply(body1.getRestitution());
         Vector2D finalVelocity1 = new Vector2D(perpVelocity1);
         finalVelocity1.add(newTangentVelocity1);
+
         Vector2D newTangentVelocity2 = calculateCircularVelocity(
                 mass2, mass1, tangentVelocity2, tangentVelocity1);
         newTangentVelocity2.multiply(body2.getRestitution());
@@ -210,6 +213,7 @@ public class Body2DCollider implements Collider {
 
         // Get normal (unit) collision vector
         Vector2D normal = getCircleRectangleCollisionNormal(circle, rectangle);
+        normal.divide(normal.norm());
 
         // Get perpendicular component of velocity of both bodies
         Vector2D tangentVelocity1 = new Vector2D(normal);
@@ -229,6 +233,7 @@ public class Body2DCollider implements Collider {
         newTangentVelocity1.multiply(circle.getRestitution());
         Vector2D finalVelocity1 = new Vector2D(perpVelocity1);
         finalVelocity1.add(newTangentVelocity1);
+
         Vector2D newTangentVelocity2 = calculateCircularVelocity(
                 mass2, mass1, tangentVelocity2, tangentVelocity1);
         newTangentVelocity2.multiply(rectangle.getRestitution());
@@ -264,6 +269,7 @@ public class Body2DCollider implements Collider {
         double penetration = circle.getRadius() + TINY;
         double currPenetration;
         Vector2D normalCollision = null;
+
         for(int i=0; i < corners.length; i++) {
 
             // Next vertex
@@ -278,14 +284,20 @@ public class Body2DCollider implements Collider {
             effPosition = new Vector2D(normal);
             effPosition.multiply(-circle.getRadius());
             effPosition.add(circle.getPosition());
+
+            System.out.println(" " +effPosition + normal + corners[i]);
             currPenetration = penetrationThroughLine(effPosition, normal, corners[i]);
+            //currPenetration = circle.getPosition().dot(normal);
+
             if(currPenetration < penetration) {
                 penetration = currPenetration;
                 normalCollision = new Vector2D(normal);
             }
+            System.out.println("  +  " + currPenetration);
 
         }
-        if(penetration < -TINY) {
+        if(penetration < 0.0) {
+            normalCollision.multiply(penetration-circle.getRadius());
             return normalCollision;
         }
 
@@ -297,11 +309,12 @@ public class Body2DCollider implements Collider {
     private Vector2D calculateCircularVelocity(double mass1, double mass2, Vector2D velocity1, Vector2D velocity2) {
 
         // New velocity according to conservation of momentum
-        // TODO do inelastic collision
         Vector2D finalVelocity = new Vector2D(velocity1);
         finalVelocity.multiply(mass1 - mass2);
+
         Vector2D temp = new Vector2D(velocity2);
         temp.multiply(2.0 * mass2);
+
         finalVelocity.add(temp);
         finalVelocity.multiply( 1.0 / (mass1 + mass2));
 
@@ -367,12 +380,13 @@ public class Body2DCollider implements Collider {
 
         // Check if penetration is negative
         Vector2D normal = getCircleRectangleCollisionNormal(circle, rectangle);
-        double penetration = 0.0; // TODO
+        double penetration = normal.norm(); // TODO
 
+        System.out.println("Circle-Rectangle penetration " + penetration + normal);
         if(penetration > 0.0) {
             return false;
         }
-
+        System.out.println("Unsinking circle and rectangle");
         unsink(circle, rectangle, normal, penetration);
 
         return true;
