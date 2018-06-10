@@ -33,6 +33,8 @@ public class Canvas {
         frame.add(component);
         frame.pack();
         frame.setLocation(LOCATION_OFFSET, LOCATION_OFFSET);
+        frame.setMinimumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
+        frame.setMaximumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
         frame.setVisible(true);
     }
 
