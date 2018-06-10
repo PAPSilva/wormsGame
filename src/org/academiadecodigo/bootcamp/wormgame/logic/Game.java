@@ -48,10 +48,11 @@ public class Game implements KeyboardHandler {
     private static final double DELTA_TIME = 0.001;
     private static final int FRAMERATE = 30; // TODO implement this
     private static final double MOVE_THRESHOLD = 1000.0;
+    private static final double ARENA_MARGIN = 200;
 
     public Game() {
 
-        simWindow = new SgfxViewport(1200, 800, 1.0);
+        //simWindow = new SgfxViewport(1200, 800, 1.0);
 
     }
 
@@ -78,7 +79,7 @@ public class Game implements KeyboardHandler {
 
         }
 
-        init(1);
+        init(2);
 
     }
 
@@ -100,8 +101,7 @@ public class Game implements KeyboardHandler {
         List<RectangularBody2D> obstacles = level.getObstacles();
         List<Vector2D> spawnSites = level.getSpawns();
 
-        //simWindow = new SgfxViewport(background.getWidth(),background.getHeight(), 1.0);
-
+        simWindow = new SgfxViewport(background.getWidth(),background.getHeight(), 1.0);
 
         // Start system
         collider = new WormCollider(1.0E-8);
@@ -109,7 +109,6 @@ public class Game implements KeyboardHandler {
         system = new Body2DSystem(gravity, collider);
 
         // Initialize scenario
-        background.draw();
         Iterator<RectangularBody2D> obstacleIterator = obstacles.iterator();
         while (obstacleIterator.hasNext()) {
 
@@ -127,27 +126,11 @@ public class Game implements KeyboardHandler {
             //system.add(body);
 
         }
+        background.draw();
 
 
         // Load Outbounds
-        int margin = 40;
-        int limitWidth = background.getWidth() + margin * 2;
-        int limitHeigth = background.getHeight() + margin * 2;
-        SgfxLimit upLimit = new SgfxLimit(limitWidth, 0.5, new Vector2D(background.getWidth()/2,-margin), simWindow);
-        SgfxLimit leftLimit = new SgfxLimit(0.5, limitHeigth, new Vector2D(-margin, background.getHeight() / 2), simWindow);
-        SgfxLimit downLimit = new SgfxLimit(limitWidth, 0.5, new Vector2D(background.getWidth()/2, background.getHeight() + margin), simWindow);
-        SgfxLimit rightLimit = new SgfxLimit(0.5, limitHeigth, new Vector2D(background.getWidth() + margin, background.getHeight()/2), simWindow);
-
-        upLimit.toggleMovable();
-        leftLimit.toggleMovable();
-        downLimit.toggleMovable();
-        rightLimit.toggleMovable();
-
-        system.add(upLimit);
-        system.add(leftLimit);
-        system.add(downLimit);
-        system.add(rightLimit);
-
+        setArenaLimits(background.getWidth(), background.getHeight());
 
         // Initialize players
         player1 = new Player("Player 1");
@@ -195,6 +178,33 @@ public class Game implements KeyboardHandler {
 
         selectedCharacter = activePlayer.nextCharacter();
         weaponUI = new SgfxWeapon(selectedCharacter.getWeapon().getWeaponType(), simWindow);
+
+    }
+
+    private void setArenaLimits(double width, double height) {
+
+        double limitWidth = width + ARENA_MARGIN * 2.0;
+        double limitHeigth = height + ARENA_MARGIN * 2.0;
+
+        SgfxLimit upLimit = new SgfxLimit(limitWidth, 0.5,
+                new Vector2D(width * 0.5,-ARENA_MARGIN), simWindow);
+        SgfxLimit leftLimit = new SgfxLimit(0.5, limitHeigth,
+                new Vector2D(-ARENA_MARGIN, height * 0.5), simWindow);
+        SgfxLimit downLimit = new SgfxLimit(limitWidth, 0.5,
+                new Vector2D(width * 0.5, height + ARENA_MARGIN), simWindow);
+        SgfxLimit rightLimit = new SgfxLimit(0.5, limitHeigth,
+                new Vector2D(width + ARENA_MARGIN, height * 0.5), simWindow);
+
+        upLimit.toggleMovable();
+        leftLimit.toggleMovable();
+        downLimit.toggleMovable();
+        rightLimit.toggleMovable();
+
+        system.add(upLimit);
+        system.add(leftLimit);
+        system.add(downLimit);
+        system.add(rightLimit);
+
     }
 
     public void start() {
@@ -258,20 +268,27 @@ public class Game implements KeyboardHandler {
 
 
         // Check Collision with Boundaries TODO check collisions with boundaries
-        for(Body2D body : system) {
+        for(Body2D body1 : system) {
 
-            if(!(collider instanceof WormCollider)) {
-                break;
+            if(!(body1 instanceof DeathGiver)) {
+                continue;
             }
 
-            //WormCollider wormCollider = (WormCollider) collider;
+            for(Body2D body2 : system) {
 
-            //if(wormCollider.collisionWithDeathGiver(body, system.iterator())) {
-          //    system.remove(body);
-            //}
+                if(body2 instanceof Hittable && collider.checkCollision(body2, body1)) {
+                    Hittable hittable = (Hittable) body2;
+                    System.out.println("Suffering " + hittable.health() + " points of damage");
+                    hittable.suffer(hittable.health());
+                    if(hittable.isDead()) {
+                        System.out.println("I'm dead, dead, dead!");
+                    }
+                    system.remove(body2);
+                }
+
+            }
+
         }
-
-
 
         // Check if all projectiles moved
         for (Body2D body : system) {
@@ -286,6 +303,12 @@ public class Game implements KeyboardHandler {
     }
 
     private void checkTurnEnd(boolean allMoved) {
+
+        // Inactivate selected if it is dead
+        if(selectedCharacter.isDead()) {
+            System.out.println("I'm kamikze!!!");
+            selectedCharacter.toggleActive();
+        }
 
         // Player still in his turn
         if ( selectedCharacter.isActive() ) {
@@ -312,9 +335,9 @@ public class Game implements KeyboardHandler {
 
     private void end() {
 
-        //for(Body2D body : system) {
-        //    system.remove(body);
-        //}
+        for(Body2D body : system) {
+            system.remove(body);
+        }
         // TODO Canvas.getInstance().DELETE!
 
     }
@@ -339,26 +362,10 @@ public class Game implements KeyboardHandler {
 
     }
 
-
-    // To substitute the createCharacters.
     private Character createCharacter(Vector2D position, String imagePath) {
 
 
         return new SgfxCharacter(30, 20, position, 100, 1, imagePath, simWindow);
-
-    }
-
-
-    // We have to pass positions for the characters
-    private Character[] createCharacters(int numOfChars) {
-
-        Character[] characters = new Character[numOfChars];
-
-        for (Character character : characters) {
-            character = new Character(30, 20, new Vector2D(100, 30), 100, 1);
-        }
-
-        return characters;
 
     }
 
@@ -415,7 +422,6 @@ public class Game implements KeyboardHandler {
         aimDown.setKey(KeyboardEvent.KEY_DOWN);
         aimDown.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(aimDown);
-
 
         KeyboardEvent jump = new KeyboardEvent();
         jump.setKey(KeyboardEvent.KEY_M);
@@ -496,9 +502,6 @@ public class Game implements KeyboardHandler {
                     gameOverPic.delete();
                     openMenu();
                 }
-                //if (activePlayer.fired()) {
-                //    break;
-                //}
                 Projectile projectile = selectedCharacter.fire();
                 if (projectile == null) {
                     break;

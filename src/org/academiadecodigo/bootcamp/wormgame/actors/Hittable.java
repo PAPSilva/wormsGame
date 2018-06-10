@@ -5,6 +5,8 @@ package org.academiadecodigo.bootcamp.wormgame.actors;
  */
 public interface Hittable {
 
+    int health();
+
     boolean suffer(int sufferDamage);
 
     boolean isDead();

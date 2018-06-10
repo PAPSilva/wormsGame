@@ -62,19 +62,4 @@ public class WormCollider implements Collider {
 
     }
 
-    public boolean collisionWithDeathGiver(Body2D body, Iterator<Body2D> iterator) {
-
-        while(iterator.hasNext()) {
-
-            if (body instanceof Hittable && iterator.next() instanceof DeathGiver) {
-
-                return true;
-
-            }
-
-        }
-        return false;
-
-    }
-
 }

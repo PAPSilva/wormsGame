@@ -24,11 +24,15 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
     }
 
     @Override
+    public int health() {
+        return health;
+    }
+
+    @Override
     public boolean suffer(int sufferDamage){
 
-        int damage = sufferDamage - minDamage;
-        if(damage > 0 && health > 0) {
-            health -= (damage < health) ? damage : health;
+        if(sufferDamage > minDamage && health > 0) {
+            health -= (sufferDamage < health) ? sufferDamage : health;
             System.out.println("Ouch");
             return true;
         }

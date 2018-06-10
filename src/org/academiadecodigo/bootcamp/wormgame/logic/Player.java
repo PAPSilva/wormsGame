@@ -79,8 +79,14 @@ public class Player {
         }
 
         // Select the next character and return it. Recycle if necessary.
-        int indexOfNext = characters.indexOf(selectedCharacter) + 1;
-        indexOfNext = (indexOfNext == characters.size()) ? 0 : indexOfNext;
+        int indexOfNext = characters.indexOf(selectedCharacter) ;
+        for(int i=0; i < characters.size(); i++) {
+            indexOfNext++;
+            indexOfNext = (indexOfNext == characters.size()) ? 0 : indexOfNext;
+            if(!characters.get(indexOfNext).isDead()) {
+                break;
+            }
+        }
         selectedCharacter = characters.get(indexOfNext);
 
         return selectedCharacter;

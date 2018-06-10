@@ -15,6 +15,11 @@ public class Projectile extends CircularBody2D implements PainGiver, Hittable {
     }
 
     @Override
+    public int health() {
+        return health;
+    }
+
+    @Override
     public boolean suffer(int damage) {
 
         if (damage > 0 && health > 0) {
