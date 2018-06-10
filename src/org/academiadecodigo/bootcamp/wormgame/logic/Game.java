@@ -188,7 +188,6 @@ public class Game implements KeyboardHandler {
                 System.out.println(e.getMessage());
             }
 
-            // Change player if turn ended
             checkTurnEnd(allMoved);
 
             // TODO check other conditions for end of game
@@ -229,12 +228,10 @@ public class Game implements KeyboardHandler {
         for (Body2D body : system) {
 
             if (body instanceof PainGiver) {
-                System.out.println("Projectile still moving");
                 return false;
             }
 
         }
-        System.out.println("All projectiles moved");
         return true;
 
     }
@@ -246,28 +243,20 @@ public class Game implements KeyboardHandler {
             return;
         }
 
-        // Player fired but still not
-        if( !allmoved && selectedCharacter.isActive() ) {
-
+        // Player fired but there still is movement in the area
+        if( ! allMoved ) {
+            return;
         }
 
         // Deactivate current character
-        // TODO deactivate instead of this?
         if (selectedCharacter.isActive()) {
             selectedCharacter.toggleActive();
         }
 
-        // Select next player and its character
+        // Select next player and activate its next character
         activePlayer = (activePlayer == player1) ? player2 : player1;
-        //selectedCharacter = activePlayer.getSelectedCharacter();
-
-        // Ensure this character is inactivated and select the next one
-        // TODO repeated code
-        //if (selectedCharacter.isActive()) {
-        //    selectedCharacter.toggleActive();
-        //}
         selectedCharacter = activePlayer.nextCharacter();
-        //selectedCharacter.toggleActive();
+        selectedCharacter.toggleActive();
 
 
     }
