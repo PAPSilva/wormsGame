@@ -76,7 +76,7 @@ public class Game implements KeyboardHandler {
 
         }
 
-        init(1);
+        init(3);
 
     }
 
@@ -134,14 +134,17 @@ public class Game implements KeyboardHandler {
         // Select initial player at random
         activePlayer = Math.random() > 0.5 ? player1 : player2;
 
-        // Initialize characters
+        // Initialize characters, with random skin for each player.
         Character randomCharacter;
-        String soldierSkin1, soldierSkin2;
+        String soldierSkin1 = CharacterType.random().getImagePath();
+        String soldierSkin2;
+        while ((soldierSkin2 = CharacterType.random().getImagePath()).equals(soldierSkin1)) {
+            System.out.println(soldierSkin1 + " and " + soldierSkin2 );
+        }
         Vector2D position;
         for (int i = 0; i < numOfChars; i++) {
 
             //Player 1
-            soldierSkin1 = CharacterType.random().getImagePath();
             position = spawnSites.get((int) (Math.random() * spawnSites.size()));
             randomCharacter = createCharacter(position, soldierSkin1);
             player1.addCharacter(randomCharacter);
@@ -149,9 +152,7 @@ public class Game implements KeyboardHandler {
             spawnSites.remove(position);
 
             // Player 2
-            while ((soldierSkin2 = CharacterType.random().getImagePath()).equals(soldierSkin1)) {
-                System.out.println(soldierSkin1 + " and " + soldierSkin2 );
-            }
+
             position = spawnSites.get((int) (Math.random() * spawnSites.size()));
             randomCharacter = createCharacter(position, soldierSkin2);
             player2.addCharacter(randomCharacter);
@@ -209,15 +210,16 @@ public class Game implements KeyboardHandler {
         // Run physic system
         system.update(DELTA_TIME, DELTA_TIME);
 
-        // Check if Hittables are dead, remove them if so.
+        // Check if Hittable PainGivers are dead, remove them if so.
         for (Body2D body : system) {
 
-            if (!(body instanceof Hittable)) {
+            if (!(body instanceof Hittable && body instanceof PainGiver)) {
                 continue;
             }
 
             Hittable hittable = (Hittable) body;
             if (hittable.isDead()) {
+                System.out.println(body);
                 system.remove(body);
             }
 

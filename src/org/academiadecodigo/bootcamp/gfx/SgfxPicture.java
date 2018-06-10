@@ -46,8 +46,14 @@ public class SgfxPicture extends Character implements Drawable {
     }
 
     @Override
-    public void delete() {
+    public void delete()
+    {
         picture.delete();
+    }
+
+    @Override
+    public void remove() {
+        delete();
     }
 
     // Getters and setters

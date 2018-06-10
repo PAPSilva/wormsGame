@@ -5,12 +5,12 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Collider;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Body2DSystem implements PhysicSystem {
 
-    private List<Body2D> bodies = new LinkedList<>();
+    private List<Body2D> bodies = new CopyOnWriteArrayList<>();
     private Vector2D gravityAcceleration;
     private Collider collider;
 

@@ -13,6 +13,7 @@ public class Main {
         game.start();
 
         System.out.println("Game Over");
+
     }
 
 }

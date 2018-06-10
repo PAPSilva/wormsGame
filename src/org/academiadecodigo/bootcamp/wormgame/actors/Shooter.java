@@ -7,7 +7,13 @@ import org.academiadecodigo.bootcamp.wormgame.actors.PainGiver;
  */
 public interface Shooter {
 
+    void changeWeapon(Fireable fireable);
+
+    Fireable getWeapon();
+
     PainGiver fire();
+
+    void changeAim(double angle);
 
     double getAim();
 

@@ -3,9 +3,6 @@ package org.academiadecodigo.bootcamp.wormgame.actors;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.CircularBody2D;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 
-/**
- * Created by codecadet on 03/06/2018.
- */
 public class Character extends CircularBody2D implements Hittable, Shooter, Controllable {
 
     private int health;
@@ -23,42 +20,6 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
         this.aim = 0;
         this.active = false;
 
-
-    }
-
-    public void move(double x, double y) {
-        this.getPosition().add(x, y);
-    }
-
-    public void changeAim(double angle) {
-
-        if(aim + angle < Math.PI * 0.45 && aim + angle > Math.PI * - 0.45) {
-            aim += angle;
-        }
-        if(aim - angle > Math.PI * 0.55 && aim - angle < Math.PI * 1.45) {
-            aim -= angle;
-        }
-
-        // Aim is to the right and aiming higher
-        //this.aim += (angle > 0 && Math.cos(angle) > 0 && aim < Math.PI * 0.45) ? angle : 0.0;
-        // Aim is to the left and aiming higher
-        //this.aim += (angle > 0 && Math.cos(angle) < 0 && aim > Math.PI * 0.45) ? -angle : 0.0;
-        // Aim is to the right and aiming lower
-        //this.aim += (angle < 0 && Math.cos(angle) > 0 && aim > -Math.PI * 0.45) ? angle : 0.0;
-        // Aim is to the left and aiming higher
-        //this.aim += (angle < 0 && Math.cos(angle) < 0 && aim > 3.0 * Math.PI * 0.45) ? -angle : 0.0;
-
-    }
-
-    @Override
-    public Projectile fire() {
-        return currentWeapon.fire(getPosition(), aim);
-    }
-
-    public void changeWeapon(Fireable weapon) {
-        System.out.print("Changed from " + currentWeapon.getWeaponType());
-        this.currentWeapon = weapon;
-        System.out.println(" to " + getWeapon().getWeaponType());
     }
 
     @Override
@@ -77,6 +38,7 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
 
     @Override
     public boolean isDead() {
+        if(health<=0) System.out.println("I'm dead!");
         return health <= 0;
     }
 
@@ -94,6 +56,34 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
         active = !active;
     }
 
+
+    @Override
+    public Fireable getWeapon() {
+        return currentWeapon;
+    }
+
+    @Override
+    public void changeWeapon(Fireable fireable) {
+        this.currentWeapon = fireable;
+    }
+
+    @Override
+    public Projectile fire() {
+        return currentWeapon.fire(getPosition(), aim);
+    }
+
+    @Override
+    public void changeAim(double angle) {
+
+        if(aim + angle < Math.PI * 0.45 && aim + angle > Math.PI * - 0.45) {
+            aim += angle;
+        }
+        if(aim - angle > Math.PI * 0.55 && aim - angle < Math.PI * 1.45) {
+            aim -= angle;
+        }
+
+    }
+
     @Override
     public double getAim() {
         return aim;
@@ -103,12 +93,5 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
     public void turnAim() {
         aim = (Math.PI - aim);
     }
-
-    public Fireable getWeapon() {
-
-        return currentWeapon;
-
-    }
-
 
 }
