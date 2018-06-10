@@ -1,4 +1,7 @@
-package org.academiadecodigo.bootcamp.wormgame;
+package org.academiadecodigo.bootcamp.wormgame.logic;
+
+import org.academiadecodigo.bootcamp.wormgame.actors.Character;
+import org.academiadecodigo.bootcamp.wormgame.actors.Fireable;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;

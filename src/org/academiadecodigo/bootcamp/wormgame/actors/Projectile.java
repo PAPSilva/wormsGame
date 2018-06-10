@@ -1,4 +1,4 @@
-package org.academiadecodigo.bootcamp.wormgame;
+package org.academiadecodigo.bootcamp.wormgame.actors;
 
 import org.academiadecodigo.bootcamp.physics2D.Body2D.CircularBody2D;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;

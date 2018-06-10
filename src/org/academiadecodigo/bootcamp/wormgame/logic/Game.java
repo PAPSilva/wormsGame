@@ -1,4 +1,4 @@
-package org.academiadecodigo.bootcamp.wormgame;
+package org.academiadecodigo.bootcamp.wormgame.logic;
 
 
 import org.academiadecodigo.bootcamp.gfx.*;
@@ -9,6 +9,8 @@ import org.academiadecodigo.bootcamp.physics2D.PhysicSystem;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Collider;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 
+import org.academiadecodigo.bootcamp.wormgame.actors.*;
+import org.academiadecodigo.bootcamp.wormgame.actors.Character;
 import org.academiadecodigo.bootcamp.wormgame.level.Level;
 import org.academiadecodigo.bootcamp.wormgame.level.LevelType;
 import org.academiadecodigo.bootcamp.wormgame.sound.SoundFX;
@@ -59,7 +61,7 @@ public class Game implements KeyboardHandler {
         initKeyboard();
 
         menuPic = new Picture();
-        menuPic.load("resources/startmenu.png");
+        menuPic.load("startmenu.png");
         menuPic.draw();
 
         while (!inInstructions) {
@@ -134,19 +136,24 @@ public class Game implements KeyboardHandler {
 
         // Initialize characters
         Character randomCharacter;
+        String soldierSkin1, soldierSkin2;
         Vector2D position;
         for (int i = 0; i < numOfChars; i++) {
 
             //Player 1
+            soldierSkin1 = CharacterType.random().getImagePath();
             position = spawnSites.get((int) (Math.random() * spawnSites.size()));
-            randomCharacter = createCharacter(position);
+            randomCharacter = createCharacter(position, soldierSkin1);
             player1.addCharacter(randomCharacter);
             system.add(randomCharacter);
             spawnSites.remove(position);
 
             // Player 2
+            while ((soldierSkin2 = CharacterType.random().getImagePath()).equals(soldierSkin1)) {
+                System.out.println(soldierSkin1 + " and " + soldierSkin2 );
+            }
             position = spawnSites.get((int) (Math.random() * spawnSites.size()));
-            randomCharacter = createCharacter(position);
+            randomCharacter = createCharacter(position, soldierSkin2);
             player2.addCharacter(randomCharacter);
             system.add(randomCharacter);
             spawnSites.remove(position);
@@ -296,10 +303,10 @@ public class Game implements KeyboardHandler {
 
 
     // To substitute the createCharacters.
-    private Character createCharacter(Vector2D position) {
+    private Character createCharacter(Vector2D position, String imagePath) {
 
 
-        return new SgfxCharacter(30, 20, position, 100, 1, simWindow);
+        return new SgfxCharacter(30, 20, position, 100, 1, imagePath, simWindow);
 
     }
 

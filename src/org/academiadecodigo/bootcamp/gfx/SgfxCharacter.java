@@ -1,7 +1,7 @@
 package org.academiadecodigo.bootcamp.gfx;
 
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
-import org.academiadecodigo.bootcamp.wormgame.Character;
+import org.academiadecodigo.bootcamp.wormgame.actors.Character;
 import org.academiadecodigo.bootcamp.wormgame.sound.SoundFX;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -18,18 +18,18 @@ public class SgfxCharacter extends Character implements Drawable {
 
     // Constructor
 
-    public SgfxCharacter(double mass, double radius, double x, double y, int health, int minDamage, SgfxViewport viewport) {
-        this(mass, radius, new Vector2D(x, y), health, minDamage, viewport);
+    public SgfxCharacter(double mass, double radius, double x, double y, int health, int minDamage, String imagePath, SgfxViewport viewport) {
+        this(mass, radius, new Vector2D(x, y), health, minDamage, imagePath, viewport);
     }
 
-    public SgfxCharacter(double mass, double radius, Vector2D position, int health, int minDamage, SgfxViewport viewport) {
+    public SgfxCharacter(double mass, double radius, Vector2D position, int health, int minDamage, String imagePath, SgfxViewport viewport) {
         super(mass, radius, position, health, minDamage);
         this.viewport = viewport;
 
         Vector2D topLeftCorner = new Vector2D(position);
         topLeftCorner.add(-radius, radius);
         Vector2D viewCoord = viewport.toViewportCoordinates(topLeftCorner);
-        picture = new Picture(viewCoord.x(),viewCoord.y(),"soldado.png");
+        picture = new Picture(viewCoord.x(),viewCoord.y(), imagePath);
         double growdx = picture.getWidth()*0.5 - radius;
         double growdy = picture.getHeight()*0.5 - radius;
         System.out.println(picture.getWidth() + " " + growdx);
