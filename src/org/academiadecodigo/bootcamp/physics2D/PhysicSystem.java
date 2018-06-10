@@ -2,7 +2,7 @@ package org.academiadecodigo.bootcamp.physics2D;
 
 import org.academiadecodigo.bootcamp.physics2D.Body2D.Body2D;
 
-public interface PhysicSystem {
+public interface PhysicSystem extends Iterable<Body2D> {
 
     /**
      * Adds a body to the system.

@@ -5,7 +5,7 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 public class SgfxViewport {
 
-    private final int PADDING = 10;
+    private final int PADDING = 0;
     private Vector2D viewportOrigin;
     private Vector2D dimension;
     private int width;
@@ -75,7 +75,4 @@ public class SgfxViewport {
         return coord;
     }
 
-    public double getScale() {
-        return scale;
-    }
 }

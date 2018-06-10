@@ -38,7 +38,6 @@ public class Body2DCollider implements Collider {
             return false;
         }
 
-        System.out.println("colliding");
         CircularBody2D circBody1 = (CircularBody2D) body1;
         CircularBody2D circBody2 = (CircularBody2D) body2;
 
@@ -213,16 +212,16 @@ public class Body2DCollider implements Collider {
         Vector2D normal = getCircleRectangleCollisionNormal(circle, rectangle);
 
         // Get perpendicular component of velocity of both bodies
-        Vector2D perpVelocity1 = new Vector2D(normal);
-        perpVelocity1.multiply( circle.getVelocity().dot(normal) );
-        Vector2D perpVelocity2 = new Vector2D(normal);
-        perpVelocity2.multiply( rectangle.getVelocity().dot(normal) );
+        Vector2D tangentVelocity1 = new Vector2D(normal);
+        tangentVelocity1.multiply( circle.getVelocity().dot(normal) );
+        Vector2D tangentVelocity2 = new Vector2D(normal);
+        tangentVelocity2.multiply( rectangle.getVelocity().dot(normal) );
 
         // Get tangent component of velocity of both bodies
-        Vector2D tangentVelocity1 = circle.getVelocity();
-        tangentVelocity1.subtract(perpVelocity1);
-        Vector2D tangentVelocity2 = rectangle.getVelocity();
-        tangentVelocity2.subtract(perpVelocity2);
+        Vector2D perpVelocity1 = circle.getVelocity();
+        perpVelocity1.subtract(perpVelocity1);
+        Vector2D perpVelocity2 = rectangle.getVelocity();
+        perpVelocity2.subtract(perpVelocity2);
 
         // Calculate final tangent, total velocities with restitution and apply them
         Vector2D newTangentVelocity1 = calculateCircularVelocity(
