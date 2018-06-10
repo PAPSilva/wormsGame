@@ -48,7 +48,7 @@ public class Game implements KeyboardHandler {
     private Picture winnerPic;
     private Picture creditsbg;
 
-    private static final double DELTA_TIME = 0.001;
+    private static final double DELTA_TIME = 0.020; // milliseconds
     private static final int FRAMERATE = 30; // TODO implement this
     private static final double MOVE_THRESHOLD = 1000.0;
     private static final double ARENA_MARGIN = 200;
@@ -103,7 +103,7 @@ public class Game implements KeyboardHandler {
 
         // Start system
         collider = new WormCollider(1.0E-8);
-        Vector2D gravity = new Vector2D(0.0, -980.0);
+        Vector2D gravity = new Vector2D(0.0, -9.80);
         system = new Body2DSystem(gravity, collider);
 
         // Initialize scenario
@@ -221,27 +221,25 @@ public class Game implements KeyboardHandler {
         while (!gameover) {
 
             allMoved = update();
+            System.out.println(allMoved);
 
             try {
-                Thread.sleep(1);
+                Thread.sleep(((long) DELTA_TIME) * 1000);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
 
             checkTurnEnd(allMoved);
 
-            // TODO check other conditions for end of game
             if (!player1.hasCharactersAvailable() || !player2.hasCharactersAvailable()) {
                 gameover = true;
-                continue;
             }
 
         }
 
         checkWinner();
         end();
-        waitAsecond();
-        gameOverScreen();
+
 
     }
 
@@ -293,6 +291,7 @@ public class Game implements KeyboardHandler {
         for (Body2D body : system) {
 
             if (body instanceof PainGiver) {
+                System.out.println("Projectiles in the air!");
                 return false;
             }
 
@@ -305,19 +304,26 @@ public class Game implements KeyboardHandler {
 
         // Inactivate selected if it is dead
         if(selectedCharacter.isDead()) {
-            System.out.println("I'm kamikze!!!");
             selectedCharacter.toggleActive();
         }
 
+        System.out.println("not dead");
+
         // Player still in his turn
         if ( selectedCharacter.isActive() ) {
+            System.out.println("Active");
             return;
         }
 
+        System.out.println("inactive");
+
         // Player fired but there still is movement in the area
-        if( ! allMoved ) {
+        if(!allMoved) {
+            System.out.println("Projectiles are still moving");
             return;
         }
+
+        System.out.println("No projectiles");
 
         // Deactivate current character
         if (selectedCharacter.isActive()) {
@@ -328,7 +334,6 @@ public class Game implements KeyboardHandler {
         activePlayer = (activePlayer == player1) ? player2 : player1;
         selectedCharacter = activePlayer.nextCharacter();
         selectedCharacter.toggleActive();
-
 
     }
 
@@ -347,7 +352,9 @@ public class Game implements KeyboardHandler {
         for(Body2D body : system) {
             system.remove(body);
         }
-        // TODO Canvas.getInstance().DELETE!
+
+        waitAsecond();
+        gameOverScreen();
 
     }
 
@@ -487,14 +494,14 @@ public class Game implements KeyboardHandler {
                     selectedCharacter.turnAim();
                     aimSide = KeyboardEvent.KEY_LEFT;
                 }
-                selectedCharacter.changeMomentum(new Vector2D(-1000.0, 0.0));
+                selectedCharacter.changeMomentum(new Vector2D(-100.0, 0.0));
                 break;
             case KeyboardEvent.KEY_RIGHT:
                 if (aimSide == KeyboardEvent.KEY_LEFT) {
                     selectedCharacter.turnAim();
                     aimSide = KeyboardEvent.KEY_RIGHT;
                 }
-                selectedCharacter.changeMomentum(new Vector2D(1000.0, 0.0));
+                selectedCharacter.changeMomentum(new Vector2D(100.0, 0.0));
                 break;
             case KeyboardEvent.KEY_UP:
                 selectedCharacter.changeAim(0.087);
@@ -503,7 +510,7 @@ public class Game implements KeyboardHandler {
                 selectedCharacter.changeAim(-0.087);
                 break;
             case KeyboardEvent.KEY_M:
-                selectedCharacter.changeMomentum(new Vector2D(0.0, 10000.0));
+                selectedCharacter.changeMomentum(new Vector2D(0.0, 1000.0));
                 break;
             case KeyboardEvent.KEY_SPACE:
                 if(!gameStarted && !inInstructions) {

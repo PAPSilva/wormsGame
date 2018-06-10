@@ -36,6 +36,7 @@ public class Canvas {
         frame.setMinimumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
         frame.setMaximumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
         frame.setVisible(true);
+
     }
 
     /**

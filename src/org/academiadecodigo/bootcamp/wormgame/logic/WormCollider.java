@@ -12,7 +12,7 @@ import java.util.Iterator;
 
 public class WormCollider implements Collider {
 
-    private final int IMPULSE_MODIFIER = 1000000;
+    private final int IMPULSE_MODIFIER = 10000;
     private Body2DCollider bodyCollider;
 
     public WormCollider(double tiny) {
