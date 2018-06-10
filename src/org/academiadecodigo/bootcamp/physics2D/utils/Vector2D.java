@@ -65,4 +65,8 @@ public class Vector2D extends Vector {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public String toString() {
+        return "(" + x() + "," + y() + ")";
+    }
 }
