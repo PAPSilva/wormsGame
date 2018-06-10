@@ -45,7 +45,7 @@ public class Game implements KeyboardHandler {
 
     private static final double DELTA_TIME = 0.001;
     private static final int FRAMERATE = 30; // TODO implement this
-    private static final double MOVE_THRESHOLD = 10.0;
+    private static final double MOVE_THRESHOLD = 1000.0;
 
     public Game() {
 
@@ -171,7 +171,7 @@ public class Game implements KeyboardHandler {
         simWindow.show();
 
         gameover = false;
-        boolean allMoved = true;
+        boolean allMoved = false;
         
 
         if (!selectedCharacter.isActive()) {
@@ -183,7 +183,7 @@ public class Game implements KeyboardHandler {
             allMoved = update();
 
             try {
-                Thread.sleep(1);
+                //Thread.sleep(1);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -226,32 +226,29 @@ public class Game implements KeyboardHandler {
         }
 
         // Check if all projectiles moved
-        boolean allMoved = true;
         for (Body2D body : system) {
 
-            if (!(body instanceof PainGiver)) {
-                continue;
+            if (body instanceof PainGiver) {
+                System.out.println("Projectile still moving");
+                return false;
             }
-
-            PainGiver painGiver = (PainGiver) body;
-            if (painGiver.getPosition().norm() > MOVE_THRESHOLD) {
-                allMoved = false;
-                break;
-            }
-
-            // TODO check end of game
-
 
         }
-        return allMoved;
+        System.out.println("All projectiles moved");
+        return true;
 
     }
 
     private void checkTurnEnd(boolean allMoved) {
 
-        // End turn conditions
-        if (!activePlayer.fired()) {
+        // Player still in his turn
+        if ( selectedCharacter.isActive() ) {
             return;
+        }
+
+        // Player fired but still not
+        if( !allmoved && selectedCharacter.isActive() ) {
+
         }
 
         // Deactivate current character
@@ -262,14 +259,15 @@ public class Game implements KeyboardHandler {
 
         // Select next player and its character
         activePlayer = (activePlayer == player1) ? player2 : player1;
-        selectedCharacter = activePlayer.getSelectedCharacter();
+        //selectedCharacter = activePlayer.getSelectedCharacter();
 
         // Ensure this character is inactivated and select the next one
         // TODO repeated code
-        if (selectedCharacter.isActive()) {
-            selectedCharacter.toggleActive();
-        }
-        activePlayer.nextCharacter().toggleActive();
+        //if (selectedCharacter.isActive()) {
+        //    selectedCharacter.toggleActive();
+        //}
+        selectedCharacter = activePlayer.nextCharacter();
+        //selectedCharacter.toggleActive();
 
 
     }
@@ -460,9 +458,9 @@ public class Game implements KeyboardHandler {
                     gameOverPic.delete();
                     openMenu();
                 }
-                if (activePlayer.fired()) {
-                    break;
-                }
+                //if (activePlayer.fired()) {
+                //    break;
+                //}
                 Projectile projectile = selectedCharacter.fire();
                 if (projectile == null) {
                     break;
@@ -471,7 +469,7 @@ public class Game implements KeyboardHandler {
                 sgfxProjectile.setVelocity(projectile.getVelocity());
                 sgfxProjectile.flip();
                 system.add(sgfxProjectile);
-                //activePlayer.toggleFired(); // TODO Uncomment for production
+                selectedCharacter.toggleActive(); // TODO Uncomment for production
                 break;
             case KeyboardEvent.KEY_N:
                 Fireable fireable = activePlayer.nextWeapon(selectedCharacter.getWeapon());
