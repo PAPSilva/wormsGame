@@ -115,4 +115,12 @@ public class SgfxCharacter extends Character implements Drawable {
     @Override
     public void remove() {}
 
+
+    public void setDeathPic() {
+        picture.delete();
+        picture.load("resources/skull.png");
+        picture.draw();
+    }
+
+
 }

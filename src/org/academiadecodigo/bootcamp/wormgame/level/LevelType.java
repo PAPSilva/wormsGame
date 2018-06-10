@@ -11,13 +11,17 @@ import java.util.List;
 
 public enum LevelType {
     LEVEL_RUIN("resources/levels/ruinsField.png",
-               "resources/levels/ruinsField.obs",
-               "resources/levels/ruinsField.spw",
-               800);
+            "resources/levels/ruinsField.obs",
+            "resources/levels/ruinsField.spw",
+            800),
+    LEVEL_MARIO("resources/levels/marioField.jpg",
+            "resources/levels/marioField.obs",
+            "resources/levels/marioField.spw",
+            800);
     //LEVEL_MOUNTAIN("resources/levels/mountainsField.png",
     //               "resources/levels/mountainsField.obs",
     //               "resources/levels/mountainsField.spw",
-    //               700);
+    //               800);
 
     private String imagePath;
     private String obstaclesPath;
@@ -38,7 +42,7 @@ public enum LevelType {
     }
 
     public static LevelType random() {
-        return values()[ (int) (Math.random() * values().length) ];
+        return values()[(int) (Math.random() * values().length)];
     }
 
     public List<RectangularBody2D> obstacles() {
@@ -49,18 +53,18 @@ public enum LevelType {
 
         Iterator<List<Vector2D>> it = vectors.iterator();
         Iterator<Vector2D> it2;
-        while( it.hasNext() ) {
+        while (it.hasNext()) {
 
             it2 = it.next().iterator();
-            if(!it2.hasNext()) {
+            if (!it2.hasNext()) {
                 continue;
             }
 
             Vector2D current = it2.next();
             Vector2D next;
-            while( it2.hasNext() ) {
+            while (it2.hasNext()) {
                 next = it2.next();
-                obstacles.add( constructRectangle(current, next) );
+                obstacles.add(constructRectangle(current, next));
                 current = next;
             }
 
@@ -88,7 +92,7 @@ public enum LevelType {
 
     }
 
-    public List<Vector2D> spawnSites () {
+    public List<Vector2D> spawnSites() {
 
         List<List<Vector2D>> vectors = DoubleReader.load(spawnSitesPath);
 
@@ -98,10 +102,10 @@ public enum LevelType {
         Iterator<Vector2D> it2;
         Vector2D yInverter = new Vector2D(1.0, -1.0);
         Vector2D current;
-        while( it.hasNext() ) {
+        while (it.hasNext()) {
 
             it2 = it.next().iterator();
-            while( it2.hasNext() ) {
+            while (it2.hasNext()) {
                 current = it2.next();
                 current.multiply(yInverter);
                 current.add(0, imageHeight);

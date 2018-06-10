@@ -1,5 +1,6 @@
 package org.academiadecodigo.bootcamp.wormgame.actors;
 
+import org.academiadecodigo.bootcamp.gfx.SgfxCharacter;
 import org.academiadecodigo.bootcamp.physics2D.Body2D.CircularBody2D;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.wormgame.sound.SoundFX;
@@ -15,7 +16,7 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
 
     public Character(double mass, double radius, Vector2D position, int health, int minDamage) {
 
-        super(mass,radius, position);
+        super(mass, radius, position);
         this.health = health;
         this.minDamage = minDamage;
         this.aim = 0;
@@ -29,9 +30,9 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
     }
 
     @Override
-    public boolean suffer(int sufferDamage){
+    public boolean suffer(int sufferDamage) {
 
-        if(sufferDamage > minDamage && health > 0) {
+        if (sufferDamage > minDamage && health > 0) {
             health -= (sufferDamage < health) ? sufferDamage : health;
             return true;
         }
@@ -42,6 +43,11 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
 
     @Override
     public boolean isDead() {
+
+        if (health <= 0) {
+            ((SgfxCharacter) this).setDeathPic();
+        }
+
         return health <= 0;
     }
 
@@ -80,10 +86,10 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
     @Override
     public void changeAim(double angle) {
 
-        if(aim + angle < Math.PI * 0.45 && aim + angle > Math.PI * - 0.45) {
+        if (aim + angle < Math.PI * 0.45 && aim + angle > Math.PI * -0.45) {
             aim += angle;
         }
-        if(aim - angle > Math.PI * 0.55 && aim - angle < Math.PI * 1.45) {
+        if (aim - angle > Math.PI * 0.55 && aim - angle < Math.PI * 1.45) {
             aim -= angle;
         }
 
