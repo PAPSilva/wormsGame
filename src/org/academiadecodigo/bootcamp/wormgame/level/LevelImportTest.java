@@ -23,7 +23,7 @@ public class LevelImportTest {
 
     private LevelImportTest() {
 
-        SgfxViewport viewport = new SgfxViewport(1000, 700, 1);
+        SgfxViewport viewport = new SgfxViewport(1200, 800, 1);
         Collider collider = new Body2DCollider(1.0E-8);
         Body2DSystem system = new Body2DSystem(new Vector2D(0.0,0.0), collider);
 
