@@ -1,12 +1,8 @@
 
 package org.academiadecodigo.bootcamp.gfx;
 
-import org.academiadecodigo.bootcamp.wormgame.Character;
+import org.academiadecodigo.bootcamp.wormgame.actors.Character;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
-import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class SgfxPicture extends Character implements Drawable {

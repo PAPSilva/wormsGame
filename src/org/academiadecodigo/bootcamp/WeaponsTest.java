@@ -1,13 +1,6 @@
 package org.academiadecodigo.bootcamp;
 
 import org.academiadecodigo.bootcamp.gfx.SgfxViewport;
-import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
-import org.academiadecodigo.bootcamp.wormgame.*;
-import org.academiadecodigo.bootcamp.wormgame.Character;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
-
-import java.awt.*;
 
 /**
  * Created by codecadet on 03/06/2018.

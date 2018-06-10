@@ -1,4 +1,4 @@
-package org.academiadecodigo.bootcamp.wormgame;
+package org.academiadecodigo.bootcamp.wormgame.tests;
 
 import org.academiadecodigo.bootcamp.gfx.SgfxCharacter;
 import org.academiadecodigo.bootcamp.gfx.SgfxProjectile;
@@ -8,6 +8,10 @@ import org.academiadecodigo.bootcamp.physics2D.Body2DSystem;
 import org.academiadecodigo.bootcamp.physics2D.PhysicSystem;
 import org.academiadecodigo.bootcamp.physics2D.collidable.Collider;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
+import org.academiadecodigo.bootcamp.wormgame.actors.Character;
+import org.academiadecodigo.bootcamp.wormgame.actors.Projectile;
+import org.academiadecodigo.bootcamp.wormgame.logic.Player;
+import org.academiadecodigo.bootcamp.wormgame.logic.WormCollider;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -107,7 +111,7 @@ public class TestPainGivers {
         // To substitute the createCharacters.
         private Character createCharacter() {
 
-            return new SgfxCharacter(30, 20, new Vector2D(Math.random() * 400, 50), 100, 1, simWindow);
+            return new SgfxCharacter(30, 20, new Vector2D(Math.random() * 400, 50), 100, 1, "soldier.png", simWindow);
 
         }
 

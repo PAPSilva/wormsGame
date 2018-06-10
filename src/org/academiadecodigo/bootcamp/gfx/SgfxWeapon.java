@@ -1,11 +1,7 @@
 package org.academiadecodigo.bootcamp.gfx;
 
-import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
-import org.academiadecodigo.bootcamp.wormgame.Fireable;
-import org.academiadecodigo.bootcamp.wormgame.Projectile;
-import org.academiadecodigo.bootcamp.wormgame.Weapon;
-import org.academiadecodigo.bootcamp.wormgame.WeaponType;
-import org.academiadecodigo.simplegraphics.graphics.Color;
+import org.academiadecodigo.bootcamp.wormgame.actors.Weapon;
+import org.academiadecodigo.bootcamp.wormgame.actors.WeaponType;
 import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 

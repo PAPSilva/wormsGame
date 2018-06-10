@@ -1,7 +1,6 @@
-package org.academiadecodigo.bootcamp.wormgame;
+package org.academiadecodigo.bootcamp.wormgame.actors;
 
-import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
-import org.academiadecodigo.simplegraphics.pictures.Picture;
+import org.academiadecodigo.bootcamp.wormgame.actors.ProjectileType;
 
 /**
  * Created by codecadet on 03/06/2018.

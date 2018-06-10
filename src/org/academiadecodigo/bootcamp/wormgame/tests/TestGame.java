@@ -1,5 +1,7 @@
-package org.academiadecodigo.bootcamp.wormgame;
+package org.academiadecodigo.bootcamp.wormgame.tests;
 
+
+import org.academiadecodigo.bootcamp.wormgame.logic.Game;
 
 /**
  * Created by codecadet on 05/06/2018.

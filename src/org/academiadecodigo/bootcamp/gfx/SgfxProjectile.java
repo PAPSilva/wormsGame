@@ -1,8 +1,8 @@
 package org.academiadecodigo.bootcamp.gfx;
 
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
-import org.academiadecodigo.bootcamp.wormgame.Projectile;
-import org.academiadecodigo.bootcamp.wormgame.ProjectileType;
+import org.academiadecodigo.bootcamp.wormgame.actors.Projectile;
+import org.academiadecodigo.bootcamp.wormgame.actors.ProjectileType;
 import org.academiadecodigo.bootcamp.wormgame.sound.SoundFX;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
