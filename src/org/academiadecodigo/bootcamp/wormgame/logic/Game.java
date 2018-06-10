@@ -46,6 +46,7 @@ public class Game implements KeyboardHandler {
     private Collider collider;
     private boolean player1Wins;
     private Picture winnerPic;
+    private Picture creditsbg;
 
     private static final double DELTA_TIME = 0.001;
     private static final int FRAMERATE = 30; // TODO implement this
@@ -336,6 +337,9 @@ public class Game implements KeyboardHandler {
 
         gameover = true;
 
+        creditsbg = new Picture();
+        creditsbg.load("resources/creditsbg.png");
+        creditsbg.draw();
         gameOverPic = new Picture();
         gameOverPic.load("resources/credits.png");
         gameOverPic.draw();
@@ -514,6 +518,7 @@ public class Game implements KeyboardHandler {
                     gameover = false;
                     gameOverPic.delete();
                     winnerPic.delete();
+                    creditsbg.delete();
                     openMenu();
                 }
                 //if (activePlayer.fired()) {
