@@ -10,9 +10,9 @@ public class Main {
 
         game.openMenu();
 
-        game.start();
+        //game.start();
 
-        System.out.println("Game Over");
+        System.out.println("Game Over123");
 
     }
 

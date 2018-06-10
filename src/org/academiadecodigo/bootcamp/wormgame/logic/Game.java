@@ -61,6 +61,7 @@ public class Game implements KeyboardHandler {
 
 
     public void openMenu() {
+
         gameStarted = false;
         inInstructions = false;
 
@@ -70,19 +71,13 @@ public class Game implements KeyboardHandler {
         menuPic.load("resources/startmenu.png");
         menuPic.draw();
 
-        while (!inInstructions) {
-
-            waitAsecond();
-
-        }
-
         while (!gameStarted) {
-
             waitAsecond();
-
         }
 
         init(2);
+
+        start();
 
     }
 
@@ -403,6 +398,7 @@ public class Game implements KeyboardHandler {
 
     }
 
+
     private void hideInstructions() {
 
         instructions.delete();
@@ -521,11 +517,13 @@ public class Game implements KeyboardHandler {
                     break;
                 }
                 if (gameover) {
+                    System.out.println("I'm ending it");
                     gameover = false;
                     gameOverPic.delete();
                     winnerPic.delete();
                     creditsbg.delete();
-                    openMenu();
+                    //openMenu();
+                    break;
                 }
                 Projectile projectile = selectedCharacter.fire();
                 if (projectile == null) {
@@ -569,7 +567,7 @@ public class Game implements KeyboardHandler {
     public void waitAsecond() {
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(10);
         } catch (InterruptedException e) {
             System.err.println(e.getMessage());
         }
