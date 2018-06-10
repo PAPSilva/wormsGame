@@ -2,6 +2,7 @@ package org.academiadecodigo.bootcamp.wormgame.actors;
 
 import org.academiadecodigo.bootcamp.physics2D.Body2D.CircularBody2D;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
+import org.academiadecodigo.bootcamp.wormgame.sound.SoundFX;
 
 public class Character extends CircularBody2D implements Hittable, Shooter, Controllable {
 
@@ -69,7 +70,9 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
 
     @Override
     public Projectile fire() {
+        SoundFX.playOnce("sounds/shooting.wav");
         return currentWeapon.fire(getPosition(), aim);
+
     }
 
     @Override

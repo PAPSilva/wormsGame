@@ -42,6 +42,7 @@ public class Game implements KeyboardHandler {
     private Picture instructions;
     private boolean gameover = false;
     private boolean inInstructions = false;
+    private SoundFX gamesound;
 
     private static final double DELTA_TIME = 0.001;
     private static final int FRAMERATE = 30; // TODO implement this
@@ -83,7 +84,13 @@ public class Game implements KeyboardHandler {
 
     public void init(int numOfChars) {
 
-        SoundFX.play("sounds/game.wav");
+        gamesound = new SoundFX("sounds/game.wav");
+        gamesound.play();
+        /*if(!gamesound.isPlaying()){
+            gamesound = new SoundFX("sounds/game.wav");
+            gamesound.play();
+        }
+        */
 
         // Load random level
         LevelType levelType = LevelType.random();
