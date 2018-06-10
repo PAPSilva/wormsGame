@@ -87,8 +87,13 @@ public class Player {
 
     }
 
-    public boolean hasCharacters() {
-        return characters.size() > 0;
+    public boolean hasCharactersAvailable() {
+        for(Character character : characters) {
+            if(!character.isDead()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void toggleFired() {

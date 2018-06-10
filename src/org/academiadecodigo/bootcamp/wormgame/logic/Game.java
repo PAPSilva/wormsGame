@@ -78,7 +78,7 @@ public class Game implements KeyboardHandler {
 
         }
 
-        init(3);
+        init(1);
 
     }
 
@@ -215,7 +215,7 @@ public class Game implements KeyboardHandler {
             allMoved = update();
 
             try {
-                //Thread.sleep(1);
+                Thread.sleep(1);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -223,7 +223,7 @@ public class Game implements KeyboardHandler {
             checkTurnEnd(allMoved);
 
             // TODO check other conditions for end of game
-            if (!activePlayer.hasCharacters() || !activePlayer.hasCharacters()) {
+            if (!player1.hasCharactersAvailable() || !player2.hasCharactersAvailable()) {
                 gameover = true;
                 continue;
             }
