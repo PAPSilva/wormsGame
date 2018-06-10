@@ -37,7 +37,9 @@ public class Game implements KeyboardHandler {
     private boolean gameStarted = false;
     private Picture menuPic;
     private Picture gameOverPic;
-    boolean gameover = false;
+    private Picture instructions;
+    private boolean gameover = false;
+    private boolean inInstructions = false;
 
     private static final double DELTA_TIME = 0.001;
     private static final int FRAMERATE = 30; // TODO implement this
@@ -45,19 +47,26 @@ public class Game implements KeyboardHandler {
 
     public Game() {
 
-        simWindow = new SgfxViewport(1000, 700, 1.0);
+        simWindow = new SgfxViewport(1200, 800, 1.0);
 
     }
 
 
     public void openMenu() {
         gameStarted = false;
+        inInstructions = false;
 
         initKeyboard();
 
         menuPic = new Picture();
-        menuPic.load("resources/menupic.png");
+        menuPic.load("resources/startmenu.png");
         menuPic.draw();
+
+        while (!inInstructions) {
+
+            waitAsecond();
+
+        }
 
         while (!gameStarted) {
 
@@ -270,7 +279,7 @@ public class Game implements KeyboardHandler {
         gameover = true;
 
         gameOverPic = new Picture();
-        gameOverPic.load("resources/menupic.png");
+        gameOverPic.load("startmenu.png");
         gameOverPic.draw();
 
         while (gameover) {
@@ -305,6 +314,25 @@ public class Game implements KeyboardHandler {
         }
 
         return characters;
+
+    }
+
+    private void showInstructions() {
+
+        if(inInstructions) {
+            return;
+        }
+        instructions = new Picture();
+        instructions.load("resources/instructions.png");
+        instructions.draw();
+        inInstructions = true;
+
+    }
+
+    private void hideInstructions() {
+
+        instructions.delete();
+        inInstructions = false;
 
     }
 
@@ -364,6 +392,11 @@ public class Game implements KeyboardHandler {
         toMenu.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(toMenu);
 
+        KeyboardEvent instructionsIn = new KeyboardEvent();
+        instructionsIn.setKey(KeyboardEvent.KEY_I);
+        instructionsIn.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(instructionsIn);
+
     }
 
 
@@ -372,7 +405,7 @@ public class Game implements KeyboardHandler {
 
 
         // Move only when active
-        if (gameStarted && !gameover) {
+        if (gameStarted && !gameover && !inInstructions) {
             if (!selectedCharacter.isActive()) {
                 return;
             }
@@ -404,9 +437,14 @@ public class Game implements KeyboardHandler {
                 selectedCharacter.changeMomentum(new Vector2D(0.0, 10000.0));
                 break;
             case KeyboardEvent.KEY_SPACE:
-                if (!gameStarted) {
-                    gameStarted = true;
+                if(!gameStarted && !inInstructions) {
                     menuPic.delete();
+                    showInstructions();
+                    break;
+                }
+                if (!gameStarted) {
+                    hideInstructions();
+                    gameStarted = true;
                     break;
                 }
                 if (gameover) {
@@ -433,11 +471,18 @@ public class Game implements KeyboardHandler {
                 weaponUI.removeWeapon();
                 weaponUI = new SgfxWeapon(selectedCharacter.getWeapon().getWeaponType(), simWindow);
                 break;
-
-            case KeyboardEvent.KEY_Q:
-                gameover = true;
-                openMenu();
+            case KeyboardEvent.KEY_Q: //TODO Q not working yet
+                //gameover = true;
+                //openMenu();
                 break;
+            case KeyboardEvent.KEY_I:
+                if(!inInstructions) {
+                    showInstructions();
+                    return;
+                }
+                hideInstructions();
+                break;
+
         }
 
     }
@@ -445,11 +490,6 @@ public class Game implements KeyboardHandler {
 
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
-
-        // Move only when active
-        if (!selectedCharacter.isActive()) {
-            return;
-        }
 
     }
 

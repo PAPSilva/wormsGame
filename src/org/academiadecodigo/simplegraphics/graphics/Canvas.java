@@ -16,8 +16,8 @@ import java.util.ArrayList;
  * Container of shapes
  */
 public class Canvas {
-    private static final int MIN_WIDTH = 1000;
-    private static final int MIN_HEIGHT = 700;
+    private static final int MIN_WIDTH = 1200;
+    private static final int MIN_HEIGHT = 800;
     private static final int MARGIN = 10;
     private static final int LOCATION_OFFSET = 120;
     private static Canvas canvas = new Canvas();
