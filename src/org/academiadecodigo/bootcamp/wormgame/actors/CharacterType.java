@@ -2,10 +2,10 @@ package org.academiadecodigo.bootcamp.wormgame.actors;
 
 public enum CharacterType {
 
-    SOLDIER_GREEN("soldier_skins/soldier_green.png"),
-    SOLDIER_RED("soldier_skins/soldier_red.png"),
-    SOLDIER_CYAN("soldier_skins/soldier_cyan.png"),
-    SOLDIER_YELLOW("soldier_skins/soldier_yellow.png");
+    SOLDIER_GREEN("resources/soldier_skins/soldier_green.png"),
+    SOLDIER_RED("resources/soldier_skins/soldier_red.png"),
+    SOLDIER_CYAN("resources/soldier_skins/soldier_cyan.png"),
+    SOLDIER_YELLOW("resources/soldier_skins/soldier_yellow.png");
 
     private String imagePath;
 

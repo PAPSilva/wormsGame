@@ -13,7 +13,7 @@ public class SgfxCharacter extends Character implements Drawable {
     private Picture picture;
     private SgfxViewport viewport;
     private boolean active = false;
-    private Picture aim = new Picture(0.0,0.0,"crosshair.png");
+    private Picture aim = new Picture(0.0,0.0,"resources/crosshair.png");
     private final double MUZZLE = 40.0;
 
     // Constructor

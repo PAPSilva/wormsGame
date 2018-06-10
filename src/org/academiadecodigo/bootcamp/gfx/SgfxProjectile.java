@@ -23,7 +23,7 @@ public class SgfxProjectile extends Projectile implements Drawable {
         double radius = projectileType.getRadius();
         topLeftCorner.add(-radius, radius);
         Vector2D viewCoord = viewport.toViewportCoordinates(topLeftCorner);
-        picture = new Picture(viewCoord.x(),viewCoord.y(),"bullet.png");
+        picture = new Picture(viewCoord.x(),viewCoord.y(),"resources/bullet.png");
         double growdx = picture.getWidth()*0.5 - radius;
         double growdy = picture.getHeight()*0.5 - radius;
         picture.grow(-growdx, -growdy);

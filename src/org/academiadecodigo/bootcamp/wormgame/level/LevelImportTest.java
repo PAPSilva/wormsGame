@@ -57,7 +57,7 @@ public class LevelImportTest {
 
             Vector2D position = spawnIt.next();
             System.out.println(position);
-            SgfxCharacter character = new SgfxCharacter(20, 20, position,100, 1, "soldier.png", viewport);
+            SgfxCharacter character = new SgfxCharacter(20, 20, position,100, 1, "resources/soldier.png", viewport);
             system.add(character);
 
         }

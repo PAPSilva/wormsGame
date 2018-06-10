@@ -63,7 +63,7 @@ public class Game implements KeyboardHandler {
         initKeyboard();
 
         menuPic = new Picture();
-        menuPic.load("startmenu.png");
+        menuPic.load("resources/startmenu.png");
         menuPic.draw();
 
         while (!inInstructions) {
@@ -324,7 +324,7 @@ public class Game implements KeyboardHandler {
         gameover = true;
 
         gameOverPic = new Picture();
-        gameOverPic.load("startmenu.png");
+        gameOverPic.load("resources/startmenu.png");
         gameOverPic.draw();
 
         while (gameover) {
