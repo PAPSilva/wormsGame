@@ -8,6 +8,8 @@ import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 import org.academiadecodigo.bootcamp.wormgame.actors.Hittable;
 import org.academiadecodigo.bootcamp.wormgame.actors.PainGiver;
 
+import java.util.Iterator;
+
 public class WormCollider implements Collider {
 
     private final int IMPULSE_MODIFIER = 1000000;
@@ -60,18 +62,18 @@ public class WormCollider implements Collider {
 
     }
 
-    public boolean collisionWithBoundaries(Body2D body1, Body2D body2) {
+    public boolean collisionWithDeathGiver(Body2D body, Iterator<Body2D> iterator) {
 
-        boolean result = false;
+        while(iterator.hasNext()) {
 
-        if(body1 instanceof Hittable && body2 instanceof DeathGiver) {
+            if (body instanceof Hittable && iterator.next() instanceof DeathGiver) {
 
-            ((Hittable) body1).suffer(9999);
-            result = true;
+                return true;
+
+            }
 
         }
-
-        return result;
+        return false;
 
     }
 

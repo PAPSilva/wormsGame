@@ -257,14 +257,20 @@ public class Game implements KeyboardHandler {
         }
 
 
-        // Check Collision with Boundaries
+        // Check Collision with Boundaries TODO check collisions with boundaries
         for(Body2D body : system) {
 
-            //if(((WormCollider) collider).collisionWithBoundaries()) {
+            if(!(collider instanceof WormCollider)) {
+                break;
+            }
 
+            //WormCollider wormCollider = (WormCollider) collider;
+
+            //if(wormCollider.collisionWithDeathGiver(body, system.iterator())) {
+          //    system.remove(body);
             //}
-
         }
+
 
 
         // Check if all projectiles moved
