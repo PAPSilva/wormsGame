@@ -33,7 +33,7 @@ public class TestPhysicSystem {
 
         // Box and circles
 
-        SgfxRectangularBody2D rectangle1 = new SgfxRectangularBody2D(20.0, 150.0, 1.0, new Vector2D(200.0, 150.0), simWindow);
+        SgfxRectangularBody2D rectangle1 = new SgfxRectangularBody2D(20.0, 150.0, 10.0, new Vector2D(200.0, 150.0), simWindow);
         rectangle1.toggleMovable();
         //rectangle1.rotate(-0.75);
         System.out.println(rectangle1.getPosition());

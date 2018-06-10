@@ -114,7 +114,15 @@ public class Body2DSystem implements PhysicSystem {
     private void avoidSinking(int index) {
 
         for(int i=index+1; i < bodies.size(); i++) {
+
+            if(!collider.checkCollision(bodies.get(index), bodies.get(i))) {
+                continue;
+            }
+
             collider.solveSinking(bodies.get(index), bodies.get(i));
+
+            if(collider.checkCollision(bodies.get(index), bodies.get(i)))
+                System.exit(1);
         }
 
     }
