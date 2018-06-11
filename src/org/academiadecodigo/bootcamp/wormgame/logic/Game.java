@@ -88,11 +88,6 @@ public class Game implements KeyboardHandler {
 
         gamesound = new SoundFX("sounds/game.wav");
         gamesound.play();
-        /*if(!gamesound.isPlaying()){
-            gamesound = new SoundFX("sounds/game.wav");
-            gamesound.play();
-        }
-        */
 
         // Load random level
         LevelType levelType = LevelType.random();
