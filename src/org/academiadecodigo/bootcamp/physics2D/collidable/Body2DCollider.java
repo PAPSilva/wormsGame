@@ -102,7 +102,6 @@ public class Body2DCollider implements Collider {
         }
 
         // Point is only inside if it is below all sides
-        if(penetrations == polygonCorners.length) System.out.println("COLLIDED!");
         return penetrations == polygonCorners.length;
 
     }
@@ -219,7 +218,6 @@ public class Body2DCollider implements Collider {
 
         // Get normal (unit) collision vector
         Vector2D normal = getCircleRectangleCollisionNormal(circle, rectangle);
-        System.out.println("normal = " + normal);
 
         // Get perpendicular component of velocity of both bodies
         Vector2D tangentVelocity1 = new Vector2D(normal);
@@ -238,12 +236,10 @@ public class Body2DCollider implements Collider {
         double restitutionCoeff = Math.min(circle.getRestitution(), rectangle.getRestitution());
         Vector2D newTangentVelocity1 = calculateCircularVelocity(
                 mass1, mass2, tangentVelocity1, tangentVelocity2, restitutionCoeff);
-        //newTangentVelocity1.multiply(circle.getRestitution());
         Vector2D finalVelocity1 = new Vector2D(perpVelocity1);
         finalVelocity1.add(newTangentVelocity1);
         Vector2D newTangentVelocity2 = calculateCircularVelocity(
                 mass2, mass1, tangentVelocity2, tangentVelocity1, restitutionCoeff);
-        //newTangentVelocity2.multiply(rectangle.getRestitution());
         Vector2D finalVelocity2 = new Vector2D(perpVelocity2);
         finalVelocity2.add(newTangentVelocity2);
 
@@ -254,9 +250,7 @@ public class Body2DCollider implements Collider {
                 rectangle.getImpulse(finalVelocity2) : circle.getImpulse(finalVelocity1);
         impulse1.divide(dt);
         impulse2.divide(dt);
-        Vector2D[] impulses = {impulse1, impulse2};
 
-        System.out.println("Impulse! " + impulse1 + impulse2);
         return impulse1;
 
     }
@@ -309,8 +303,6 @@ public class Body2DCollider implements Collider {
         closestPoint.add(rectangle.getPosition());
         Vector2D normal = new Vector2D(circle.getPosition());
         normal.subtract(closestPoint);
-
-        System.out.println("closest" + closestPoint);
 
         if( normal.norm() <= circle.getRadius()+TINY ) {
             normal.divide(normal.norm());

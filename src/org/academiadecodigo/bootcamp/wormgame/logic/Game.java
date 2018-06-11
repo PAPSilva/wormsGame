@@ -119,11 +119,7 @@ public class Game implements KeyboardHandler {
             sgfxBody.rotate(body.getOrientation());
             sgfxBody.toggleMovable();
 
-            system.add(sgfxBody); // TODO this is to see. Add it.next() directly.
-
-            //RectangularBody2D rectBody = obstacleIterator.next();
-            //body.toggleMovable();
-            //system.add(body);
+            system.add(sgfxBody);
 
         }
         background.draw();
@@ -218,15 +214,14 @@ public class Game implements KeyboardHandler {
             selectedCharacter.toggleActive();
         }
 
-        long time = System.nanoTime() * 1000;
+        long time = System.currentTimeMillis();
         long framePeriod = (long) (1.0 / (double) FRAMERATE);
         while (!gameover) {
 
             allMoved = update();
 
-
             try {
-                Thread.sleep(framePeriod - (System.nanoTime() * 1000 - time));
+                Thread.sleep(1);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -250,7 +245,7 @@ public class Game implements KeyboardHandler {
     private boolean update() {
 
         // Run physic system
-        system.update( 1.0 / (double) FRAMERATE, DELTA_TIME);
+        system.update(DELTA_TIME, DELTA_TIME);
 
         // Check if Hittable PainGivers are dead, remove them if so.
         for (Body2D body : system) {
@@ -267,7 +262,7 @@ public class Game implements KeyboardHandler {
         }
 
 
-        // Check Collision with Boundaries TODO check collisions with boundaries
+        // Check Collision with Boundaries
         for(Body2D body1 : system) {
 
             if(!(body1 instanceof DeathGiver)) {
@@ -353,7 +348,7 @@ public class Game implements KeyboardHandler {
         gameover = true;
 
         creditsBackground = new Picture();
-        creditsBackground.load("resources/creditsBackground.png");
+        creditsBackground.load("resources/creditsbg.png");
         creditsBackground.draw();
         gameOverPic = new Picture();
         gameOverPic.load("resources/credits.png");
