@@ -17,7 +17,6 @@ public class Player {
     private List<Fireable> fireables = new LinkedList<>();
     private List<Character> characters = new LinkedList<>();
     private Character selectedCharacter = null;
-    private boolean fired = false;
 
     public Player(String name) {
 
@@ -27,20 +26,8 @@ public class Player {
 
     }
 
-//    private void addFireables() {
-//
-//        for (WeaponType weaponType : WeaponType.values()) {
-//            fireables.add(new Weapon(weaponType));
-//        }
-//
-//    }
-
     public void addFireable(Fireable fireable) {
         fireables.add(fireable);
-    }
-
-    public List<Fireable> getFireables() {
-        return fireables;
     }
 
     public Fireable nextWeapon(Fireable fireable) {
@@ -97,18 +84,6 @@ public class Player {
             }
         }
         return false;
-    }
-
-    public void toggleFired() {
-        fired = !fired;
-    }
-
-    public boolean fired() {
-        return fired;
-    }
-
-    private String getName() {
-        return name;
     }
 
 }

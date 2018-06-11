@@ -124,38 +124,41 @@ public class Body2DCollider implements Collider {
 
 
     @Override
-    public Vector2D[] solveCollision(Body2D body1, Body2D body2, double dt) {
+    public Vector2D solveCollision(Body2D body1, Body2D body2, double dt) {
+
+        Vector2D forces = null;
 
         // Solve the case of two circles colliding
         if((body1 instanceof CircularBody2D) && (body2 instanceof CircularBody2D)) {
             CircularBody2D circBody1 = (CircularBody2D) body1;
             CircularBody2D circBody2 = (CircularBody2D) body2;
-            Vector2D[] forces = solveCircleCircleCollision(circBody1, circBody2, dt);
-            return forces;
+            forces = solveCircleCircleCollision(circBody1, circBody2, dt);
         }
 
         // Solve the case for a circle and a rectangle colliding
         if(body1 instanceof CircularBody2D && body2 instanceof RectangularBody2D) {
             CircularBody2D circle = (CircularBody2D) body1;
             RectangularBody2D rectangle = (RectangularBody2D) body2;
-            Vector2D[] forces = solveCircleRectangleCollision(circle, rectangle, dt, true);
-            return forces;
+            forces = solveCircleRectangleCollision(circle, rectangle, dt, true);
         }
         if(body1 instanceof RectangularBody2D && body2 instanceof CircularBody2D) {
             CircularBody2D circle = (CircularBody2D) body2;
             RectangularBody2D rectangle = (RectangularBody2D) body1;
-            Vector2D[] forces = solveCircleRectangleCollision(circle, rectangle, dt, false);
+            forces = solveCircleRectangleCollision(circle, rectangle, dt, false);
+        }
+
+        if(forces != null) {
             return forces;
         }
 
         // No collisions
         Vector2D impulse = new Vector2D(0.0, 0.0);
         Vector2D[] impulses = {impulse, impulse};
-        return impulses;
+        return impulse;
 
     }
 
-    private Vector2D[] solveCircleCircleCollision(CircularBody2D body1, CircularBody2D body2, double dt) {
+    private Vector2D solveCircleCircleCollision(CircularBody2D body1, CircularBody2D body2, double dt) {
 
         // Get masses
         double mass1 = body1.isMovable() ? body1.getMass() : INFINIY;
@@ -182,14 +185,15 @@ public class Body2DCollider implements Collider {
         perpVelocity2.subtract(tangentVelocity2);
 
         // Calculate final tangent, total velocities with restitution and apply them
+        double restitutionCoeff = Math.min(body1.getRestitution(), body2.getRestitution());
         Vector2D newTangentVelocity1 = calculateCircularVelocity(
-                mass1, mass2, tangentVelocity1, tangentVelocity2);
+                mass1, mass2, tangentVelocity1, tangentVelocity2, restitutionCoeff);
         newTangentVelocity1.multiply(body1.getRestitution());
         Vector2D finalVelocity1 = new Vector2D(perpVelocity1);
         finalVelocity1.add(newTangentVelocity1);
 
         Vector2D newTangentVelocity2 = calculateCircularVelocity(
-                mass2, mass1, tangentVelocity2, tangentVelocity1);
+                mass2, mass1, tangentVelocity2, tangentVelocity1, restitutionCoeff);
         newTangentVelocity2.multiply(body2.getRestitution());
         Vector2D finalVelocity2 = new Vector2D(perpVelocity2);
         finalVelocity2.add(newTangentVelocity2);
@@ -201,19 +205,22 @@ public class Body2DCollider implements Collider {
         impulse2.divide(dt);
         Vector2D[] impulses = {impulse1, impulse2};
 
-        return impulses;
+        return impulse1;
 
     }
 
-    private Vector2D[] solveCircleRectangleCollision(CircularBody2D circle, RectangularBody2D rectangle, double dt, boolean returnCircleFirst) {
+    private Vector2D solveCircleRectangleCollision(CircularBody2D circle, RectangularBody2D rectangle, double dt, boolean returnCircleFirst) {
 
         // Get masses
         double mass1 = circle.isMovable() ? circle.getMass() : INFINIY;
         double mass2 = rectangle.isMovable() ? rectangle.getMass() : INFINIY;
 
         // Get normal (unit) collision vector
-        Vector2D normal = getCircleRectangleCollisionNormal(circle, rectangle);
-        normal.divide(normal.norm());
+        CollisionData data = getCircleRectangleCollisionNormal(circle, rectangle);
+        if(data == null) {
+            return null;
+        }
+        Vector2D normal = data.getNormal();
 
         // Get perpendicular component of velocity of both bodies
         Vector2D tangentVelocity1 = new Vector2D(normal);
@@ -228,15 +235,14 @@ public class Body2DCollider implements Collider {
         perpVelocity2.subtract(perpVelocity2);
 
         // Calculate final tangent, total velocities with restitution and apply them
+        double restitutionCoeff = Math.min(circle.getRestitution(), rectangle.getRestitution());
         Vector2D newTangentVelocity1 = calculateCircularVelocity(
-                mass1, mass2, tangentVelocity1, tangentVelocity2);
-        newTangentVelocity1.multiply(circle.getRestitution());
+                mass1, mass2, tangentVelocity1, tangentVelocity2, restitutionCoeff);
         Vector2D finalVelocity1 = new Vector2D(perpVelocity1);
         finalVelocity1.add(newTangentVelocity1);
 
         Vector2D newTangentVelocity2 = calculateCircularVelocity(
-                mass2, mass1, tangentVelocity2, tangentVelocity1);
-        newTangentVelocity2.multiply(rectangle.getRestitution());
+                mass2, mass1, tangentVelocity2, tangentVelocity1, restitutionCoeff);
         Vector2D finalVelocity2 = new Vector2D(perpVelocity2);
         finalVelocity2.add(newTangentVelocity2);
 
@@ -248,9 +254,8 @@ public class Body2DCollider implements Collider {
                 rectangle.getImpulse(finalVelocity2) : circle.getImpulse(finalVelocity1);
         impulse1.divide(dt);
         impulse2.divide(dt);
-        Vector2D[] impulses = {impulse1, impulse2};
 
-        return impulses;
+        return impulse1;
 
     }
 
@@ -261,57 +266,50 @@ public class Body2DCollider implements Collider {
      * @throws NullPointerException in the case of no collision
      * @return collision normal vector
      */
-    private Vector2D getCircleRectangleCollisionNormal(CircularBody2D circle, RectangularBody2D rectangle) {
+    private CollisionData getCircleRectangleCollisionNormal(CircularBody2D circle, RectangularBody2D rectangle) {
 
-        // Case it it was at a face
-        Vector2D effPosition;
-        Vector2D[] corners = rectangle.getCorners();
-        double penetration = circle.getRadius() + TINY;
-        double currPenetration;
-        Vector2D normalCollision = null;
+        Vector2D rotatedCenter = new Vector2D(circle.getPosition());
+        rotatedCenter.subtract(rectangle.getPosition());
+        rotatedCenter.rotate(-rectangle.getOrientation());
 
-        for(int i=0; i < corners.length; i++) {
+        double xPoint = rotatedCenter.x();
+        double halfWidth = rectangle.getWidth() * 0.5;
+        if( xPoint < -halfWidth ) {
+            xPoint = -halfWidth;
+        } else if( xPoint > halfWidth) {
+            xPoint = halfWidth;
+        }
 
-            // Next vertex
-            int j = (i + 1) % corners.length;
+        double yPoint = rotatedCenter.y();
+        double halfHeight = rectangle.getHeight() * 0.5;
+        if( yPoint < -halfHeight ) {
+            yPoint = -halfHeight;
+        } else if( yPoint > halfHeight) {
+            yPoint = halfHeight;
+        }
 
-            // Calculate normal to side
-            Vector2D normal = new Vector2D(corners[j]);
-            normal.subtract(corners[i]);
-            normal.rotate(Math.PI * 0.5);
+        Vector2D closestPoint = new Vector2D(xPoint, yPoint);
+        closestPoint.rotate(rectangle.getOrientation());
+        closestPoint.add(rectangle.getPosition());
+        Vector2D normal = new Vector2D(circle.getPosition());
+        normal.subtract(closestPoint);
+
+        double penetration = normal.norm() - circle.getRadius();
+        if( penetration <= TINY ) {
             normal.divide(normal.norm());
-
-            effPosition = new Vector2D(normal);
-            effPosition.multiply(-circle.getRadius());
-            effPosition.add(circle.getPosition());
-
-            System.out.println(" " +effPosition + normal + corners[i]);
-            currPenetration = penetrationThroughLine(effPosition, normal, corners[i]);
-            //currPenetration = circle.getPosition().dot(normal);
-
-            if(currPenetration < penetration) {
-                penetration = currPenetration;
-                normalCollision = new Vector2D(normal);
-            }
-            System.out.println("  +  " + currPenetration);
-
-        }
-        if(penetration < 0.0) {
-            normalCollision.multiply(penetration-circle.getRadius());
-            return normalCollision;
+            return new CollisionData(normal, penetration);
         }
 
-        // Case of no collision
-        throw new NullPointerException("No collision detected. This method should only be called in the case of a collision.");
+        return null;
 
     }
 
-    private Vector2D calculateCircularVelocity(double mass1, double mass2, Vector2D velocity1, Vector2D velocity2) {
+    private Vector2D calculateCircularVelocity(double mass1, double mass2, Vector2D velocity1, Vector2D velocity2, double restitutionCoeff) {
 
         // New velocity according to conservation of momentum
         Vector2D finalVelocity = new Vector2D(velocity1);
-        finalVelocity.multiply(mass1 - mass2);
 
+        finalVelocity.multiply((mass1 - mass2) * restitutionCoeff);
         Vector2D temp = new Vector2D(velocity2);
         temp.multiply(2.0 * mass2);
 
@@ -379,14 +377,16 @@ public class Body2DCollider implements Collider {
                 (RectangularBody2D) body1 : (RectangularBody2D) body2;
 
         // Check if penetration is negative
-        Vector2D normal = getCircleRectangleCollisionNormal(circle, rectangle);
-        double penetration = normal.norm(); // TODO
+        CollisionData data = getCircleRectangleCollisionNormal(circle, rectangle);
+        if(data == null) {
+            return false;
+        }
+        Vector2D normal = data.getNormal();
+        double penetration = data.getPenetration();
 
-        System.out.println("Circle-Rectangle penetration " + penetration + normal);
         if(penetration > 0.0) {
             return false;
         }
-        System.out.println("Unsinking circle and rectangle");
         unsink(circle, rectangle, normal, penetration);
 
         return true;
@@ -408,6 +408,26 @@ public class Body2DCollider implements Collider {
         if(body1.isMovable()) {
             normal.multiply(-body2.getMass() / body1.getMass());
             body1.translate(normal);
+        }
+
+    }
+
+    private class CollisionData {
+
+        private Vector2D normal;
+        private double penetration;
+
+        public CollisionData(Vector2D normal, double penetration) {
+            this.normal = normal;
+            this.penetration = penetration;
+        }
+
+        public double getPenetration() {
+            return penetration;
+        }
+
+        public Vector2D getNormal() {
+            return normal;
         }
 
     }

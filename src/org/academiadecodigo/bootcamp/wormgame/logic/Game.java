@@ -47,20 +47,12 @@ public class Game implements KeyboardHandler {
     private Collider collider;
     private boolean player1Wins;
     private Picture winnerPic;
-    private Picture creditsbg;
+    private Picture creditsBackground;
     private boolean inGame;
 
-    private static final double DELTA_TIME = 0.020; // milliseconds
-    private static final int FRAMERATE = 30; // TODO implement this
-    private static final double MOVE_THRESHOLD = 1000.0;
+    private static final double DELTA_TIME = 0.01; // milliseconds
+    private static final int FRAMERATE = 30;
     private static final double ARENA_MARGIN = 200;
-
-    public Game() {
-
-        //simWindow = new SgfxViewport(1200, 800, 1.0);
-
-    }
-
 
     public void openMenu() {
 
@@ -127,11 +119,7 @@ public class Game implements KeyboardHandler {
             sgfxBody.rotate(body.getOrientation());
             sgfxBody.toggleMovable();
 
-            system.add(sgfxBody); // TODO this is to see. Add it.next() directly.
-
-            //RectangularBody2D rectBody = obstacleIterator.next();
-            //body.toggleMovable();
-            //system.add(body);
+            system.add(sgfxBody);
 
         }
         background.draw();
@@ -226,15 +214,19 @@ public class Game implements KeyboardHandler {
             selectedCharacter.toggleActive();
         }
 
+        long time = System.currentTimeMillis();
+        long framePeriod = (long) (1.0 / (double) FRAMERATE);
         while (!gameover) {
 
             allMoved = update();
 
             try {
-                Thread.sleep(((long) DELTA_TIME) * 1000);
+                Thread.sleep(1);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
+
+            time = System.nanoTime() * 1000;
 
             checkTurnEnd(allMoved);
 
@@ -270,7 +262,7 @@ public class Game implements KeyboardHandler {
         }
 
 
-        // Check Collision with Boundaries TODO check collisions with boundaries
+        // Check Collision with Boundaries
         for(Body2D body1 : system) {
 
             if(!(body1 instanceof DeathGiver)) {
@@ -355,9 +347,9 @@ public class Game implements KeyboardHandler {
 
         gameover = true;
 
-        creditsbg = new Picture();
-        creditsbg.load("resources/creditsbg.png");
-        creditsbg.draw();
+        creditsBackground = new Picture();
+        creditsBackground.load("resources/creditsbg.png");
+        creditsBackground.draw();
         gameOverPic = new Picture();
         gameOverPic.load("resources/credits.png");
         gameOverPic.draw();
@@ -520,7 +512,7 @@ public class Game implements KeyboardHandler {
                     gameover = false;
                     gameOverPic.delete();
                     winnerPic.delete();
-                    creditsbg.delete();
+                    creditsBackground.delete();
                     break;
                 }
                 Projectile projectile = selectedCharacter.fire();

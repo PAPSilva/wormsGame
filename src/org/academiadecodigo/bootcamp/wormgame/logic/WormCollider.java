@@ -9,7 +9,7 @@ import org.academiadecodigo.bootcamp.wormgame.actors.PainGiver;
 
 public class WormCollider implements Collider {
 
-    private final int IMPULSE_MODIFIER = 10000;
+    private final int IMPULSE_MODIFIER = 15000;
     private Body2DCollider bodyCollider;
 
     public WormCollider(double tiny) {
@@ -25,10 +25,10 @@ public class WormCollider implements Collider {
      * While the impulse is calculated for both bodies, only body1 is affected by the game mechanics. This function should be called a second time to apply the game mechanics to body2. TODO affect both bodies at the same time
      */
     @Override
-    public Vector2D[] solveCollision(Body2D body1, Body2D body2, double dt) {
+    public Vector2D solveCollision(Body2D body1, Body2D body2, double dt) {
 
         // First resolve physical collisions
-        Vector2D[] impulse = bodyCollider.solveCollision(body1, body2, dt);
+        Vector2D impulse = bodyCollider.solveCollision(body1, body2, dt);
 
         // Resolve each kind of interactions specific to the game.
 
@@ -42,7 +42,7 @@ public class WormCollider implements Collider {
 
             // TODO Do this properly
 
-            int damage = ((int) (impulse[0].norm() / IMPULSE_MODIFIER)) * damageMultiplier;
+            int damage = ((int) (impulse.norm() / IMPULSE_MODIFIER)) * damageMultiplier;
 
             // Modify impulse damage if body2 is unmovable.
             if (!body2.isMovable()) {

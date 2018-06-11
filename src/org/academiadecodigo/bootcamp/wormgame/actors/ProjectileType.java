@@ -5,7 +5,7 @@ package org.academiadecodigo.bootcamp.wormgame.actors;
  */
 public enum ProjectileType {
 
-    BULLET(2, 2, 5),
+    BULLET(2, 2, 2),
     ROCKET(20, 10, 5);
 
     private double mass;
