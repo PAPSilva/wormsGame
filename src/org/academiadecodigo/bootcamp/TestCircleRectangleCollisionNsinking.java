@@ -17,7 +17,7 @@ public class TestCircleRectangleCollisionNsinking {
 
         // Start system
         Body2DCollider collider = new Body2DCollider(1.0E-8);
-        Vector2D gravity = new Vector2D(0.0,98.0);
+        Vector2D gravity = new Vector2D(0.0,0.0);
         Body2DSystem system = new Body2DSystem(gravity, collider);
 
         // Add bodies to system
@@ -39,14 +39,14 @@ public class TestCircleRectangleCollisionNsinking {
         // Box and circles
 
         SgfxRectangularBody2D rectangle1 = new SgfxRectangularBody2D(20.0, 200.0, 200.0, new Vector2D(300.0, 300.0), simWindow);
-        rectangle1.toggleMovable();
-        //rectangle1.setVelocity(new Vector2D(100.0,00.0));
+        //rectangle1.toggleMovable();
+        rectangle1.setVelocity(new Vector2D(100.0,00.0));
 
         // Add bodies to system and start simulation
 
-        //system.add(circle1);
-        //system.add(circle2);
-        //system.add(circle3);
+        system.add(circle1);
+        system.add(circle2);
+        system.add(circle3);
         system.add(circle4);
         system.add(rectangle1);
 

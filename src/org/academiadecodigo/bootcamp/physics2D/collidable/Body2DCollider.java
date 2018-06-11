@@ -212,8 +212,7 @@ public class Body2DCollider implements Collider {
         double mass2 = rectangle.isMovable() ? rectangle.getMass() : INFINIY;
 
         // Get normal (unit) collision vector
-        CollisionData data = getCircleRectangleCollisionNormal(circle, rectangle);
-        Vector2D normal = data.getNormal();
+        Vector2D normal = getCircleRectangleCollisionNormal(circle, rectangle);
         normal.divide(normal.norm());
 
         // Get perpendicular component of velocity of both bodies
@@ -262,9 +261,9 @@ public class Body2DCollider implements Collider {
      * @throws NullPointerException in the case of no collision
      * @return collision normal vector
      */
-    private CollisionData getCircleRectangleCollisionNormal(CircularBody2D circle, RectangularBody2D rectangle) {
+    private Vector2D getCircleRectangleCollisionNormal(CircularBody2D circle, RectangularBody2D rectangle) {
 
-        // Case if it was at a face
+        // Case it it was at a face
         Vector2D effPosition;
         Vector2D[] corners = rectangle.getCorners();
         double penetration = circle.getRadius() + TINY;
@@ -299,7 +298,7 @@ public class Body2DCollider implements Collider {
         }
         if(penetration < 0.0) {
             normalCollision.multiply(penetration-circle.getRadius());
-            return new CollisionData(normalCollision, penetration);
+            return normalCollision;
         }
 
         // Case of no collision
@@ -380,23 +379,17 @@ public class Body2DCollider implements Collider {
                 (RectangularBody2D) body1 : (RectangularBody2D) body2;
 
         // Check if penetration is negative
-        CollisionData data = getCircleRectangleCollisionNormal(circle, rectangle);
-        Vector2D normal = data.getNormal();
-        if(body2 instanceof CircularBody2D) {
-            normal.multiply(-1.0);
-        }
-        double penetration = data.getPenetration();
+        Vector2D normal = getCircleRectangleCollisionNormal(circle, rectangle);
+        double penetration = normal.norm(); // TODO
 
-        System.out.println("Circle-Rectangle penetration " + penetration + " " + normal);
+        System.out.println("Circle-Rectangle penetration " + penetration + normal);
         if(penetration > 0.0) {
-            System.out.println("returning");
             return false;
         }
         System.out.println("Unsinking circle and rectangle");
         unsink(circle, rectangle, normal, penetration);
 
         return true;
-
     }
 
     private void unsink(Body2D body1, Body2D body2, Vector2D normal, double penetration) {
@@ -410,33 +403,11 @@ public class Body2DCollider implements Collider {
 
         if(body2.isMovable()) {
             body2.translate(normal);
-            System.out.printf("Translating body2: " + normal);
         }
 
         if(body1.isMovable()) {
             normal.multiply(-body2.getMass() / body1.getMass());
-            System.out.printf("Translating body1: " + normal);
             body1.translate(normal);
-        }
-
-    }
-
-    private class CollisionData {
-
-        private Vector2D normal;
-        private double penetration;
-
-        public CollisionData(Vector2D normal, double penetration) {
-            this.normal = normal;
-            this.penetration = penetration;
-        }
-
-        public Vector2D getNormal() {
-            return normal;
-        }
-
-        public double getPenetration() {
-            return penetration;
         }
 
     }

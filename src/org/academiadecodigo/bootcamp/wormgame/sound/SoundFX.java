@@ -27,7 +27,7 @@ public class SoundFX {
 
 
     public void play(){
-        //clip.start();
+        clip.start();
     }
 
     public void stop(){
