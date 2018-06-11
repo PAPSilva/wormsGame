@@ -10,9 +10,7 @@ public abstract class AbstractBody2D implements Body2D {
     private boolean movable;
     private Vector2D velocity;
     private boolean gravitable;
-    private double restitution = 0.9; // Bounciness [0,1]
-    private double staticFrictionCoeff;
-    private double kineticFrictionCoeff;
+    private double restitution = 0.8; // Bounciness [0,1]
 
     // Constructor
 

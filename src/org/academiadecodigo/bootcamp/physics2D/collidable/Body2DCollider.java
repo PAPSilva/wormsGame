@@ -230,9 +230,9 @@ public class Body2DCollider implements Collider {
 
         // Get tangent component of velocity of both bodies
         Vector2D perpVelocity1 = circle.getVelocity();
-        perpVelocity1.subtract(perpVelocity1);
+        perpVelocity1.subtract(tangentVelocity1);
         Vector2D perpVelocity2 = rectangle.getVelocity();
-        perpVelocity2.subtract(perpVelocity2);
+        perpVelocity2.subtract(tangentVelocity2);
 
         // Calculate final tangent, total velocities with restitution and apply them
         double restitutionCoeff = Math.min(circle.getRestitution(), rectangle.getRestitution());
