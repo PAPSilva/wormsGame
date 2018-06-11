@@ -84,7 +84,7 @@ public enum LevelType {
         center.add(point1);
 
         RectangularBody2D rectangle = new RectangularBody2D(
-                -1.0, width, 0.5, center);
+                -1.0, width, 2.0, center);
         rectangle.rotate(-angle);
         rectangle.toggleMovable();
 

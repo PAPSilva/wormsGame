@@ -23,6 +23,7 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Timer;
 
 /**
  * Created by codecadet on 05/06/2018.
@@ -50,17 +51,9 @@ public class Game implements KeyboardHandler {
     private Picture creditsbg;
     private boolean inGame;
 
-    private static final double DELTA_TIME = 0.020; // milliseconds
-    private static final int FRAMERATE = 30; // TODO implement this
-    private static final double MOVE_THRESHOLD = 1000.0;
+    private static final double DELTA_TIME = 0.001; // milliseconds
+    private static final int FRAMERATE = 60;
     private static final double ARENA_MARGIN = 200;
-
-    public Game() {
-
-        //simWindow = new SgfxViewport(1200, 800, 1.0);
-
-    }
-
 
     public void openMenu() {
 
@@ -226,15 +219,20 @@ public class Game implements KeyboardHandler {
             selectedCharacter.toggleActive();
         }
 
+        long time = System.nanoTime() * 1000;
+        long framePeriod = (long) (1.0 / (double) FRAMERATE);
         while (!gameover) {
 
             allMoved = update();
 
+
             try {
-                Thread.sleep(((long) DELTA_TIME) * 1000);
+                Thread.sleep(framePeriod - (System.nanoTime() * 1000 - time));
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
+
+            time = System.nanoTime() * 1000;
 
             checkTurnEnd(allMoved);
 
@@ -253,7 +251,7 @@ public class Game implements KeyboardHandler {
     private boolean update() {
 
         // Run physic system
-        system.update(DELTA_TIME, DELTA_TIME);
+        system.update( 1.0 / (double) FRAMERATE, DELTA_TIME);
 
         // Check if Hittable PainGivers are dead, remove them if so.
         for (Body2D body : system) {
