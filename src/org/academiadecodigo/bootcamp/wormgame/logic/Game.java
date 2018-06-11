@@ -36,7 +36,6 @@ public class Game implements KeyboardHandler {
     private PhysicSystem system;
     private Character selectedCharacter;
     private SgfxWeapon weaponUI;
-    private int aimSide = KeyboardEvent.KEY_RIGHT;
     private boolean gameStarted = false;
     private Picture menuPic;
     private Picture gameOverPic;
@@ -470,16 +469,15 @@ public class Game implements KeyboardHandler {
         // Deal with event
         switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_LEFT:
-                if (aimSide == KeyboardEvent.KEY_RIGHT) {
+                if (Math.cos(selectedCharacter.getAim()) > 0 ) {
                     selectedCharacter.turnAim();
-                    aimSide = KeyboardEvent.KEY_LEFT;
                 }
                 selectedCharacter.changeMomentum(new Vector2D(-100.0, 0.0));
                 break;
             case KeyboardEvent.KEY_RIGHT:
-                if (aimSide == KeyboardEvent.KEY_LEFT) {
+
+                if (Math.cos(selectedCharacter.getAim()) < 0 ) {
                     selectedCharacter.turnAim();
-                    aimSide = KeyboardEvent.KEY_RIGHT;
                 }
                 selectedCharacter.changeMomentum(new Vector2D(100.0, 0.0));
                 break;

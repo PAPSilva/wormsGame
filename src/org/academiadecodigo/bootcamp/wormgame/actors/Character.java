@@ -86,10 +86,10 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
     @Override
     public void changeAim(double angle) {
 
-        if (aim + angle < Math.PI * 0.45 && aim + angle > Math.PI * -0.45) {
+        if (aim + angle < Math.PI * 0.49 && aim + angle > Math.PI * -0.49) {
             aim += angle;
         }
-        if (aim - angle > Math.PI * 0.55 && aim - angle < Math.PI * 1.45) {
+        if (aim - angle > Math.PI * 0.49 && aim - angle < Math.PI * 1.49) {
             aim -= angle;
         }
 
@@ -102,7 +102,7 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
 
     @Override
     public void turnAim() {
-        aim = (Math.PI - aim);
+        aim = (Math.PI - aim) % (2.0 * Math.PI);
     }
 
 }
