@@ -313,6 +313,7 @@ public class Game implements KeyboardHandler {
         activePlayer = (activePlayer == player1) ? player2 : player1;
         selectedCharacter = activePlayer.nextCharacter();
         selectedCharacter.toggleActive();
+        changeWeaponUI();
 
     }
 
@@ -519,10 +520,7 @@ public class Game implements KeyboardHandler {
                 selectedCharacter.toggleActive(); // TODO Uncomment for production
                 break;
             case KeyboardEvent.KEY_N:
-                Fireable fireable = activePlayer.nextWeapon(selectedCharacter.getWeapon());
-                selectedCharacter.changeWeapon(fireable);
-                weaponUI.removeWeapon();
-                weaponUI = new SgfxWeapon(selectedCharacter.getWeapon().getWeaponType(), simWindow);
+                changeWeaponUI();
                 break;
             case KeyboardEvent.KEY_Q: //TODO Add Q to instructions
                 Canvas.getInstance().closeWindow();
@@ -539,6 +537,12 @@ public class Game implements KeyboardHandler {
 
     }
 
+    private void changeWeaponUI() {
+        Fireable fireable = activePlayer.nextWeapon(selectedCharacter.getWeapon());
+        selectedCharacter.changeWeapon(fireable);
+        weaponUI.removeWeapon();
+        weaponUI = new SgfxWeapon(selectedCharacter.getWeapon().getWeaponType(), simWindow);
+    }
 
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
