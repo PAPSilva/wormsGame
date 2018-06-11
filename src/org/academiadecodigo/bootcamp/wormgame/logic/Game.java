@@ -73,7 +73,7 @@ public class Game implements KeyboardHandler {
                 waitAsecond();
             }
 
-            init(2);
+            init(4);
 
             start();
 
