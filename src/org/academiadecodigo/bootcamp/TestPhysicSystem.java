@@ -35,7 +35,7 @@ public class TestPhysicSystem {
 
         SgfxRectangularBody2D rectangle1 = new SgfxRectangularBody2D(20.0, 150.0, 15.0, new Vector2D(200.0, 150.0), simWindow);
         rectangle1.toggleMovable();
-        rectangle1.rotate(-0.75);
+        //rectangle1.rotate(-0.75);
         System.out.println(rectangle1.getPosition());
 
         SgfxCircularBody2D circle4 = new SgfxCircularBody2D(20.0,20.0, new Vector2D(200.0,400.0), simWindow);

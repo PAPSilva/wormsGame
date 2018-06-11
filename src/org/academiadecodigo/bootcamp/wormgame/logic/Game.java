@@ -23,7 +23,6 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Timer;
 
 /**
  * Created by codecadet on 05/06/2018.
@@ -48,11 +47,11 @@ public class Game implements KeyboardHandler {
     private Collider collider;
     private boolean player1Wins;
     private Picture winnerPic;
-    private Picture creditsbg;
+    private Picture creditsBackground;
     private boolean inGame;
 
-    private static final double DELTA_TIME = 0.001; // milliseconds
-    private static final int FRAMERATE = 60;
+    private static final double DELTA_TIME = 0.003; // milliseconds
+    private static final int FRAMERATE = 30;
     private static final double ARENA_MARGIN = 200;
 
     public void openMenu() {
@@ -353,9 +352,9 @@ public class Game implements KeyboardHandler {
 
         gameover = true;
 
-        creditsbg = new Picture();
-        creditsbg.load("resources/creditsbg.png");
-        creditsbg.draw();
+        creditsBackground = new Picture();
+        creditsBackground.load("resources/creditsBackground.png");
+        creditsBackground.draw();
         gameOverPic = new Picture();
         gameOverPic.load("resources/credits.png");
         gameOverPic.draw();
@@ -518,7 +517,7 @@ public class Game implements KeyboardHandler {
                     gameover = false;
                     gameOverPic.delete();
                     winnerPic.delete();
-                    creditsbg.delete();
+                    creditsBackground.delete();
                     break;
                 }
                 Projectile projectile = selectedCharacter.fire();

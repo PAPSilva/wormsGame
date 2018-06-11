@@ -59,8 +59,12 @@ public class Body2DSystem implements PhysicSystem {
         // Apply force to the objects
         // TODO Apply torque to the objects
         for(int i=0; i < length; i++) {
+            System.out.println("Vi = " + bodies.get(i).getVelocity());
+            System.out.println("F  = " + force[i]);
             bodies.get(i).applyForce(force[i], dt);
+            System.out.println("Vf = " + bodies.get(i).getVelocity());
             bodies.get(i).updatePosition(dt);
+            System.out.println("P  = " + bodies.get(i).getPosition());
         }
 
     }
@@ -72,7 +76,7 @@ public class Body2DSystem implements PhysicSystem {
         // Unmovable objects are dealt with within the collider
 
         // Collisions
-        // TODO this is calculating some objects two times... improve it
+        // TODO this is calculating some object pairs two times... improve it
         int length = bodies.size();
         for(int i=0; i < length; i++) {
 
@@ -87,9 +91,9 @@ public class Body2DSystem implements PhysicSystem {
             }
 
             // Get force for object
-            Vector2D[] impulses = collider.solveCollision(body, bodies.get(i), dt);
-
-            force.add(impulses[0]);
+            Vector2D impulses = collider.solveCollision(body, bodies.get(i), dt);
+            System.out.println("I = " + impulses);
+            force.add(impulses);
 
         }
 

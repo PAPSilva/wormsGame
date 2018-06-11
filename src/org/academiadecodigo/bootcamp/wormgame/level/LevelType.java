@@ -13,11 +13,11 @@ public enum LevelType {
     LEVEL_RUIN("resources/levels/ruinsField.png",
             "resources/levels/ruinsField.obs",
             "resources/levels/ruinsField.spw",
-            800),
-    LEVEL_MARIO("resources/levels/marioField.jpg",
-            "resources/levels/marioField.obs",
-            "resources/levels/marioField.spw",
             800);
+    //LEVEL_MARIO("resources/levels/marioField.jpg",
+    //        "resources/levels/marioField.obs",
+    //        "resources/levels/marioField.spw",
+    //        800);
     //LEVEL_MOUNTAIN("resources/levels/mountainsField.png",
     //               "resources/levels/mountainsField.obs",
     //               "resources/levels/mountainsField.spw",
@@ -84,7 +84,7 @@ public enum LevelType {
         center.add(point1);
 
         RectangularBody2D rectangle = new RectangularBody2D(
-                -1.0, width, 2.0, center);
+                -1.0, width, 0.5, center);
         rectangle.rotate(-angle);
         rectangle.toggleMovable();
 
