@@ -120,26 +120,28 @@ public class Body2DCollider implements Collider {
     @Override
     public Vector2D solveCollision(Body2D body1, Body2D body2, double dt) {
 
+        Vector2D forces = null;
+
         // Solve the case of two circles colliding
         if((body1 instanceof CircularBody2D) && (body2 instanceof CircularBody2D)) {
             CircularBody2D circBody1 = (CircularBody2D) body1;
             CircularBody2D circBody2 = (CircularBody2D) body2;
-            Vector2D force = solveCircleCircleCollision(circBody1, circBody2, dt);
-            return force;
+            forces = solveCircleCircleCollision(circBody1, circBody2, dt);
         }
 
         // Solve the case for a circle and a rectangle colliding
         if(body1 instanceof CircularBody2D && body2 instanceof RectangularBody2D) {
             CircularBody2D circle = (CircularBody2D) body1;
             RectangularBody2D rectangle = (RectangularBody2D) body2;
-            Vector2D forces = solveCircleRectangleCollision(circle, rectangle, dt, true);
-            System.out.println(forces);
-            return forces;
+            forces = solveCircleRectangleCollision(circle, rectangle, dt, true);
         }
         if(body1 instanceof RectangularBody2D && body2 instanceof CircularBody2D) {
             CircularBody2D circle = (CircularBody2D) body2;
             RectangularBody2D rectangle = (RectangularBody2D) body1;
-            Vector2D forces = solveCircleRectangleCollision(circle, rectangle, dt, false);
+            forces = solveCircleRectangleCollision(circle, rectangle, dt, false);
+        }
+
+        if(forces != null) {
             return forces;
         }
 
@@ -309,8 +311,7 @@ public class Body2DCollider implements Collider {
             return normal;
         }
 
-        // Case of no collision
-        throw new NullPointerException("No collision detected. This method should only be called in the case of a collision.");
+        return null;
 
     }
 

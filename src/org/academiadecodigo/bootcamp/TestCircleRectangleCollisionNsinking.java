@@ -38,7 +38,7 @@ public class TestCircleRectangleCollisionNsinking {
 
         // Box and circles
 
-        SgfxRectangularBody2D rectangle1 = new SgfxRectangularBody2D(-1.0, 200.0, 0.5, new Vector2D(300.0, 300.0), simWindow);
+        SgfxRectangularBody2D rectangle1 = new SgfxRectangularBody2D(-1.0, 0.5, 200, new Vector2D(300.0, 300.0), simWindow);
         rectangle1.toggleMovable();
         //rectangle1.setVelocity(new Vector2D(100.0,00.0));
         //rectangle1.rotate(3.14 * 0.25);
