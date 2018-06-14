@@ -18,10 +18,6 @@ public enum LevelType {
             "resources/levels/marioField.obs",
             "resources/levels/marioField.spw",
             800);
-    //LEVEL_MOUNTAIN("resources/levels/mountainsField.png",
-    //               "resources/levels/mountainsField.obs",
-    //               "resources/levels/mountainsField.spw",
-    //               800);
 
     private String imagePath;
     private String obstaclesPath;

@@ -10,7 +10,7 @@
         <property name="build.dir" value="build" />
         <property name="classes.dir" value="${build.dir}/classes" />
         <property name="lib.dir" value="lib" />
-        <property name="resources.dir" value="resources/**"/>
+        <property name="resources.dir" value="resources"/>
         <path id="classpath">
             <fileset dir="${lib.dir}" includes="**/*.jar" />
         </path>

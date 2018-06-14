@@ -16,7 +16,7 @@ public class TestCharacter {
         simWindow.show();
 
 
-        SgfxCharacter sgfxCharacter = new SgfxCharacter(30,20, new Vector2D(100,30),100, 10, "soldier.png", simWindow);
+        SgfxCharacter sgfxCharacter = new SgfxCharacter(30,20, new Vector2D(100,30),100, 10, "soldier_skins/soldier_green.png", simWindow);
 
         Character character = (Character) sgfxCharacter;
 

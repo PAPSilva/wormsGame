@@ -111,7 +111,7 @@ public class TestPainGivers {
         // To substitute the createCharacters.
         private Character createCharacter() {
 
-            return new SgfxCharacter(30, 20, new Vector2D(Math.random() * 400, 50), 100, 1, "soldier.png", simWindow);
+            return new SgfxCharacter(30, 20, new Vector2D(Math.random() * 400, 50), 100, 1, "soldier_skin/soldier_green.png", simWindow);
 
         }
 

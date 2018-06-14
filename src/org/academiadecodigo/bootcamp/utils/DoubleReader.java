@@ -3,6 +3,7 @@ package org.academiadecodigo.bootcamp.utils;
 import org.academiadecodigo.bootcamp.physics2D.utils.Vector2D;
 
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -32,14 +33,14 @@ public class DoubleReader {
 
     private static int[] getDimensions(String filepath) throws IOException {
 
-        BufferedReader reader = new BufferedReader(new java.io.FileReader(filepath));
+        BufferedReader reader = getBufferedReader(filepath);
         LineNumberReader lineReader = new LineNumberReader(reader);
 
-        int[] count = {0,0,0}; // width, height, channels
+        int[] count = {0, 0, 0}; // width, height, channels
         String line;
         while ((line = lineReader.readLine()) != null) {
 
-            if(count[0] == 0) {
+            if (count[0] == 0) {
 
                 String[] numbers = line.split("\\s+");
                 count[1] = numbers.length;
@@ -53,7 +54,7 @@ public class DoubleReader {
         lineReader.close();
         reader.close();
 
-        if(count[0] > 0) {
+        if (count[0] > 0) {
             return count;
         }
 
@@ -61,28 +62,37 @@ public class DoubleReader {
 
     }
 
+    private static BufferedReader getBufferedReader(String filepath) throws IOException {
+        URL fileURL = DoubleReader.class.getResource("/" + filepath);
+
+        if (fileURL == null) {
+            fileURL = new File(filepath).toURI().toURL();
+        }
+        return new BufferedReader(new InputStreamReader(fileURL.openStream()));
+    }
+
     private static List<List<Vector2D>> loadValues(String filepath, int[] dimensions) throws IOException {
 
         List<List<Vector2D>> numbers = new ArrayList<>();
 
-        BufferedReader reader = new BufferedReader(new java.io.FileReader(filepath));
+        BufferedReader reader = getBufferedReader(filepath);
 
         String line;
         int lineCount = 0;
         int numberCount;
         while ((line = reader.readLine()) != null) {
 
-            numbers.add( new ArrayList<>() );
+            numbers.add(new ArrayList<>());
 
             String[] values = line.split("[\\s,]+");
 
             numberCount = 0;
             List<Vector2D> coords = new ArrayList<>();
-            for(int i=0; i < values.length; i += dimensions[2]) {
+            for (int i = 0; i < values.length; i += dimensions[2]) {
 
                 Vector2D vector = new Vector2D(
-                        Double.parseDouble( values[i] ),
-                        Double.parseDouble( values[i+1] )
+                        Double.parseDouble(values[i]),
+                        Double.parseDouble(values[i + 1])
                 );
                 coords.add(vector);
 
