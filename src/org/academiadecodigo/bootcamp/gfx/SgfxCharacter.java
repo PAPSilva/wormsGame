@@ -16,12 +16,15 @@ public class SgfxCharacter extends Character implements Drawable {
     // Constructor
 
     public SgfxCharacter(double mass, double radius, Vector2D position, int health, int minDamage, String imagePath, SgfxViewport viewport) {
+
         super(mass, radius, position, health, minDamage);
         this.viewport = viewport;
 
+        // Set skin with proper size and at proper location.
         Vector2D topLeftCorner = new Vector2D(position);
         topLeftCorner.add(-radius, radius);
         Vector2D viewCoord = viewport.toViewportCoordinates(topLeftCorner);
+
         picture = new Picture(viewCoord.x(),viewCoord.y(), imagePath);
         double growdx = picture.getWidth()*0.5 - radius;
         double growdy = picture.getHeight()*0.5 - radius;
@@ -37,10 +40,11 @@ public class SgfxCharacter extends Character implements Drawable {
 
     @Override
     public void updatePosition(double dt) {
-        // TODO errors might accumulate from double to integer. Check if they do
+
         super.updatePosition(dt);
         updateShape();
         updateAim();
+
     }
 
     private void updateAim() {
@@ -56,7 +60,7 @@ public class SgfxCharacter extends Character implements Drawable {
 
         Vector2D viewCoord = viewport.toViewportCoordinates(muzzle);
         viewCoord.subtract(new Vector2D(aim.getX(), aim.getY()));
-        aim.translate(viewCoord.x(), viewCoord.y());
+        aim.translate( (int) viewCoord.x(), (int) viewCoord.y());
 
     }
 
@@ -66,7 +70,7 @@ public class SgfxCharacter extends Character implements Drawable {
         topLeftCorner.add(-getRadius(), getRadius());
         Vector2D viewCoord = viewport.toViewportCoordinates(topLeftCorner);
         viewCoord.subtract(new Vector2D(picture.getX(), picture.getY()));
-        picture.translate(viewCoord.x(), viewCoord.y());
+        picture.translate((int) viewCoord.x(), (int) viewCoord.y());
 
     }
 
@@ -132,7 +136,7 @@ public class SgfxCharacter extends Character implements Drawable {
     public void remove() {}
 
 
-    public void setDeathPic() {
+    private void setDeathPic() {
 
         picture.delete();
         picture.load("resources/skull.png");
