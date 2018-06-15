@@ -105,11 +105,27 @@ public class SgfxCharacter extends Character implements Drawable {
 
     @Override
     public boolean suffer(int sufferDamage){
+
+        // Character is dead
+        if(health() <= 0) {
+            return false;
+        }
+
+        // Damage
         if(super.suffer(sufferDamage)){
+
             SoundFX.playOnce("sounds/cry.wav");
+
+            // Check if it died after suffering damage
+            if(health() <= 0) {
+                setDeathPic();
+            }
+
             return true;
         }
-       return false;
+
+        return false;
+
     }
 
     @Override
@@ -117,9 +133,11 @@ public class SgfxCharacter extends Character implements Drawable {
 
 
     public void setDeathPic() {
+
         picture.delete();
         picture.load("resources/skull.png");
         picture.draw();
+
     }
 
 

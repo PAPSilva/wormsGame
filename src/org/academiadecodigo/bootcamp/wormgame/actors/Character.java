@@ -43,11 +43,6 @@ public class Character extends CircularBody2D implements Hittable, Shooter, Cont
 
     @Override
     public boolean isDead() {
-
-        if (health <= 0) {
-            ((SgfxCharacter) this).setDeathPic();
-        }
-
         return health <= 0;
     }
 
