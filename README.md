@@ -1,23 +1,23 @@
 # wormsGame
 
-Wormagedon-like game.
+Wormagedon-like game. This game was developed during one week only, while we were having our fourth week of Java.
 
-# Feature
+In this game, two teams fight in turns for supremacy on the battleground. Each soldier is armed with a bazooka, a rifle and a jetpack. Beware not to fly where the oxygen level is low!
+
+# Features
 
 The main features of this game are:
-* Pysics engine.
-* Modularity to make many games.
-
-## UML diagrams
-
-UML files were produced with PlantText. To generate the UML diagrams, please import these files in www.planttest.com.
+* Game engine, which is independent of visualization engine.
+* 2D Pysics engine, built from the ground-up.
+* Modular, open for expansion, close for modification.
+* Easiness to add new levels and soldiers skins.
 
 ## GIT workflow ##
 
 We used the following branch structure:
-* Master: Stable version. Only team leader can commit it.
+* Master: Stable version. Only team leader can commit to it.
 * Release: Feature freeze. Used to test and bug fix for production. Only team
-  leader can commit it.
+  leader can commit to it.
 * Hot fixes: Work out specific issues. Initial commit should start with a
   brief description of the issue.
 * Development: up-to-date branch.
@@ -27,20 +27,9 @@ commit should start with a brief description of the feature.
 
 ![GIT workflow](https://nvie.com/img/git-model@2x.png)
 
-Example to start a new feature (playerControl is *batata*):
-git checkout -b playerControl
-*make sure the next steps are always performed while in this branch!*
-*make first changes*
-git add.
-git commit -m 'Feature: Player Control. Keyboard input to class
-ControlableObject.'
-*more changes*
-git add .
-git commit -m 'All tests passed.'
-*make sure the next steps are performed in the development branch.*
-git checkout development
-git pull origin development *make sure your local development branch is up-to-date*
-git merge playerControl *merge your feature to dev branch*
-*workout conflits, if needed. Provide a good merging message.*
-git push origin development
+# Initial team of Developers
 
+André Carreira
+Pedro Ângelo Silva
+Pedro Sardinha
+Nuno Santos
